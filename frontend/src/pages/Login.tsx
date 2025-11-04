@@ -107,7 +107,7 @@ const Login: React.FC = () => {
 
    return (
     <div
-      className="min-h-screen flex items-center justify-center py-12 bg-[#dc8d33]"
+      className="min-h-screen flex items-center justify-center py-12 bg-[#CBE56A]"
       // style={{
       //   background: 'linear-gradient(180deg, #F5F3FF, #EAEFFE)',
       // }}
@@ -134,7 +134,7 @@ const Login: React.FC = () => {
         <div
           className="absolute bottom-24 left-1/4 w-40 h-40 rounded-full"
           style={{
-            background: '#CBE56A',
+            background: '#9787F3',
             opacity: 0.04,
             animation: 'floaty 6s ease-in-out infinite',
             animationDelay: '3.2s',
@@ -219,8 +219,8 @@ const Login: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center text-base sm:text-lg py-3 rounded-xl font-semibold text-[#2D274B] hover:opacity-90 transition"
-              style={{ backgroundColor: '#CBE56A' }}
+              className="w-full flex items-center justify-center text-base sm:text-lg py-3 rounded-xl font-semibold text-[#dc8d33] hover:opacity-90 transition"
+              style={{ backgroundColor: '#4f4382' }}
               aria-disabled={loading}
             >
               {loading ? (
@@ -237,9 +237,9 @@ const Login: React.FC = () => {
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-[#4B437C] font-bold">
+            <p className="text-[#2D274B] font-bold">
               Don't have an account? {' '}
-              <Link to="/register" className="font-bold hover:underline" style={{ color: '#2D274B' }}>
+              <Link to="/register" className="font-bold hover:underline" style={{ color: '#dc8d33' }}>
                 Sign up here
               </Link>
             </p>

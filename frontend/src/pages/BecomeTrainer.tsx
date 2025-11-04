@@ -5,8 +5,8 @@ import { ChevronDown, ChevronRight,Facebook, Twitter, Instagram, Linkedin
 } from "lucide-react";
 import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
 import logo from '../assets/LearnilmworldLogo.jpg'
-
-import image1 from '../assets/become-trainer.png'
+import image1 from '../assets/become-trainer1.webp'
+import image2 from '../assets/become-trainer2.png'
 
 
 
@@ -27,7 +27,7 @@ const BecomeTrainer: React.FC = () => {
                   <Link to="/">
                   <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center">
                     <span className="text-[#2D274B]">
-                      LEARNILM
+                      LEARNiLM
                     </span>
                     <motion.span
                       animate={{ rotate: 360 }}
@@ -119,7 +119,7 @@ const BecomeTrainer: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Join LearnILm🌍World as a Trainer and help students achieve their goals while
+          Join LEARNiLM🌍WORLD as a Trainer and help students achieve their goals while
           growing your career in a flexible, rewarding environment.
         </motion.p>
         <motion.button
@@ -143,7 +143,7 @@ const BecomeTrainer: React.FC = () => {
             Teach, Inspire, and Make a Difference
           </h2>
           <p className="text-lg font-bold text-white leading-relaxed">
-            At LearnILmWorld, we believe in empowering individuals through knowledge.
+            At LEARNiLMWORLD, we believe in empowering individuals through knowledge.
             As a trainer, you’ll help learners from diverse backgrounds gain confidence,
             improve communication, and unlock new opportunities in their lives.
           </p>
@@ -187,7 +187,7 @@ const BecomeTrainer: React.FC = () => {
             Empower Learners Across 150+ Countries 🌍
           </h2>
           <p className="text-lg text-white font-semibold leading-relaxed">
-           Be part of LearnILm 🌎 World — where passionate educators and curious learners come together. Shape the future of learning and grow with our expanding global community. <br/>
+           Be part of LEARNiLM 🌎 World — where passionate educators and curious learners come together. Shape the future of learning and grow with our expanding global community. <br/>
             {/* <span className="font-semibold text-[#8CA0E5]">800,000+</span> students.  */}
             {/* Join us and get all the tools you need to teach, inspire, and grow. */}
           </p>
@@ -233,7 +233,7 @@ const BecomeTrainer: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <img
-            src={image1}
+            src={image2}
             alt="Global teaching"
             className="rounded-2xl shadow-lg w-full max-w-lg object-cover"
           />
@@ -244,7 +244,7 @@ const BecomeTrainer: React.FC = () => {
       {/* Benefits Section */}
       <section className="py-16 px-6 md:px-16">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-[#2D274B] mb-12">
-          Why Teach with LearnILmWorld?
+          Why Teach with LEARNiLMWORLD?
         </h2>
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto ">
           {[
@@ -333,7 +333,7 @@ const BecomeTrainer: React.FC = () => {
             </h2>
             <p className="mt-3 text-[#2D274B] text-lg font-bold max-w-2xl mx-auto">
               Everything you need to know before starting your teaching journey with
-              LearnILm🌎World.
+              LEARNiLM🌎WORLD.
             </p>
           </div>
 
@@ -356,7 +356,7 @@ const BecomeTrainer: React.FC = () => {
                 a: "Use a clear, real photo, add a short 1–2 minute video, and write an authentic description of your strengths. Avoid adding contact details or pricing in your profile to speed up approval.",
               },
               {
-                q: "Why teach with LearnILm🌎World?",
+                q: "Why teach with LEARNiLM🌎WORLD?",
                 a: "You earn while helping students learn, set your own schedule, reach learners globally, and receive secure payments. Plus, you get access to growth webinars, community support, and built-in teaching tools.",
               },
               {
@@ -430,8 +430,8 @@ const BecomeTrainer: React.FC = () => {
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
           <div>
             <div className="font-semibold text-lg">LearnILmWorld</div>
-            <div className="text-sm text-slate-300 mt-2">© {new Date().getFullYear()} LearnILmWorld — All rights reserved</div>
-            <div className="mt-4 text-sm text-slate-300">Email: hello@LearnILmWorld.example</div>
+            <div className="text-sm text-slate-300 mt-2">© {new Date().getFullYear()} LEARNiLM🌎WORLD — All rights reserved</div>
+            <div className="mt-4 text-sm text-slate-300">Email: support@learnilmworld.com</div>
             <div className="text-sm text-slate-300">Phone: +1 (555) 123-4567</div>
           </div>
 
@@ -470,7 +470,7 @@ const BecomeTrainer: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-6 mt-8 border-t border-white/10 pt-6 text-sm  flex flex-col sm:flex-row justify-between">
-          <div>Made with ❤️ in LearnILmWorld</div>
+          <div>Made with ❤️ in LEARNiLM🌎WORLD</div>
           <div className="mt-3 sm:mt-0">Version 1.0 • Privacy policy</div>
         </div>
       </footer>

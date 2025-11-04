@@ -20,6 +20,9 @@ import {
 } from 'lucide-react'
 import { Navbar, Nav, Container, Offcanvas, Button } from 'react-bootstrap'
 import logo from "../assets/LearnilmworldLogo.jpg";
+import russian_student from '../assets/russian_student.png'
+import arab_student from '../assets/arabian_student.png'
+import chi_student from '../assets/chinese_student.png'
 import { useAuth } from "../contexts/AuthContext"; 
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -98,6 +101,9 @@ export default function LandingPageAlt() {
       Spanish: "trainer_id_for_spanish",
       English: "68ef33d0cad95b62472f382a",
       Sanskrit: "trainer_id_for_sanskrit",
+      Russian: "",
+      Arabic: "68ef33d0cad95b62472f382a",
+      Mandarin: "",
     };
 
     const trainerId = trainerMap[language];
@@ -165,7 +171,7 @@ export default function LandingPageAlt() {
     { q: 'Do trainers provide materials?', a: 'Many trainers include PDFs, flashcards or audio. You can also upload your own material before a lesson.' },
     { q: 'Is there a mobile app?', a: 'Coming soon — our PWA works great on mobile and can be installed to your home screen.' },
     {
-      q: "What is the procedure to become a tutor at LearnILmWorld?",
+      q: "What is the procedure to become a tutor at LEARNiLM🌎WORLD?",
       a: "Becoming a tutor involves a few simple steps — from applying to onboarding. Here’s how you can start your journey with us:",
     },
     {
@@ -224,7 +230,7 @@ export default function LandingPageAlt() {
     <div className="min-h-screen font-inter bg-[#dc8d33] text-[#2D274B] transition-colors duration-500"> 
 
       {/* 2D274B */}
-      <header className="sticky top-0 z-40 bg-[#dc8d33]/95 backdrop-blur-sm border-b border-[#8CA0E5]/30 text-[#8CA0E5]">
+      <header className="sticky top-0 z-40 bg-[#2D274B]/95 backdrop-blur-sm border-b border-white/30 text-[#dc8d33]">
 
         <Container className="py-3">
           <div className="flex items-center justify-between">
@@ -236,13 +242,13 @@ export default function LandingPageAlt() {
                 <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center"> 
                   
                   {/* LEARN */} 
-                  <span className="text-[#2D274B] bg-clip-text drop-shadow-lg"> LEARNILM </span> 
+                  <span className="text-[#dc8d33] bg-clip-text drop-shadow-lg"> LEARNiLM </span> 
                    
                   {/* Rotating Globe */} 
                   <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }} className="inline-block mx-1 text-3xl" > 🌎 </motion.span> 
 
                    {/* World */} 
-                  <span className="text-[#2D274B] bg-clip-text drop-shadow-lg"> WORLD </span>
+                  <span className="text-[#dc8d33] bg-clip-text drop-shadow-lg"> WORLD </span>
                  
                   {/* Optional subtle shine */} 
                   {/* <motion.div className="absolute top-0 left-0 w-full h-full bg-white/20 rounded-full blur-xl pointer-events-none" animate={{ x: [-200, 200] }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }} />  */}
@@ -251,10 +257,10 @@ export default function LandingPageAlt() {
             </div>
 
             <nav className="hidden sm:flex items-center gap-6">
-              <Link to="/main" className="text-base text-[#2D274B] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
+              <Link to="/main" className="text-base text-[#dc8d33] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
               
               
-              <Link to="/login" className="text-base font-medium text-[#2D274B] hover:text-[#CBE56A]">Sign In</Link>
+              <Link to="/login" className="text-base font-medium text-[#dc8d33] hover:text-[#CBE56A]">Sign In</Link>
               <Link to="/register" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#CBE56A] text-[#2D274B] text-sm font-semibold shadow hover:scale-105 transition">Get started</Link>
             </nav>
 
@@ -320,16 +326,16 @@ export default function LandingPageAlt() {
                  {/* chaned color to wite from [#7fe808],[#ef4444] and [#9787F3] */}
                 <motion.div initial={{ scale: 0.95 }} animate={mounted ? { scale: 1 } : {}} className="text-center">
                   <div className="text-2xl font-bold text-white">400+</div>
-                  <div className="text-sm text-[#4B437C]">Trainers</div>
+                  <div className="text-sm text-[#2D274B]">Trainers</div>
                 </motion.div>
                 <motion.div initial={{ scale: 0.95 }} animate={mounted ? { scale: 1.03 } : {}} className="text-center">
                  
                   <div className="text-2xl font-bold text-white">60+</div>
-                  <div className="text-sm text-[#4B437C]">Languages</div>
+                  <div className="text-sm text-[#2D274B]">Languages</div>
                 </motion.div>
                 <motion.div initial={{ scale: 0.95 }} animate={mounted ? { scale: 1.06 } : {}} className="text-center">
                   <div className="text-2xl font-bold text-white">12K+</div>
-                  <div className="text-sm text-[#4B437C]">Students</div>
+                  <div className="text-sm text-[#2D274B]">Students</div>
                 </motion.div>
               </div>
             </motion.div>
@@ -371,7 +377,7 @@ export default function LandingPageAlt() {
 
      {/* Language Levels Explanation */}
     <section
-      className="relative py-28 bg-[#dc8d33] text-[#8CA0E5]"
+      className="relative py-28 bg-[#2D274B] text-[#dc8d33]"
       aria-labelledby="sdil-courses"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
@@ -382,10 +388,10 @@ export default function LandingPageAlt() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-5xl font-extrabold font-serif text-[#2D274B] tracking-tight"
+          className="text-5xl md:text-5xl font-extrabold font-serif text-[#dc8d33] tracking-tight"
         >
           Languages That Open Doors
-          <span className="block text-[#2D274B] mt-1">
+          <span className="block text-[#dc8d33] mt-1">
             Speak to the World with Confidence
           </span>
         </motion.h2>
@@ -473,6 +479,45 @@ export default function LandingPageAlt() {
               bg: "https://st2.depositphotos.com/3591429/11681/i/450/depositphotos_116814870-stock-photo-college-students-using-wireless-devices.jpg",
               levels: [{ name: "Intro", desc: "Learn alphabets & chanting." }],
             },
+
+            //  Russian
+            {
+              lang: "Russian",
+              flag: "https://flagcdn.com/w40/ru.png",
+              pattern: "TORFL / TRKI Certification",
+              bg: russian_student,
+              levels: [
+                { name: "A1", desc: "Basic phrases & introductions." },
+                { name: "A2", desc: "Simple dialogues & reading skills." },
+                { name: "B1", desc: "Confident in travel & work situations." },
+              ],
+            },
+
+            //  Arabic
+            {
+              lang: "Arabic",
+              flag: "https://flagcdn.com/w40/sa.png",
+              pattern: "ALPT / Arabic Lang. Proficiency Test",
+              bg: arab_student,
+              levels: [
+                { name: "A1", desc: "Learn alphabets & greetings." },
+                { name: "A2", desc: "Daily conversation & short texts." },
+                { name: "B1", desc: "Understand media & formal speech." },
+              ],
+            },
+
+            //  Mandarin
+            {
+              lang: "Mandarin",
+              flag: "https://flagcdn.com/w40/cn.png",
+              pattern: "HSK (Hanyu Shuiping Kaoshi)",
+              bg: chi_student,
+              levels: [
+                { name: "HSK 1", desc: "Basic vocabulary & sentences." },
+                { name: "HSK 2", desc: "Understand short daily phrases." },
+                { name: "HSK 3", desc: "Converse & read common texts." },
+              ],
+            },
           ].map((course, idx) => (
             <motion.div
               key={idx}
@@ -480,7 +525,7 @@ export default function LandingPageAlt() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.15 }}
               viewport={{ once: true }}
-              className="relative rounded-2xl overflow-hidden group  hover:shadow-2xl transition-all duration-300 cursor-pointer "
+              className="relative rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-300 cursor-pointer"
               onClick={() => handleLanguageClick(course.lang)}
             >
               {/* Language Header (moved outside image) */}
@@ -529,7 +574,6 @@ export default function LandingPageAlt() {
         </div>
       </div>
     </section>
-
 
 
       {/* Explore subjects section */}
@@ -658,11 +702,11 @@ export default function LandingPageAlt() {
       </section>
 
       {/* Why learners love us section */}
-      <section className="py-16">
+      <section className="py-16 bg-[#2D274B]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-4xl font-semibold font-serif">Why learners love <br/> LEARNILM🌎WORLD</h3>
+              <h3 className="text-4xl font-semibold font-serif text-[#dc8d33]">Why learners love <br/> LEARNiLM🌎WORLD</h3>
               <p className="mt-4 text-white text-lg font-bold max-w-xl">Short lessons, lots of speaking time and tutors focused on practical outcomes. Learn phrases you’ll use the very next day.</p>
 
               <div className="mt-8 grid sm:grid-cols-3 gap-4">
@@ -696,15 +740,13 @@ export default function LandingPageAlt() {
           </div>
         </div>
       </section>
-      
-
 
       {/* Reviews */}
       <section className="py-16" aria-labelledby="reviews">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-8">
             <h3 id="reviews" className="text-4xl font-serif font-bold">What learners say</h3>
-            <p className="mt-2 text-white font-bold text-lg">Real reviews from students and professionals who used LearnILm 🌍 World.</p>
+            <p className="mt-2 text-white font-bold text-lg">Real reviews from students and professionals who used LEARNiLM🌎WORLD.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -727,7 +769,7 @@ export default function LandingPageAlt() {
 
       {/* Highlights section */}
       <section
-        className="relative py-24 bg-gradient-to-b from-[#f0f9ff] to-white"
+        className="relative py-24 bg-[#2D274B] text-wite"
         aria-labelledby="sdil-highlights"
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -738,9 +780,9 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif text-[#2D274B] tracking-tight text-center"
+            className="text-4xl md:text-5xl font-serif text-[#dc8d33] tracking-tight text-center"
           >
-            Highlights of LEARNILM 🌎 WORLD
+            Highlights of LEARNiLM 🌎 WORLD
           </motion.h2>
 
           {/* Subtitle */}
@@ -749,7 +791,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-5 text-xl font-bold text-[#4B437C] max-w-2xl mx-auto text-center"
+            className="mt-5 text-xl font-bold text-white max-w-2xl mx-auto text-center"
           >
             Our approach is designed to ensure effective learning, flexibility, and comprehensive support.
           </motion.p>
@@ -780,7 +822,7 @@ export default function LandingPageAlt() {
                 hidden: { opacity: 0 },
                 visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
               }}
-              className="space-y-4 text-lg text-slate-800 list-disc list-inside"
+              className="space-y-4 text-lg text-white list-disc list-inside"
             >
               {[
                 "Flexible Timings",
@@ -845,9 +887,9 @@ export default function LandingPageAlt() {
       <footer className="bg-[#6b48af] text-white py-12">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
           <div>
-            <div className="font-semibold text-lg">LearnILmWorld</div>
-            <div className="text-sm text-slate-300 mt-2">© {new Date().getFullYear()} LearnILmWorld — All rights reserved</div>
-            <div className="mt-4 text-sm text-slate-300">Email: hello@LearnILmWorld.example</div>
+            <div className="font-semibold text-lg">LEARNiLM🌎WORLD</div>
+            <div className="text-sm text-slate-300 mt-2">© {new Date().getFullYear()} LEARNiLM🌎WORLD — All rights reserved</div>
+            <div className="mt-4 text-sm text-slate-300">Email: support@learnilmworld.com</div>
             <div className="text-sm text-slate-300">Phone: +1 (555) 123-4567</div>
           </div>
 
@@ -886,7 +928,7 @@ export default function LandingPageAlt() {
         </div>
 
         <div className="max-w-7xl mx-auto px-6 mt-8 border-t border-white/10 pt-6 text-sm  flex flex-col sm:flex-row justify-between">
-          <div>Made with ❤️ in LearnILmWorld</div>
+          <div>Made with ❤️ in LEARNiLM🌎WORLD</div>
           <div className="mt-3 sm:mt-0">Version 1.0 • Privacy policy</div>
         </div>
       </footer>

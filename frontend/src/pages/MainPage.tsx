@@ -361,8 +361,8 @@ const MainPage: React.FC = () => {
               <div>
                 <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center">
                 {/* LEARN */}
-                <span className="bg-gradient-to-r from-black via-gray-800 to-gray-700 bg-clip-text text-transparent drop-shadow-lg">
-                  LEARNILMWORLD
+                <span className="text-[#2D274B] bg-clip-text  drop-shadow-lg">
+                  LEARNIiLM
                 </span>
 
                 {/* Rotating Globe */}
@@ -374,17 +374,17 @@ const MainPage: React.FC = () => {
                   🌎
                 </motion.span>
 
-                {/* SPHERE */}
-                {/* <span className="bg-gradient-to-r from-black via-gray-800 to-gray-700 bg-clip-text text-transparent drop-shadow-lg">
-                  SPHERE
-                </span> */}
+                {/* World */}
+                <span className=" bg-clip-text text-[#2D274B] drop-shadow-lg">
+                  WORLD
+                </span>
 
                 {/* Optional subtle shine */}
-                <motion.div
+                {/* <motion.div
                   className="absolute top-0 left-0 w-full h-full bg-white/20 rounded-full blur-xl pointer-events-none"
                   animate={{ x: [-200, 200] }}
                   transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-                />
+                /> */}
               </div>
 
               </div>
@@ -393,7 +393,7 @@ const MainPage: React.FC = () => {
             <nav className="flex items-center space-x-4">
               <button
                 onClick={handleDashboardClick}
-                className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-white bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
+                className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-[#2D274B] bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 <span className="relative z-10">Dashboard</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-[#9787F3] to-[var(--accent-orange)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -422,7 +422,7 @@ const MainPage: React.FC = () => {
           <div className="w-full max-w-4xl px-0">
             <div className="flex flex-col lg:flex-row gap-4 items-start">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#2D274B] h-5 w-5" />
                 <input
                   type="text"
                   placeholder="Search trainers by name, language, or specialization..."
@@ -435,7 +435,7 @@ const MainPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setShowFilters(s => !s)}
-                  className="flex items-center px-4 py-3 bg-[#9787F3] text-white rounded-xl hover:bg-[#8d7cf1] transition-all duration-200 font-semibold"
+                  className="flex items-center px-4 py-3 bg-[#CBE56A] text-[#2D274B] rounded-xl hover:bg-[#c2e24f] transition-all duration-200 font-semibold"
                   aria-expanded={showFilters}
                 >
                   <Filter className="h-4 w-4 mr-2" />
@@ -445,7 +445,7 @@ const MainPage: React.FC = () => {
 
                 <button
                   onClick={clearFilters}
-                  className="px-4 py-3 bg-gray-100 text-[#4A4470] rounded-xl hover:bg-gray-200 transition-colors duration-200 font-medium"
+                  className="px-4 py-3 bg-gray-100 text-[#2D274B] rounded-xl hover:bg-[#CBE56A] transition-colors duration-200 font-medium"
                 >
                   Clear All
                 </button>
@@ -457,7 +457,7 @@ const MainPage: React.FC = () => {
               <div className="mt-4 p-4 rounded-xl animate-slide-down max-w-2xl mx-auto">
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-[#4A4470] mb-1">Language</label>
+                    <label className="block text-sm font-semibold text-[#2D274B] mb-1">Language</label>
                     <input
                       type="text"
                       placeholder="e.g., English, Spanish"
@@ -468,7 +468,7 @@ const MainPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-[#4A4470] mb-1">Min Price ($/hr)</label>
+                    <label className="block text-sm font-semibold text-[#2D274B] mb-1">Min Price ($/hr)</label>
                     <input
                       type="number"
                       placeholder="0"
@@ -479,7 +479,7 @@ const MainPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-[#4A4470] mb-1">Max Price ($/hr)</label>
+                    <label className="block text-sm font-semibold text-[#2D274B] mb-1">Max Price ($/hr)</label>
                     <input
                       type="number"
                       placeholder="100"
@@ -490,7 +490,7 @@ const MainPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-[#4A4470] mb-1">Min Experience (years)</label>
+                    <label className="block text-sm font-semibold text-[#2D274B] mb-1">Min Experience (years)</label>
                     <input
                       type="number"
                       placeholder="0"
@@ -501,7 +501,7 @@ const MainPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-[#4A4470] mb-1">Specialization</label>
+                    <label className="block text-sm font-semibold text-[#2D274B] mb-1">Specialization</label>
                     <input
                       type="text"
                       placeholder="e.g., Business, Exam Prep"
@@ -512,7 +512,7 @@ const MainPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-[#4A4470] mb-1">Min Rating</label>
+                    <label className="block text-sm font-semibold text-[#2D274B] mb-1">Min Rating</label>
                     <select
                       value={filters.rating}
                       onChange={(e) => setFilters(prev => ({ ...prev, rating: e.target.value }))}
@@ -526,7 +526,7 @@ const MainPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-[#4A4470] mb-1">Sort By</label>
+                    <label className="block text-sm font-semibold text-[#2D274B] mb-1">Sort By</label>
                     <select
                       value={filters.sortBy}
                       onChange={(e) => setFilters(prev => ({ ...prev, sortBy: e.target.value }))}
@@ -540,7 +540,7 @@ const MainPage: React.FC = () => {
                   </div>
 
                   <div className="flex items-end">
-                    <button onClick={clearFilters} className="w-full px-4 py-2 bg-gray-200 text-[#4A4470] rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium">
+                    <button onClick={clearFilters} className="w-full px-4 py-2 bg-gray-200 text-[#2D274B] rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium">
                       Clear All
                     </button>
                   </div>
@@ -553,7 +553,7 @@ const MainPage: React.FC = () => {
         {/* Results Count */}
         <div className="mb-6 text-center">
           <p className="text-lg text-white">
-            Found <span className="font-bold text-[#9787F3]">{filteredTrainers.length}</span> trainers
+            Found <span className="font-bold text-[#2D274B]">{filteredTrainers.length}</span> trainers
           </p>
         </div>
 
@@ -561,7 +561,7 @@ const MainPage: React.FC = () => {
           <div className="mb-6 text-center">
             <button
               onClick={assignTopTrainer}
-              className="px-6 py-3 bg-[#CBE56A] text-white rounded-xl font-semibold hover:bg-[#CBE56A] transition"
+              className="px-6 py-3 bg-[#CBE56A] text-[#2D274B] rounded-xl font-semibold hover:bg-[#CBE56A] transition"
             >
               Assign Me a Top Trainer
             </button>

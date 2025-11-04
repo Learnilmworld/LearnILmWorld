@@ -745,7 +745,7 @@ const StudentDashboard: React.FC = () => {
         <div className="flex items-center justify-between p-6 border-b border-white border-opacity-30">
           <Link to="/" className="flex items-center">
                       <div>
-                          <div className="text-lg font-semibold">LEARN🌎SPHERE</div>
+                          <div className="text-lg font-semibold">LEARNiLM🌎WORLD</div>
                           
                         </div>
                     </Link>

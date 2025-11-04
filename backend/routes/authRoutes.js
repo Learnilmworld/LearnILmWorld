@@ -27,7 +27,6 @@ router.post('/register', async (req, res) => {
       } = {}
     } = req.body;
 
-
     // CountDown for Re registration
     const COOLDOWN_MS = 2 * 60 * 1000; // 2 mins for testing, later 6 months ~ 6*30*24*60*60*1000
 
@@ -49,8 +48,6 @@ router.post('/register', async (req, res) => {
         }
 
         // Reset trainer data for re-registration
-        // Allow trainer to re-register with their own password
-        // Reset trainer data for re-registration
         existingUser.password = password;
         existingUser.profile.education =
           education || req.body.profile?.education || '';
@@ -64,12 +61,12 @@ router.post('/register', async (req, res) => {
           ? certifications || req.body.profile?.certifications
           : [];
         existingUser.profile.phone =
-          phone || req.body.profile?.phone || ''; // ✅ added phone reset
+          phone || req.body.profile?.phone || '';
         existingUser.profile.verificationStatus = 'pending';
         existingUser.profile.rejectionDate = null;
 
         await existingUser.save();
-        sendTrainerVerificationEmail(existingUser);
+        sendTrainerVerificationEmail(existingUser, resume);
         return res.status(200).json({
           message: 'You have re-registered successfully. Awaiting verification.',
           user: existingUser,
@@ -80,7 +77,6 @@ router.post('/register', async (req, res) => {
     }
 
     // For new User Registration
-
     const userData = {
       name,
       email,
@@ -89,20 +85,17 @@ router.post('/register', async (req, res) => {
       profile: {}
     };
 
-
-    // ✅ Use extracted or nested values safely
+    //  Use extracted or nested values safely
     const edu = education || req.body.profile?.education || '';
     const exp =
       teachingExperienceDetails || req.body.profile?.teachingExperienceDetails || '';
     const certs = certifications || req.body.profile?.certifications || [];
 
-    // for preventing malisious creation of admin
+    // Prevent malicious admin creation
     const allowedRoles = ['student', 'trainer'];
     if (!allowedRoles.includes(role)) {
       return res.status(403).json({ message: 'Invalid role' });
     }
-
-
 
     // If trainer, attach verification-related data
     if (role === 'trainer') {
@@ -118,17 +111,15 @@ router.post('/register', async (req, res) => {
           : [],
         dob: dob || null,
         bio: bio || '',
-        resume: resume || '',
         phone: phone || '',
         verificationStatus: 'pending'
+        // Removed resume here (we don't store base64 file)
       };
     } else if (role === 'student') {
       userData.profile = {
-        phone: phone || '',  // store student’s phone number
+        phone: phone || '',
       };
     }
-
-
 
     if (userData.profile?.certifications?.length) {
       userData.profile.certifications = userData.profile.certifications.map(cert => ({
@@ -144,21 +135,16 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     if (role === 'trainer') {
-      sendTrainerVerificationEmail(user);
-
-      // Optionally clear resume after sending mail
-      user.profile.resume = '';
-      await user.save();
+      // Send verification email with resume attached, but don’t store resume
+      await sendTrainerVerificationEmail(user, resume);
     }
-    // sends e-mail using helper
 
-    // JWT token for immediate use (optional, can skip for trainer)
+    // JWT token for immediate use
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN }
     );
-
 
     res.status(201).json({
       message: role === 'trainer'
@@ -179,7 +165,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Helper to send email to admin for trainer verification
-const sendTrainerVerificationEmail = async (user) => {
+const sendTrainerVerificationEmail = async (user, resumeData) => {
   // Prepare certifications list in HTML
   const certList = (user.profile.certifications || [])
     .map(
@@ -218,14 +204,13 @@ const sendTrainerVerificationEmail = async (user) => {
     <a href="${rejectLink}" style="color: red;">❌ Reject Trainer</a>
   `;
 
-  // Prepare attachments array
   const attachments = [];
 
-  // Attach resume if present
-  if (user.profile.resume) {
+  // Attach resume (base64 string) if present
+  if (resumeData) {
     attachments.push({
-      filename: 'resume.pdf', // or detect extension dynamically
-      content: user.profile.resume.split(',')[1] || user.profile.resume, // handle base64 string
+      filename: 'resume.pdf', // detect type if needed
+      content: resumeData.split(',')[1] || resumeData,
       encoding: 'base64'
     });
   }
@@ -234,7 +219,7 @@ const sendTrainerVerificationEmail = async (user) => {
   (user.profile.certifications || []).forEach((cert, idx) => {
     if (cert.certificateImage) {
       attachments.push({
-        filename: `certificate_${idx + 1}.png`, // or detect extension
+        filename: `certificate_${idx + 1}.png`,
         content: cert.certificateImage.split(',')[1] || cert.certificateImage,
         encoding: 'base64'
       });
@@ -249,8 +234,6 @@ const sendTrainerVerificationEmail = async (user) => {
     attachments
   });
 };
-
-
 // End of helper
 
 // Login

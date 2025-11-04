@@ -147,107 +147,149 @@ const PaymentPanel = ({ trainer, selectedMethod, onPaymentSuccess, onPaymentErro
     else if (!ev?.error) setCardError('')
   }
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   if (!studentName.trim()) {
+  //     onPaymentError('Please enter your name')
+  //     return
+  //   }
+  //   setLoading(true)
+
+  //   try {
+  //     if (selectedMethod === 'card') {
+  //       if (!stripe || !elements) {
+  //         onPaymentError('Stripe not loaded')
+  //         setLoading(false)
+  //         return
+  //       }
+
+  //       const cardNumberEl = elements.getElement(CardNumberElement)
+  //       if (!cardNumberEl) {
+  //         onPaymentError('Card number field missing')
+  //         setLoading(false)
+  //         return
+  //       }
+
+  //       // Create payment intent (kept same as original: amount not multiplied)
+  //       const { data } = await axios.post('/api/payments/create-payment-intent', {
+  //         amount: trainer.profile?.hourlyRate || 25,
+  //         currency: 'usd'
+  //       })
+
+  //       // Confirm payment using the CardNumberElement as card
+  //       const result = await stripe.confirmCardPayment(data.clientSecret, {
+  //         payment_method: {
+  //           card: cardNumberEl,
+  //           billing_details: { name: studentName }
+  //         }
+  //       })
+
+  //       if (result.error) {
+  //         onPaymentError(result.error.message)
+  //       } else {
+  //         // Create booking
+  //         const bookingResponse = await axios.post('/api/bookings', {
+  //           trainerId: trainer._id,
+  //           studentName,
+  //           paymentMethod: 'stripe',
+  //           amount: trainer.profile?.hourlyRate || 25
+  //         })
+
+  //         // Update payment status
+  //         await axios.put(`/api/bookings/${bookingResponse.data._id}/payment`, {
+  //           paymentStatus: 'completed',
+  //           paymentId: result.paymentIntent.id
+  //         })
+
+  //         onPaymentSuccess({
+  //           ...bookingResponse.data,
+  //           paymentDetails: {
+  //             paymentId: result.paymentIntent.id,
+  //             amount: result.paymentIntent.amount / 100,
+  //             currency: result.paymentIntent.currency,
+  //             status: result.paymentIntent.status
+  //           }
+  //         })
+  //       }
+  //     } else {
+  //       // Demo flow: call fake-payment endpoint (keeps your original flow)
+  //       const fakePaymentResponse = await axios.post('/api/payments/fake-payment', {
+  //         amount: trainer.profile?.hourlyRate || 25
+  //       })
+
+  //       // Create booking
+  //       const bookingResponse = await axios.post('/api/bookings', {
+  //         trainerId: trainer._id,
+  //         studentName,
+  //         paymentMethod: 'fake',
+  //         amount: trainer.profile?.hourlyRate || 25
+  //       })
+
+  //       // Update payment status
+  //       await axios.put(`/api/bookings/${bookingResponse.data._id}/payment`, {
+  //         paymentStatus: 'completed',
+  //         paymentId: fakePaymentResponse.data.paymentId
+  //       })
+
+  //       onPaymentSuccess({
+  //         ...bookingResponse.data,
+  //         paymentDetails: {
+  //           paymentId: fakePaymentResponse.data.paymentId,
+  //           amount: trainer.profile?.hourlyRate || 25,
+  //           currency: 'usd',
+  //           status: 'succeeded'
+  //         }
+  //       })
+  //     }
+  //   } catch (err) {
+  //     console.error('Payment error:', err)
+  //     onPaymentError(err?.response?.data?.message || 'Payment failed')
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!studentName.trim()) {
-      onPaymentError('Please enter your name')
-      return
-    }
-    setLoading(true)
+  e.preventDefault();
+  console.log("Form submitted ✅");
 
-    try {
-      if (selectedMethod === 'card') {
-        if (!stripe || !elements) {
-          onPaymentError('Stripe not loaded')
-          setLoading(false)
-          return
-        }
+  try {
+    console.log("Trainer:", trainer);
+    console.log("Student Name:", studentName);
 
-        const cardNumberEl = elements.getElement(CardNumberElement)
-        if (!cardNumberEl) {
-          onPaymentError('Card number field missing')
-          setLoading(false)
-          return
-        }
+    const payload = {
+      trainerId: trainer?._id || trainer?.id,
+      studentName,
+      paymentMethod: 'fake',
+      amount: 0
+    };
 
-        // Create payment intent (kept same as original: amount not multiplied)
-        const { data } = await axios.post('/api/payments/create-payment-intent', {
-          amount: trainer.profile?.hourlyRate || 25,
-          currency: 'usd'
-        })
+    console.log("Payload being sent:", payload);
 
-        // Confirm payment using the CardNumberElement as card
-        const result = await stripe.confirmCardPayment(data.clientSecret, {
-          payment_method: {
-            card: cardNumberEl,
-            billing_details: { name: studentName }
-          }
-        })
+    const bookingResponse = await axios.post('/api/bookings', payload);
+    console.log("Booking created:", bookingResponse.data);
 
-        if (result.error) {
-          onPaymentError(result.error.message)
-        } else {
-          // Create booking
-          const bookingResponse = await axios.post('/api/bookings', {
-            trainerId: trainer._id,
-            studentName,
-            paymentMethod: 'stripe',
-            amount: trainer.profile?.hourlyRate || 25
-          })
+    await axios.put(`/api/bookings/${bookingResponse.data._id}/payment`, {
+      paymentStatus: 'completed',
+      paymentId: 'FREE-BOOKING'
+    });
 
-          // Update payment status
-          await axios.put(`/api/bookings/${bookingResponse.data._id}/payment`, {
-            paymentStatus: 'completed',
-            paymentId: result.paymentIntent.id
-          })
-
-          onPaymentSuccess({
-            ...bookingResponse.data,
-            paymentDetails: {
-              paymentId: result.paymentIntent.id,
-              amount: result.paymentIntent.amount / 100,
-              currency: result.paymentIntent.currency,
-              status: result.paymentIntent.status
-            }
-          })
-        }
-      } else {
-        // Demo flow: call fake-payment endpoint (keeps your original flow)
-        const fakePaymentResponse = await axios.post('/api/payments/fake-payment', {
-          amount: trainer.profile?.hourlyRate || 25
-        })
-
-        // Create booking
-        const bookingResponse = await axios.post('/api/bookings', {
-          trainerId: trainer._id,
-          studentName,
-          paymentMethod: 'fake',
-          amount: trainer.profile?.hourlyRate || 25
-        })
-
-        // Update payment status
-        await axios.put(`/api/bookings/${bookingResponse.data._id}/payment`, {
-          paymentStatus: 'completed',
-          paymentId: fakePaymentResponse.data.paymentId
-        })
-
-        onPaymentSuccess({
-          ...bookingResponse.data,
-          paymentDetails: {
-            paymentId: fakePaymentResponse.data.paymentId,
-            amount: trainer.profile?.hourlyRate || 25,
-            currency: 'usd',
-            status: 'succeeded'
-          }
-        })
+    onPaymentSuccess({
+      ...bookingResponse.data,
+      paymentDetails: {
+        paymentId: 'FREE-BOOKING',
+        amount: 0,
+        currency: 'usd',
+        status: 'succeeded'
       }
-    } catch (err) {
-      console.error('Payment error:', err)
-      onPaymentError(err?.response?.data?.message || 'Payment failed')
-    } finally {
-      setLoading(false)
-    }
+    });
+  } catch (err) {
+    console.error('Booking error:', err.response?.data || err.message);
+    onPaymentError('Failed to complete free booking');
   }
+};
+
+
 
   return (
     <div className="right-card card">

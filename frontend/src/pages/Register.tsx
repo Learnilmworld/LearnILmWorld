@@ -212,7 +212,9 @@ const Register: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen bg-pale flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10 bg-[#2D274B]"
+      className={`min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10 transition-all duration-700 ${
+      formData.role === 'trainer' ? 'bg-[#CBE56A]' : 'bg-[#dc8d33]'
+    }`}
       // style={{
       //   background: `linear-gradient(180deg, #F5F3FF, #EAEFFE)`,
       // }}
@@ -242,10 +244,10 @@ const Register: React.FC = () => {
       <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto relative z-10 p-4 sm:p-8">
         <div className="text-center mb-8">
           {/* change css for text */}
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold text-[#9787F3] mb-2 text-center">
-            Join LearnILmWorld 🌎
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2D274B] mb-2 text-center">
+            Join LEARNiLM 🌎 WORLD
           </h1>
-          <p className="text-base font-bold sm:text-base md:text-lg text-[#9787F3]">
+          <p className="text-xl font-bold sm:text-base md:text-xl text-[#2D274B]">
             Start your Learning Journey today
           </p>
         </div>
@@ -649,9 +651,13 @@ const Register: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center text-base sm:text-lg py-3 rounded-xl font-semibold text-[#2D274B] hover:opacity-90 transition"
-              style={{ backgroundColor: '#CBE56A' }}
-
+              className={`w-full flex items-center justify-center text-base sm:text-lg py-3 rounded-xl font-semibold text-[#2D274B] hover:opacity-90 transition ${
+                loading ? 'opacity-70 cursor-not-allowed' : ''
+              }`}
+              style={{
+                backgroundColor: formData.role === 'trainer' ? '#2D274B' : '#CBE56A',
+                color: formData.role === 'trainer' ? '#dc8d33' : '#2D274B',
+              }}
             >
               {loading ? (
                 <div className="loading-dots">
