@@ -46,6 +46,8 @@ interface Trainer {
   }
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 const Trainer: React.FC = () => {
   // ---------- hooks (always declared in same order) ----------
   const [trainers, setTrainers] = useState<Trainer[]>([])
@@ -108,7 +110,7 @@ const Trainer: React.FC = () => {
     let mounted = true
     const fetchTrainers = async () => {
       try {
-        const response = await axios.get('/api/users/trainers')
+        const response = await axios.get(`${API_BASE_URL}/api/users/trainers`)
         let data = Array.isArray(response.data) ? response.data : []
        
         // Keep only verified trainers

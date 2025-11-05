@@ -19,6 +19,9 @@ import axios from 'axios'
    ------------------------- */
 
 /* ---------- TrainerHome ---------- */
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 const TrainerHome = () => {
   const [stats, setStats] = useState({
     totalSessions: 0,
@@ -36,9 +39,9 @@ const TrainerHome = () => {
   const fetchDashboardData = async () => {
     try {
       const [sessionsRes, bookingsRes, userRes] = await Promise.all([
-        axios.get('/api/sessions/my-sessions'),
-        axios.get('/api/bookings/trainer-bookings'),
-        axios.get('/api/auth/me')
+        axios.get(`${API_BASE_URL}/api/sessions/my-sessions`),
+        axios.get(`${API_BASE_URL}/api/bookings/trainer-bookings`),
+        axios.get(`${API_BASE_URL}/api/auth/me`)
       ])
       const sessions = Array.isArray(sessionsRes.data) ? sessionsRes.data : []
       const bookings = Array.isArray(bookingsRes.data) ? bookingsRes.data : []
@@ -151,7 +154,7 @@ const TrainerSessions = () => {
 
   const fetchSessions = async () => {
     try {
-      const res = await axios.get('/api/sessions/my-sessions')
+      const res = await axios.get(`${API_BASE_URL}/api/sessions/my-sessions`)
       setSessions(Array.isArray(res.data) ? res.data : [])
     } catch (err) {
       console.error('Failed to fetch sessions:', err)
@@ -162,7 +165,7 @@ const TrainerSessions = () => {
 
   const updateSessionStatus = async (sessionId, status) => {
     try {
-      await axios.put(`/api/sessions/${sessionId}/status`, { status })
+      await axios.put(`${API_BASE_URL}/api/sessions/${sessionId}/status`, { status })
       fetchSessions()
     } catch (err) {
       console.error('Failed to update session status:', err)
@@ -266,7 +269,7 @@ const TrainerStudents = () => {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get('/api/bookings/trainer-bookings')
+      const res = await axios.get(`${API_BASE_URL}/api/bookings/trainer-bookings`)
       setBookings(Array.isArray(res.data) ? res.data.filter(b => b.paymentStatus === 'completed') : [])
     } catch (err) {
       console.error('Failed to fetch bookings:', err)
@@ -283,7 +286,7 @@ const TrainerStudents = () => {
     }
     try {
       const scheduledDateTime = new Date(`${sessionData.scheduledDate}T${sessionData.scheduledTime}`)
-      await axios.post('/api/sessions', {
+      await axios.post(`${API_BASE_URL}/api/sessions`, {
         ...sessionData,
         bookingIds: selectedBookings,
         scheduledDate: scheduledDateTime.toISOString()
@@ -449,7 +452,7 @@ const TrainerReviews = () => {
 
   const fetchReviews = async () => {
     try {
-      const res = await axios.get('/api/reviews/trainer-reviews')
+      const res = await axios.get(`${API_BASE_URL}/api/reviews/trainer-reviews`)
       const reviewsData = Array.isArray(res.data) ? res.data : []
       setReviews(reviewsData)
 

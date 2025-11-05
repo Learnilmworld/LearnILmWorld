@@ -12,6 +12,9 @@ interface Review {
   createdAt: string
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
+
 const AdminReviews: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
@@ -19,7 +22,7 @@ const AdminReviews: React.FC = () => {
   const fetchReviews = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('/api/admin/reviews', {
+      const res = await axios.get(`${API_BASE_URL}/api/admin/reviews`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setReviews(res.data)
@@ -34,7 +37,7 @@ const AdminReviews: React.FC = () => {
     if (!confirm('Are you sure you want to delete this review?')) return
     try {
       const token = localStorage.getItem('token')
-      await axios.delete(`/api/admin/reviews/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/admin/reviews/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setReviews(reviews.filter(r => r._id !== id))

@@ -44,6 +44,8 @@ const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; desc: string
   </div>
 )
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 /* ---------------- StudentHome ---------------- */
 const StudentHome: React.FC = () => {
   const { user } = useAuth() as AnyObj
@@ -64,8 +66,8 @@ const StudentHome: React.FC = () => {
   const fetchDashboardData = async () => {
     try {
       const [sessionsRes, bookingsRes] = await Promise.all([
-        axios.get('/api/sessions/my-sessions'),
-        axios.get('/api/bookings/my-bookings')
+        axios.get(`${API_BASE_URL}/api/sessions/my-sessions`),
+        axios.get(`${API_BASE_URL}/api/bookings/my-bookings`)
       ])
 
       const sessions = Array.isArray(sessionsRes.data) ? sessionsRes.data : []
@@ -209,7 +211,7 @@ const StudentSessions: React.FC = () => {
 
   const fetchSessions = async () => {
     try {
-      const response = await axios.get('/api/sessions/my-sessions')
+      const response = await axios.get(`${API_BASE_URL}/api/sessions/my-sessions`)
       setSessions(Array.isArray(response.data) ? response.data : [])
     } catch (error) {
       console.error('Failed to fetch sessions:', error)
@@ -261,7 +263,7 @@ const StudentSessions: React.FC = () => {
         comment: reviewData.comment
       }
 
-      await axios.post('/api/reviews', payload)
+      await axios.post(`${API_BASE_URL}/api/reviews`, payload)
 
       setReviewSuccess('Review submitted successfully')
       setShowReviewModal(false)

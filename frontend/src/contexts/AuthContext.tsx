@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import axios from 'axios'
 
+
 type Role = 'student' | 'trainer'
 
 export interface User {
@@ -23,6 +24,9 @@ interface AuthContextType {
   forgotPassword: (email: string) => Promise<void>
   resetPassword: (token: string, newPassword: string) => Promise<void>
 }
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -53,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get('/api/auth/me')
+      const response = await axios.get(`${API_BASE_URL}/api/auth/me`)
       setUser(response.data)
     } catch (error) {
       console.error('Failed to fetch user:', error)
@@ -65,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const forgotPassword = async (email: string) => {
   try {
-    await axios.post('/api/auth/forgot-password', { email })
+    await axios.post(`${API_BASE_URL}/api/auth/forgot-password`, { email })
   } catch (error: any) {
     throw new Error(error.response?.data?.message || 'Failed to send reset link')
   }
@@ -73,7 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const resetPassword = async (token: string, newPassword: string) => {
     try {
-      await axios.post(`/api/auth/reset-password/${token}`, { newPassword })
+      await axios.post(`${API_BASE_URL}/api/auth/reset-password/${token}`, { newPassword })
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Failed to reset password')
     }
@@ -82,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password })
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password })
       const { token: jwtToken, user: userFromServer } = response.data
 
       const loginAdmin = (email: string, password: string) => {
@@ -113,7 +117,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const register = async (userData: any) => {
     try {
-      const response = await axios.post('/api/auth/register', userData)
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, userData)
       const { token: jwtToken, user: userFromServer } = response.data
 
       if (jwtToken) {
@@ -143,7 +147,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateProfile = async (updates: any) => {
     try {
-      const response = await axios.put('/api/users/profile', updates)
+      const response = await axios.put(`${API_BASE_URL}/api/users/profile`, updates)
       setUser(response.data)
       return { success: true }
     } catch (error: any) {

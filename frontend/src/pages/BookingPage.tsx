@@ -26,6 +26,8 @@ import {
 import axios from 'axios'
 import { useAuth } from '../contexts/AuthContext'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const stripePromise = loadStripe(
   import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
     'pk_test_51SFTuTAiYefZpFfcyRQjJAUIlyldQfTLpmtR1XvsmwPHESrdu7b5klbKyxsDF0a6YLurpdSnHEDLPFHmcyjbb6DP00KsLS35fZ'
@@ -171,7 +173,7 @@ const PaymentPanel = ({ trainer, selectedMethod, onPaymentSuccess, onPaymentErro
   //       }
 
   //       // Create payment intent (kept same as original: amount not multiplied)
-  //       const { data } = await axios.post('/api/payments/create-payment-intent', {
+  //       const { data } = await axios.post(`${API_BASE_URL}/api/payments/create-payment-intent`, {
   //         amount: trainer.profile?.hourlyRate || 25,
   //         currency: 'usd'
   //       })
@@ -266,10 +268,10 @@ const PaymentPanel = ({ trainer, selectedMethod, onPaymentSuccess, onPaymentErro
 
     console.log("Payload being sent:", payload);
 
-    const bookingResponse = await axios.post('/api/bookings', payload);
+    const bookingResponse = await axios.post(`${API_BASE_URL}/api/bookings`, payload);
     console.log("Booking created:", bookingResponse.data);
 
-    await axios.put(`/api/bookings/${bookingResponse.data._id}/payment`, {
+    await axios.put(`${API_BASE_URL}/api/bookings/${bookingResponse.data._id}/payment`, {
       paymentStatus: 'completed',
       paymentId: 'FREE-BOOKING'
     });
@@ -424,7 +426,7 @@ const BookingPage = () => {
 
   const fetchTrainer = async () => {
     try {
-      const response = await axios.get(`/api/users/profile/${trainerId}`)
+      const response = await axios.get(`${API_BASE_URL}/api/users/profile/${trainerId}`)
       setTrainer(response.data)
     } catch (err) {
       setError('Failed to load trainer information')

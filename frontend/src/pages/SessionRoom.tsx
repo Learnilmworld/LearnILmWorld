@@ -27,6 +27,8 @@ interface Session {
   level: string
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 const SessionRoom = () => {
   const { sessionId } = useParams()
   const navigate = useNavigate()
@@ -44,7 +46,7 @@ const SessionRoom = () => {
 
   const fetchSession = async () => {
     try {
-      const response = await axios.get(`/api/sessions/${sessionId}`)
+      const response = await axios.get(`${API_BASE_URL}/api/sessions/${sessionId}`)
       setSession(response.data)
       
       // Check if session is active
@@ -63,7 +65,7 @@ const SessionRoom = () => {
     if (!session || user?.role !== 'trainer') return
     
     try {
-      await axios.put(`/api/sessions/${session._id}/status`, { status: 'active' })
+      await axios.put(`${API_BASE_URL}/api/sessions/${session._id}/status`, { status: 'active' })
       setSessionStarted(true)
       setSession({ ...session, status: 'active' })
     } catch (error) {
@@ -75,7 +77,7 @@ const SessionRoom = () => {
     if (!session || user?.role !== 'trainer') return
     
     try {
-      await axios.put(`/api/sessions/${session._id}/status`, { status: 'completed' })
+      await axios.put(`${API_BASE_URL}/api/sessions/${session._id}/status`, { status: 'completed' })
       navigate(user.role === 'trainer' ? '/trainer/sessions' : '/student/sessions')
     } catch (error) {
       console.error('Failed to end session:', error)

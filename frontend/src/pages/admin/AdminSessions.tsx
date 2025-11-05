@@ -36,6 +36,8 @@ interface Session {
   maxStudents?: number
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 const AdminSessions: React.FC = () => {
   const [sessions, setSessions] = useState<Session[]>([])
   const [trainers, setTrainers] = useState<Trainer[]>([])
@@ -83,7 +85,7 @@ const AdminSessions: React.FC = () => {
   const fetchSessions = async () => {
     setLoading(true)
     try {
-      const res = await axios.get('/api/admin/sessions', axiosConfig)
+      const res = await axios.get(`${API_BASE_URL}/api/admin/sessions`, axiosConfig)
       setSessions(Array.isArray(res.data) ? res.data : [])
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Failed to fetch sessions.')
@@ -95,7 +97,7 @@ const AdminSessions: React.FC = () => {
   // Fetch trainers
   const fetchTrainers = async () => {
     try {
-      const res = await axios.get('/api/admin/trainers', axiosConfig)
+      const res = await axios.get(`${API_BASE_URL}/api/admin/trainers`, axiosConfig)
       setTrainers(res.data || [])
     } catch (err) {
       console.error('Error fetching trainers:', err)
@@ -105,7 +107,7 @@ const AdminSessions: React.FC = () => {
   // Fetch bookings for selected trainer
   const fetchBookingsByTrainer = async (trainerId: string) => {
     try {
-      const res = await axios.get(`/api/admin/bookings/trainer/${trainerId}`, axiosConfig)
+      const res = await axios.get(`${API_BASE_URL}/api/admin/bookings/trainer/${trainerId}`, axiosConfig)
       setBookings(res.data || [])
     } catch (err) {
       console.error('Error fetching bookings:', err)
@@ -116,7 +118,7 @@ const AdminSessions: React.FC = () => {
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await axios.post('/api/admin/sessions', formData, axiosConfig)
+      await axios.post(`${API_BASE_URL}/api/admin/sessions`, formData, axiosConfig)
       alert('Session created successfully!')
       setFormData({
         title: '',
@@ -140,7 +142,7 @@ const AdminSessions: React.FC = () => {
     e.preventDefault()
     if (!editingSession) return
     try {
-      await axios.put(`/api/admin/sessions/${editingSession._id}`, editFormData, axiosConfig)
+      await axios.put(`${API_BASE_URL}/api/admin/sessions/${editingSession._id}`, editFormData, axiosConfig)
       alert('Session updated successfully!')
       setEditingSession(null)
       setShowEditModal(false)
@@ -154,7 +156,7 @@ const AdminSessions: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this session?')) return
     try {
-      await axios.delete(`/api/admin/sessions/${id}`, axiosConfig)
+      await axios.delete(`${API_BASE_URL}/api/admin/sessions/${id}`, axiosConfig)
       fetchSessions()
     } catch (err) {
       console.error(err)

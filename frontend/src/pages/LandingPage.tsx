@@ -30,6 +30,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 // LinguaNest — Enhanced Landing Page (single-file React component)
 // Adjusted image positions: hero image lifted up slightly and the three overlapping
 // cards have been moved upwards for a stronger visual overlap and nicer composition.
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 
 export default function LandingPageAlt() {
   const [mounted, setMounted] = useState(false)
@@ -42,7 +44,7 @@ export default function LandingPageAlt() {
 
   const handleLanguageClick = async (language: string) => {
     // try {
-    //   const res = await axios.get("/api/users/trainers");
+    //   const res = await axios.get(`${API_BASE_URL}/api/users/trainers`);
     //   const trainers = res.data;
     //   console.log("✅ Trainers fetched:", trainers);
 

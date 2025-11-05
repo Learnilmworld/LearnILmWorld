@@ -63,6 +63,8 @@ interface Review {
   createdAt: string
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
 const TrainerProfile: React.FC = () => {
   const { trainerId } = useParams<{ trainerId: string }>()
   const [trainer, setTrainer] = useState<Trainer | null>(null)
@@ -80,7 +82,7 @@ const TrainerProfile: React.FC = () => {
 
   const fetchTrainerProfile = async () => {
     try {
-      const response = await axios.get(`/api/users/profile/${trainerId}`)
+      const response = await axios.get(`${API_BASE_URL}/api/users/profile/${trainerId}`)
       setTrainer(response.data)
     } catch (err) {
       console.error(err)
@@ -92,7 +94,7 @@ const TrainerProfile: React.FC = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`/api/reviews/trainer/${trainerId}`)
+      const response = await axios.get(`${API_BASE_URL}/api/reviews/trainer/${trainerId}`)
       setReviews(Array.isArray(response.data) ? response.data : [])
     } catch (err) {
       console.error(err)

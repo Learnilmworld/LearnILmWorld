@@ -48,6 +48,9 @@ interface Session {
   createdAt?: string
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
+
 /* -------------------------- Admin Home -------------------------- */
 
 
@@ -68,7 +71,7 @@ const AdminHome: React.FC = () => {
   const fetchDashboardData = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('/api/admin/dashboard-stats', {
+      const res = await axios.get(`${API_BASE_URL}/api/admin/dashboard-stats`, {
         headers: { Authorization: `Bearer ${token}` }
       })
 
@@ -207,7 +210,7 @@ const AdminUsers: React.FC = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('/api/admin/users', {
+      const res = await axios.get(`${API_BASE_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setUsers(Array.isArray(res.data) ? res.data : [])
@@ -341,10 +344,10 @@ const handleDownloadTrainers = () =>
 
     try {
       if (editingUserId) {
-        await axios.put(`/api/admin/users/${editingUserId}`, formData)
+        await axios.put(`${API_BASE_URL}/api/admin/users/${editingUserId}`, formData)
         setSuccess('User updated successfully.')
       } else {
-        await axios.post('/api/admin/users', formData)
+        await axios.post(`${API_BASE_URL}/api/admin/users`, formData)
         setSuccess('User created successfully.')
       }
 
@@ -380,7 +383,7 @@ const handleDownloadTrainers = () =>
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this user?')) return
     try {
-      await axios.delete(`/api/admin/users/${id}`)
+      await axios.delete(`${API_BASE_URL}/api/admin/users/${id}`)
       fetchUsers()
     } catch (err) {
       console.error(err)
@@ -509,7 +512,7 @@ const AdminTrainers: React.FC = () => {
   const fetchTrainers = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('/api/admin/trainers', {
+      const res = await axios.get(`${API_BASE_URL}/api/admin/trainers`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setTrainers(Array.isArray(res.data) ? res.data : [])
