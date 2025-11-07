@@ -99,12 +99,25 @@ router.post('/register', async (req, res) => {
 
     // If trainer, attach verification-related data
     if (role === 'trainer') {
+      const {
+        education,
+        teachingExperienceDetails,
+        certifications,
+        dob,
+        bio,
+        resume,
+        phone,
+        subjects,
+        languages,
+        standards
+      } = req.body.profile || {};
+
       userData.profile = {
-        education: edu,
-        teachingExperienceDetails: exp,
-        experience: parseInt(exp) || 0,
-        certifications: Array.isArray(certs)
-          ? certs.map(cert => ({
+        education: education || '',
+        teachingExperienceDetails: teachingExperienceDetails || '',
+        experience: parseInt(teachingExperienceDetails) || 0,
+        certifications: Array.isArray(certifications)
+          ? certifications.map(cert => ({
             ...cert,
             issueYear: cert.issuedDate ? new Date(cert.issuedDate).getFullYear() : null,
           }))
@@ -112,8 +125,19 @@ router.post('/register', async (req, res) => {
         dob: dob || null,
         bio: bio || '',
         phone: phone || '',
-        verificationStatus: 'pending'
-        // Removed resume here (we don't store base64 file)
+        verificationStatus: 'pending',
+        //  New fields
+        languages: Array.isArray(languages)
+          ? languages
+          : typeof languages === 'string'
+            ? languages.split(',').map(l => l.trim()).filter(Boolean)
+            : [],
+        specializations: Array.isArray(subjects)
+          ? subjects
+          : typeof subjects === 'string'
+            ? subjects.split(',').map(s => s.trim()).filter(Boolean)
+            : [],
+        standards: standards || ''
       };
     } else if (role === 'student') {
       userData.profile = {
@@ -136,7 +160,10 @@ router.post('/register', async (req, res) => {
 
     if (role === 'trainer') {
       // Send verification email with resume attached, but don’t store resume
-      await sendTrainerVerificationEmail(user, resume);
+      // and Send email asynchronously (non-blocking)
+      sendTrainerVerificationEmail(user, resume)
+        .then(() => console.log('✅ Verification email sent'))
+        .catch(err => console.error('❌ Email sending failed:', err));
     }
 
     // JWT token for immediate use
@@ -166,74 +193,84 @@ router.post('/register', async (req, res) => {
 
 // Helper to send email to admin for trainer verification
 const sendTrainerVerificationEmail = async (user, resumeData) => {
-  // Prepare certifications list in HTML
-  const certList = (user.profile.certifications || [])
-    .map(
-      (c, i) =>
-        `<p>
-        <b>${i + 1}.</b> ${c.name} <br>
-        <b>Issuer:</b> ${c.issuer || 'N/A'} <br>
-        <b>Link:</b> ${c.certificateLink || 'No link'} <br>
-        <b>Issued Date:</b> ${c.issuedDate ? new Date(c.issuedDate).toLocaleDateString() : 'N/A'}
-        </p>`
-    )
-    .join('');
+  const { profile } = user;
 
-  const verifyToken = jwt.sign(
-    { trainerId: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: '7d' }
-  );
+  // Build certification list
+  const certList = (profile.certifications || [])
+    .map(
+      (c, i) => `
+      <div style="margin-bottom:10px;">
+        <b>${i + 1}. ${c.name || 'N/A'}</b><br>
+        <b>Issuer:</b> ${c.issuer || 'N/A'}<br>
+        <b>Issued Date:</b> ${c.issuedDate ? new Date(c.issuedDate).toLocaleDateString() : 'N/A'}<br>
+        <b>Certificate Link:</b> <a href="${c.certificateLink || '#'}">${c.certificateLink || 'No link'}</a>
+      </div>
+    `
+    )
+    .join('') || '<p>No certificates provided</p>';
+
+  // Add verify/reject links
+  const verifyToken = jwt.sign({ trainerId: user._id }, process.env.JWT_SECRET, {
+    expiresIn: '7d',
+  });
 
   const approveLink = `${process.env.FRONTEND_URL}/api/auth/verify-trainer/${verifyToken}?action=approve`;
   const rejectLink = `${process.env.FRONTEND_URL}/api/auth/verify-trainer/${verifyToken}?action=reject`;
 
+  // Email body
   const htmlBody = `
     <h2>Trainer Registration - Verification Required</h2>
     <p><b>Name:</b> ${user.name}</p>
     <p><b>Email:</b> ${user.email}</p>
-    <p><b>Phone:</b> ${user.profile.phone || 'N/A'}</p>
-    <p><b>Education:</b> ${user.profile.education}</p>
-    <p><b>Teaching Experience:</b> ${user.profile.teachingExperienceDetails}</p>
-    <p><b>Date of Birth:</b> ${user.profile.dob ? new Date(user.profile.dob).toLocaleDateString() : 'N/A'}</p>
-    <p><b>Bio:</b> ${user.profile.bio || 'N/A'}</p>
+    <p><b>Phone:</b> ${profile.phone || 'N/A'}</p>
+    <p><b>Education:</b> ${profile.education || 'N/A'}</p>
+    <p><b>Teaching Experience:</b> ${profile.teachingExperienceDetails || 'N/A'}</p>
+    <p><b>Date of Birth:</b> ${profile.dob ? new Date(profile.dob).toLocaleDateString() : 'N/A'}</p>
+    <p><b>Bio:</b> ${profile.bio || 'N/A'}</p>
+    <p><b>Languages:</b> ${(profile.languages || []).join(', ') || 'N/A'}</p>
+    <p><b>Subjects:</b> ${(profile.specializations || []).join(', ') || 'N/A'}</p>
+    <p><b>Standards:</b> ${profile.standards || 'N/A'}</p>
+
     <h3>Certifications:</h3>
-    ${certList || '<p>No certificates provided</p>'}
-    <p>Click below to verify or reject:</p>
-    <a href="${approveLink}" style="color: green;">✅ Approve Trainer</a><br>
-    <a href="${rejectLink}" style="color: red;">❌ Reject Trainer</a>
+    ${certList}
+
+    <p>Click below to verify or reject this trainer:</p>
+    <a href="${approveLink}" style="color:green;">✅ Approve Trainer</a><br>
+    <a href="${rejectLink}" style="color:red;">❌ Reject Trainer</a>
   `;
 
+  // Attachments
   const attachments = [];
 
-  // Attach resume (base64 string) if present
-  if (resumeData) {
+  // Resume as attachment (if exists)
+  if (resumeData && typeof resumeData === 'string') {
     attachments.push({
-      filename: 'resume.pdf', // detect type if needed
+      filename: 'resume.pdf',
       content: resumeData.split(',')[1] || resumeData,
-      encoding: 'base64'
+      encoding: 'base64',
     });
   }
 
-  // Attach certificate images if present
-  (user.profile.certifications || []).forEach((cert, idx) => {
-    if (cert.certificateImage) {
+  // Certificates as attachments (if any)
+  (profile.certifications || []).forEach((cert, idx) => {
+    if (cert.certificateImage && typeof cert.certificateImage === 'string') {
       attachments.push({
         filename: `certificate_${idx + 1}.png`,
         content: cert.certificateImage.split(',')[1] || cert.certificateImage,
-        encoding: 'base64'
+        encoding: 'base64',
       });
     }
   });
 
-  // Send email with attachments
+  // Send email
   await sendEmail({
     to: process.env.ADMIN_VERIFICATION_EMAIL,
-    subject: 'Trainer Verification Required',
+    subject: `Trainer Verification Required - ${user.name}`,
     html: htmlBody,
-    attachments
+    attachments,
   });
 };
+
 // End of helper
 
 // Login

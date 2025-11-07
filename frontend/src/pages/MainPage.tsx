@@ -735,7 +735,7 @@ const MainPage: React.FC = () => {
                   </Link>
                 ) : (
                   <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                    <Link to={`/trainer/${id}`} className="px-4 py-2 bg-gray-100 text-[#4A4470] rounded-lg font-medium hover:bg-[#CBE56A] text-center">
+                    <Link to={`/trainer-profile/${id}`} className="px-4 py-2 bg-gray-100 text-[#4A4470] rounded-lg font-medium hover:bg-[#CBE56A] text-center">
                       View Profile
                     </Link>
                     <button

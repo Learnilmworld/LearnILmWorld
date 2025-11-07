@@ -117,16 +117,16 @@ const Login: React.FC = () => {
         <div
           className="absolute top-20 left-10 w-32 h-32 rounded-full"
           style={{
-            background: '#9787F3',
-            opacity: 0.06,
+            background: '#647a0c',
+            opacity: 0.14,
             animation: 'floaty 6s ease-in-out infinite',
           }}
         />
         <div
           className="absolute top-44 right-16 w-24 h-24 rounded-full"
           style={{
-            background: '#9787F3',
-            opacity: 0.06,
+            background: '#647a0c',
+            opacity: 0.09,
             animation: 'floaty 6s ease-in-out infinite',
             animationDelay: '1.8s',
           }}
@@ -134,10 +134,19 @@ const Login: React.FC = () => {
         <div
           className="absolute bottom-24 left-1/4 w-40 h-40 rounded-full"
           style={{
-            background: '#9787F3',
-            opacity: 0.04,
+            background: '#647a0c',
+            opacity: 0.14,
             animation: 'floaty 6s ease-in-out infinite',
             animationDelay: '3.2s',
+          }}
+        />
+        <div
+          className="absolute bottom-44 right-44 w-24 h-24 rounded-full"
+          style={{
+            background: '#647a0c',
+            opacity: 0.09,
+            animation: 'floaty 6s ease-in-out infinite',
+            animationDelay: '1.8s',
           }}
         />
       </div>

@@ -32,6 +32,10 @@ interface RegisterFormData {
   bio: string
   resume: File | string | null // can be file or URL
   phone: string
+  languages?: string
+  subjects?: string
+  standards?: string
+  customStandardRange?: string
 }
 
 
@@ -46,16 +50,20 @@ const Register: React.FC = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: defaultRole as 'student'| 'trainer',
-    // Trainer-specific fields
-    education: '', // e.g., "M.A. in English"
+    role: defaultRole as 'student' | 'trainer',
+    education: '',
     certificates: [],
-    experience: '', // e.g., "5 years teaching English"
+    experience: '',
     dob: '',
     bio: '',
     resume: null,
     phone: '',
+    subjects: '',
+    languages: '',
+    standards: '',
+    customStandardRange: '',
   })
+
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -119,7 +127,7 @@ const Register: React.FC = () => {
       return
     }
 
-    // Trainer age validation
+    // Trainer age validation , Phone Validation, 
     if (formData.role === 'trainer') {
       const dob = new Date(formData.dob)
       const age = today.getFullYear() - dob.getFullYear()
@@ -140,6 +148,29 @@ const Register: React.FC = () => {
         setError("Please enter a valid phone number (10–15 digits).");
         return;
       }
+
+      //  Subjects and lang validation
+      const hasSubjects = formData.subjects?.trim() !== '';
+      const hasLanguages = formData.languages?.trim() !== '';
+
+      if (!hasSubjects && !hasLanguages) {
+        setError('Please enter at least one of: Subjects or Languages.');
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.standards) {
+        setError('Please select the standards you can teach.');
+        setLoading(false);
+        return;
+      }
+
+      if (formData.standards === 'Others' && !formData.customStandardRange?.trim()) {
+        setError('Please specify your custom standard range.');
+        setLoading(false);
+        return;
+      }
+
     }
 
 
@@ -174,7 +205,7 @@ const Register: React.FC = () => {
     password: formData.password,
     role: formData.role,
     profile: {
-      phone: formData.phone, // 👈 always included
+      phone: formData.phone,
       ...(formData.role === 'trainer' && {
         education: formData.education,
         teachingExperienceDetails: formData.experience,
@@ -183,6 +214,12 @@ const Register: React.FC = () => {
         dob: formData.dob,
         bio: formData.bio,
         resume: resumeData,
+        subjects: formData.subjects?.split(',').map(s => s.trim()).filter(Boolean),
+        languages: formData.languages?.split(',').map(l => l.trim()).filter(Boolean),
+        standards:
+          formData.standards === 'Others'
+            ? formData.customStandardRange
+            : formData.standards,
       }),
     },
   })
@@ -224,16 +261,34 @@ const Register: React.FC = () => {
         <div
           className="absolute top-20 left-10 w-32 h-32 rounded-full"
           style={{
-            background: '#9787F3',
-            opacity: 0.06,
+            background: '#fff7e1',
+            opacity: 0.16,
             animation: 'floaty 6s ease-in-out infinite',
           }}
         />
         <div
           className="absolute top-44 right-20 w-24 h-24 rounded-full"
           style={{
-            background: '#9787F3',
-            opacity: 0.06,
+            background: '#fff7e1',
+            opacity: 0.26,
+            animation: 'floaty 6s ease-in-out infinite',
+            animationDelay: '1.8s',
+          }}
+        />
+        <div
+          className="absolute bottom-24 left-1/4 w-40 h-40 rounded-full"
+          style={{
+            background: '#fff7e1',
+            opacity: 0.14,
+            animation: 'floaty 6s ease-in-out infinite',
+            animationDelay: '3.2s',
+          }}
+        />
+        <div
+          className="absolute bottom-44 right-44 w-40 h-40 rounded-full"
+          style={{
+            background: '#fff7e1',
+            opacity: 0.14,
             animation: 'floaty 6s ease-in-out infinite',
             animationDelay: '1.8s',
           }}
@@ -518,6 +573,73 @@ const Register: React.FC = () => {
                   />
                 </div>
 
+                {/* Subjects Field */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2D274B] mb-2">
+                    Subjects You Can Teach
+                  </label>
+                  <input
+                    type="text"
+                    name="subjects"
+                    value={formData.subjects}
+                    onChange={handleChange}
+                    placeholder="e.g., Math, Science, English"
+                    className="w-full pl-4 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9787F3] focus:border-[#9787F3] transition-all duration-300"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">You may leave this empty if you select languages below.</p>
+                </div>
+
+                {/* Languages Field */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2D274B] mb-2">
+                    Languages You Can Teach In
+                  </label>
+                  <input
+                    type="text"
+                    name="languages"
+                    value={formData.languages}
+                    onChange={handleChange}
+                    placeholder="e.g., English, Hindi, Urdu"
+                    className="w-full pl-4 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9787F3] focus:border-[#9787F3] transition-all duration-300"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">You must fill at least one of: Subjects or Languages.</p>
+                </div>
+
+                {/* Standards Field */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2D274B] mb-2">
+                    Standards You Can Teach <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex flex-wrap gap-4">
+                    {['5-8', '5-10', '5-12', 'Others'].map(option => (
+                      <label key={option} className="flex items-center gap-2 text-[#2D274B] font-medium">
+                        <input
+                          type="radio"
+                          name="standards"
+                          value={option}
+                          checked={formData.standards === option}
+                          onChange={handleChange}
+                          required
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
+
+                  {/* Show custom range input when "Others" is selected */}
+                  {formData.standards === 'Others' && (
+                    <input
+                      type="text"
+                      name="customStandardRange"
+                      value={formData.customStandardRange}
+                      onChange={handleChange}
+                      placeholder="Specify range (e.g., 3-9)"
+                      className="mt-3 w-full pl-4 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9787F3] focus:border-[#9787F3] transition-all duration-300"
+                    />
+                  )}
+                </div>
+
+
                 {/* Date of Birth */}
                 <div>
                   <label className="block text-sm font-semibold text-[#2D274B] mb-2">
@@ -570,7 +692,7 @@ const Register: React.FC = () => {
                     className="w-full pl-4 pr-4 py-2 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#9787F3] focus:border-[#9787F3] transition-all duration-300"
                   />
                 </div>
-
+                {/* Certificate section */}
                 <div className="space-y-3 ">
                   <label className="block text-sm font-semibold text-[#2D274B] mb-2">
                     Certificates

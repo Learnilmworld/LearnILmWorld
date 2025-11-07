@@ -68,7 +68,7 @@ const userSchema = new mongoose.Schema({
     languages: [{ type: String, trim: true }],
 
     // richer trainer languages (optional)
-    trainerLanguages: { type: [LanguageSchema], default: [] },
+    // trainerLanguages: { type: [LanguageSchema], default: [] },
 
     experience: { type: Number, min: 0, default: 0 },
     hourlyRate: { type: Number, min: 0, default: 25 },
@@ -78,6 +78,7 @@ const userSchema = new mongoose.Schema({
 
     // list of specializations
     specializations: { type: [String], default: [] },
+    standards: { type: [String], default: [] },
 
     certifications: { type: [CertificationSchema], default: [] },
     availability: { type: [AvailabilitySchema], default: [] },

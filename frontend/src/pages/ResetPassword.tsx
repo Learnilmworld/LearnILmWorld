@@ -46,21 +46,21 @@ const ResetPassword: React.FC = () => {
       // }}
     >
 
-      {/* Decorative subtle orbs */}
+       {/* Decorative orbs */}
       <div className="fixed inset-0 pointer-events-none">
         <div
           className="absolute top-20 left-10 w-32 h-32 rounded-full"
           style={{
-            background: 'var(--brand-#9787F3)',
-            opacity: 0.06,
+            background: '#fff7e1',
+            opacity: 0.16,
             animation: 'floaty 6s ease-in-out infinite',
           }}
         />
         <div
-          className="absolute top-44 right-16 w-24 h-24 rounded-full"
+          className="absolute top-44 right-20 w-24 h-24 rounded-full"
           style={{
-            background: 'var(--#9787F3-mid)',
-            opacity: 0.06,
+            background: '#fff7e1',
+            opacity: 0.26,
             animation: 'floaty 6s ease-in-out infinite',
             animationDelay: '1.8s',
           }}
@@ -68,18 +68,27 @@ const ResetPassword: React.FC = () => {
         <div
           className="absolute bottom-24 left-1/4 w-40 h-40 rounded-full"
           style={{
-            background: 'var(--accent-orange)',
-            opacity: 0.04,
+            background: '#fff7e1',
+            opacity: 0.14,
             animation: 'floaty 6s ease-in-out infinite',
             animationDelay: '3.2s',
+          }}
+        />
+        <div
+          className="absolute bottom-44 right-44 w-40 h-40 rounded-full"
+          style={{
+            background: '#fff7e1',
+            opacity: 0.14,
+            animation: 'floaty 6s ease-in-out infinite',
+            animationDelay: '1.8s',
           }}
         />
       </div>
 
       <div className="max-w-md w-full mx-4">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-[#9787F3] mb-2">Reset Password</h1>
-          <p className="text-[#9787F3] text-lg font-bold">Enter your new password below</p>
+          <h1 className="text-4xl font-bold text-[#dc8d33] mb-2">Reset Password</h1>
+          <p className="text-[#dc8d33] text-lg font-bold">Enter your new password below</p>
         </div>
 
         <div className="glass-effect rounded-2xl p-8 shadow-2xl  bg-white/80 backdrop-blur">

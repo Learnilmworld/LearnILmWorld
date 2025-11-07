@@ -23,8 +23,17 @@ import logo from "../assets/LearnilmworldLogo.jpg";
 import russian_student from '../assets/russian_student.png'
 import arab_student from '../assets/arabian_student.png'
 import chi_student from '../assets/chinese_student.png'
+import indian_st from '../assets/Indian_student.png';
+import french_st from '../assets/French_student.png';
+import german_st from '../assets/German_student.png';
+import british_st from '../assets/British_student.png';
+import spanish_st from '../assets/Spanish_student.png';
+import japanese_st from '../assets/Japanese_student.png';
 import { useAuth } from "../contexts/AuthContext"; 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Footer from '../components/Footer'
+
+import heroImage1 from '../assets/Hero_image1.png'
 
 
 // LinguaNest — Enhanced Landing Page (single-file React component)
@@ -37,6 +46,7 @@ export default function LandingPageAlt() {
   const [mounted, setMounted] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [showOffcanvas, setShowOffcanvas] = useState(false)
+  const [showMore, setShowMore] = useState(false);
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -114,12 +124,81 @@ export default function LandingPageAlt() {
 
     if (!user) {
       // Save the clicked language temporarily for redirect after login
-      localStorage.setItem("redirectAfterLogin", `/book/${trainerId}`);
+      localStorage.setItem("redirectAfterLogin", `/trainer-profile/${trainerId}`);
       navigate("/login");
     } else {
-      navigate(`/book/${trainerId}`);
+      navigate(`/trainer-profile/${trainerId}`);
     }
   };
+
+  const handleSubjectClick = (subject: any) => {
+    if (subject.isMore) {
+      setShowMore(true);
+      return;
+    }
+
+    const subjectTrainerMap: Record<string, string> = {
+      History: "trainer_id_for_history",
+      Geography: "trainer_id_for_geography",
+      Physics: "690dc8cb64cc3e1c19580f24",
+      Chemistry: "690dc8cb64cc3e1c19580f24",
+      Mathematics: "690dc8cb64cc3e1c19580f24",
+      Biology: "trainer_id_for_biology",
+      "Computer Science": "trainer_id_for_computer_science",
+      Economics: "trainer_id_for_economics",
+      Hindi: "trainer_id_for_hindi",
+      Bengali: "trainer_id_for_bengali",
+      Psychology: "trainer_id_for_psychology",
+      Philosophy: "690dc8cb64cc3e1c19580f24",
+      EVS: "trainer_id_for_evs",
+      "Accounts & Finance": "trainer_id_for_accounts_finance",
+    };
+
+    const trainerId = subjectTrainerMap[subject.name];
+
+    if (!trainerId) {
+      alert("Trainer for this subject not found yet!");
+      return;
+    }
+
+    if (!user) {
+      // Store redirect path for after login
+      localStorage.setItem("redirectAfterLogin", `/trainer-profile/${trainerId}`);
+      navigate("/login");
+    } else {
+      navigate(`/trainer-profile/${trainerId}`);
+    }
+  };
+
+  const handleMoreSubjectClick = (subjectName: string) => {
+    const subjectTrainerMap: Record<string, string> = {
+      Economics: "trainer_id_for_economics",
+      Hindi: "690dc8cb64cc3e1c19580f24",
+      Bengali: "690dc8cb64cc3e1c19580f24",
+      Psychology: "trainer_id_for_psychology",
+      Philosophy: "690dc8cb64cc3e1c19580f24",
+      EVS: "trainer_id_for_evs",
+      "Accounts & Finance": "trainer_id_for_accounts_finance",
+    };
+
+    const trainerId = subjectTrainerMap[subjectName];
+
+    if (!trainerId) {
+      alert("Trainer for this subject not found yet!");
+      setShowMore(false);
+      return;
+    }
+
+    if (!user) {
+      localStorage.setItem("redirectAfterLogin", `/trainer-profile/${trainerId}`);
+      navigate("/login");
+    } else {
+      navigate(`/trainer-profile/${trainerId}`);
+    }
+
+    setShowMore(false);
+  };
+
 
 
 
@@ -298,12 +377,13 @@ export default function LandingPageAlt() {
               className="text-left"
             >
               <h1 className="text-5xl md:text-6xl font-serif leading-tight font-extrabold text-[#2D274B]">
-                Learn the Subject,Speak with Confidence — <span className="text-white">Real Tutors, Real Conversations</span>
+                Empower your future now, clarity comes with the
+                <br/>
+                <span className="text-white"> Right Mentors.</span>
               </h1>
 
               <p className="mt-6 text-2xl text-[#2D274B] font-bold max-w-xl">
-                Quickly gain practical speaking skills with 1:1 lessons, micro-modules and conversation practice designed by expert tutors.
-                Start with a free trial, learn at your pace and see measurable progress every week.
+                Personalized Learning, Perfect for Your Pace: Languages & Academic Subjects.Master Every Subject & Language, Backed by Experts.An EdTech solution that fits your life. Unlock your first lesson free and see the difference by coming week. 
               </p>
 
               <div className="mt-6 flex items-center gap-3">
@@ -323,9 +403,8 @@ export default function LandingPageAlt() {
                   <Users /> Become a Trainer
                 </Link>
               </div>
-
-              <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
-                 {/* chaned color to wite from [#7fe808],[#ef4444] and [#9787F3] */}
+              {/* chaned color to wite from [#7fe808],[#ef4444] and [#9787F3] */}
+              {/* <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
                 <motion.div initial={{ scale: 0.95 }} animate={mounted ? { scale: 1 } : {}} className="text-center">
                   <div className="text-2xl font-bold text-white">400+</div>
                   <div className="text-sm text-[#2D274B]">Trainers</div>
@@ -339,11 +418,11 @@ export default function LandingPageAlt() {
                   <div className="text-2xl font-bold text-white">12K+</div>
                   <div className="text-sm text-[#2D274B]">Students</div>
                 </motion.div>
-              </div>
+              </div> */}
             </motion.div>
 
-            <motion.div initial={{ opacity: 0 }} animate={mounted ? { opacity: 1 } : {}} transition={{ delay: 0.2 }} className="relative w-full max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-2xl -translate-y-6 md:-translate-y-12">
-              <img loading="lazy" src={heroImage} alt="students practicing a language together" className="w-full h-[420px] md:h-96 lg:h-[520px] object-cover" />
+            <motion.div initial={{ opacity: 0 }} animate={mounted ? { opacity: 1 } : {}} transition={{ delay: 0.2 }} className="relative w-full max-w-2xl mx-auto rounded-2xl overflow-hidden  -translate-y-6 md:-translate-y-12">
+              <img loading="lazy" src={heroImage1} alt="students practicing a language together" className="w-full h-[420px] md:h-96 lg:h-[520px] object-contain" />
 
               {/* Left card - moved up */}
               {/* <div className="absolute left-6 bottom-24 w-52 rounded-xl overflow-hidden shadow-lg border-2 border-white bg-white">
@@ -377,205 +456,211 @@ export default function LandingPageAlt() {
         </div>
       </main>
 
-     {/* Language Levels Explanation */}
-    <section
-      className="relative py-28 bg-[#2D274B] text-[#dc8d33]"
-      aria-labelledby="sdil-courses"
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        {/* Heading */}
-        <motion.h2
-          id="sdil-courses"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-5xl md:text-5xl font-extrabold font-serif text-[#dc8d33] tracking-tight"
-        >
-          Languages That Open Doors
-          <span className="block text-[#dc8d33] mt-1">
-            Speak to the World with Confidence
-          </span>
-        </motion.h2>
+      {/* Language Levels Explanation */}
+      <section
+        className="relative py-28 bg-[#2D274B] text-[#dc8d33]"
+        aria-labelledby="sdil-courses"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          {/* Heading */}
+          <motion.h2
+            id="sdil-courses"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-5xl font-extrabold font-serif text-[#dc8d33] tracking-tight"
+          >
+            Languages That Open Doors
+            <span className="block text-[#dc8d33] mt-1">
+              Speak to the World with Confidence
+            </span>
+          </motion.h2>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mt-5 text-xl text-white font-bold max-w-3xl mx-auto"
-        >
-          Explore world languages guided by international certification standards.
-          Learn from certified trainers across every level.
-        </motion.p>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mt-5 text-xl text-white font-bold max-w-3xl mx-auto"
+          >
+            Explore world languages guided by international certification standards.
+            Learn from certified trainers across every level.
+          </motion.p>
 
-        {/* Tag */}
-        <div className="mt-6 flex justify-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border text-sm font-medium text-[#4B437C] shadow-sm">
-            🌍 Languages & Levels
+          {/* Tag */}
+          <div className="mt-6 flex justify-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border text-sm font-medium text-[#4B437C] shadow-sm">
+              🌍 Languages & Levels
+            </div>
+          </div>
+
+          {/* Responsive Grid with Flags */}
+          <div className="mt-20 grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            {[
+              {
+                lang: "German",
+                flag: "https://flagcdn.com/w40/de.png",
+                pattern: "MMB Pattern",
+                bg: german_st,
+                // bg: "https://st2.depositphotos.com/1518767/8469/i/450/depositphotos_84693888-stock-photo-pretty-student-in-the-library.jpg",
+                levels: [
+                  { name: "A1", desc: "Basic introductions & phrases." },
+                  { name: "A2", desc: "Everyday conversations & travel." },
+                  { name: "B1", desc: "Confident speaking in work & study." },
+                ],
+              },
+              {
+                lang: "French",
+                flag: "https://flagcdn.com/w40/fr.png",
+                pattern: "DELF Pattern",
+                bg: french_st,
+                // bg: "https://t3.ftcdn.net/jpg/04/70/92/80/360_F_470928010_XLZ5r8ksCXK8ZEGUnc6X5PPTPFpbgSwv.jpg",
+                levels: [
+                  { name: "A1", desc: "Greetings & simple interactions." },
+                  { name: "A2", desc: "Conversations on daily topics." },
+                  { name: "B1", desc: "Fluent discussions & media." },
+                ],
+              },
+              {
+                lang: "Japanese",
+                flag: "https://flagcdn.com/w40/jp.png",
+                pattern: "JLPT / Japan Foundation",
+                bg: japanese_st,
+                // bg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmgp7s6ne8OUyY3aOKKDYbfdMLwCEG_qaThSBYaZYrA4uqLYDkioAmr4JvVXuI4qaVp_8&usqp=CAU",
+                levels: [
+                  { name: "N5", desc: "Basic greetings & phrases." },
+                  { name: "N4", desc: "Daily conversation & reading." },
+                  { name: "N3", desc: "Understand news & articles." },
+                ],
+              },
+              {
+                lang: "Spanish",
+                flag: "https://flagcdn.com/w40/es.png",
+                pattern: "DELE Pattern",
+                bg: spanish_st,
+                // bg: "https://st5.depositphotos.com/1003234/69163/i/450/depositphotos_691637142-stock-photo-beautiful-woman-student-spanish-flag.jpg",
+                levels: [
+                  { name: "A1", desc: "Everyday vocabulary & phrases." },
+                  { name: "A2", desc: "Converse about daily life." },
+                ],
+              },
+              {
+                lang: "English",
+                flag: "https://flagcdn.com/w40/gb.png",
+                pattern: "Cambridge English",
+                bg: british_st,
+                // bg: "https://st5.depositphotos.com/10614052/68049/i/450/depositphotos_680499390-stock-photo-young-students-language-school-books.jpg",
+                levels: [
+                  { name: "A2", desc: "Understand daily expressions." },
+                  { name: "B1", desc: "Detailed conversations." },
+                  { name: "B2", desc: "Fluent in professional settings." },
+                ],
+              },
+              {
+                lang: "Sanskrit",
+                flag: "https://flagcdn.com/w40/in.png",
+                pattern: "Classical Language",
+                bg: indian_st,
+                // bg: "https://st2.depositphotos.com/3591429/11681/i/450/depositphotos_116814870-stock-photo-college-students-using-wireless-devices.jpg",
+                levels: [{ name: "Intro", desc: "Learn alphabets & chanting." }],
+              },
+
+              //  Russian
+              {
+                lang: "Russian",
+                flag: "https://flagcdn.com/w40/ru.png",
+                pattern: "TORFL / TRKI Certification",
+                bg: russian_student,
+                levels: [
+                  { name: "A1", desc: "Basic phrases & introductions." },
+                  { name: "A2", desc: "Simple dialogues & reading skills." },
+                  { name: "B1", desc: "Confident in travel & work situations." },
+                ],
+              },
+
+              //  Arabic
+              {
+                lang: "Arabic",
+                flag: "https://flagcdn.com/w40/sa.png",
+                pattern: "ALPT / Arabic Lang. Proficiency Test",
+                bg: arab_student,
+                levels: [
+                  { name: "A1", desc: "Learn alphabets & greetings." },
+                  { name: "A2", desc: "Daily conversation & short texts." },
+                  { name: "B1", desc: "Understand media & formal speech." },
+                ],
+              },
+
+              //  Mandarin
+              {
+                lang: "Mandarin",
+                flag: "https://flagcdn.com/w40/cn.png",
+                pattern: "HSK (Hanyu Shuiping Kaoshi)",
+                bg: chi_student,
+                levels: [
+                  { name: "HSK 1", desc: "Basic vocabulary & sentences." },
+                  { name: "HSK 2", desc: "Understand short daily phrases." },
+                  { name: "HSK 3", desc: "Converse & read common texts." },
+                ],
+              },
+            ].map((course, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.15 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                onClick={() => handleLanguageClick(course.lang)}
+              >
+                {/* Language Header (moved outside image) */}
+                <div className="flex items-center justify-between px-3 pt-4 pb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full overflow-hidden border border-white">
+                      <img
+                        src={course.flag}
+                        alt={`${course.lang} flag`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">{course.lang}</h3>
+                  </div>
+                  <span className="text-xs bg-[#9787F3] text-white px-2 py-1 rounded-full">
+                    {course.pattern}
+                  </span>
+                </div>
+
+                {/* Image with gradient and text content below */}
+                <div
+                  className="relative rounded-b-2xl overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${course.bg})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    height: "280px",
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent group-hover:from-black/50 transition-all duration-300"></div>
+                  <div className="relative z-10 text-left p-6 flex flex-col justify-end h-full">
+                    <ul className="text-base font-semibold text-gray-200 space-y-1">
+                      {course.levels.map((level, i) => (
+                        <li key={i} className="leading-snug">
+                          <strong>{level.name}:</strong> {level.desc}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 text-[#CBE56A] font-semibold">
+                      Click to start learning →
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
-
-        {/* Responsive Grid with Flags */}
-        <div className="mt-20 grid gap-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-          {[
-            {
-              lang: "German",
-              flag: "https://flagcdn.com/w40/de.png",
-              pattern: "MMB Pattern",
-              bg: "https://st2.depositphotos.com/1518767/8469/i/450/depositphotos_84693888-stock-photo-pretty-student-in-the-library.jpg",
-              levels: [
-                { name: "A1", desc: "Basic introductions & phrases." },
-                { name: "A2", desc: "Everyday conversations & travel." },
-                { name: "B1", desc: "Confident speaking in work & study." },
-              ],
-            },
-            {
-              lang: "French",
-              flag: "https://flagcdn.com/w40/fr.png",
-              pattern: "DELF Pattern",
-              bg: "https://t3.ftcdn.net/jpg/04/70/92/80/360_F_470928010_XLZ5r8ksCXK8ZEGUnc6X5PPTPFpbgSwv.jpg",
-              levels: [
-                { name: "A1", desc: "Greetings & simple interactions." },
-                { name: "A2", desc: "Conversations on daily topics." },
-                { name: "B1", desc: "Fluent discussions & media." },
-              ],
-            },
-            {
-              lang: "Japanese",
-              flag: "https://flagcdn.com/w40/jp.png",
-              pattern: "JLPT / Japan Foundation",
-              bg: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmgp7s6ne8OUyY3aOKKDYbfdMLwCEG_qaThSBYaZYrA4uqLYDkioAmr4JvVXuI4qaVp_8&usqp=CAU",
-              levels: [
-                { name: "N5", desc: "Basic greetings & phrases." },
-                { name: "N4", desc: "Daily conversation & reading." },
-                { name: "N3", desc: "Understand news & articles." },
-              ],
-            },
-            {
-              lang: "Spanish",
-              flag: "https://flagcdn.com/w40/es.png",
-              pattern: "DELE Pattern",
-              bg: "https://st5.depositphotos.com/1003234/69163/i/450/depositphotos_691637142-stock-photo-beautiful-woman-student-spanish-flag.jpg",
-              levels: [
-                { name: "A1", desc: "Everyday vocabulary & phrases." },
-                { name: "A2", desc: "Converse about daily life." },
-              ],
-            },
-            {
-              lang: "English",
-              flag: "https://flagcdn.com/w40/gb.png",
-              pattern: "Cambridge English",
-              bg: "https://st5.depositphotos.com/10614052/68049/i/450/depositphotos_680499390-stock-photo-young-students-language-school-books.jpg",
-              levels: [
-                { name: "A2", desc: "Understand daily expressions." },
-                { name: "B1", desc: "Detailed conversations." },
-                { name: "B2", desc: "Fluent in professional settings." },
-              ],
-            },
-            {
-              lang: "Sanskrit",
-              flag: "https://flagcdn.com/w40/in.png",
-              pattern: "Classical Language",
-              bg: "https://st2.depositphotos.com/3591429/11681/i/450/depositphotos_116814870-stock-photo-college-students-using-wireless-devices.jpg",
-              levels: [{ name: "Intro", desc: "Learn alphabets & chanting." }],
-            },
-
-            //  Russian
-            {
-              lang: "Russian",
-              flag: "https://flagcdn.com/w40/ru.png",
-              pattern: "TORFL / TRKI Certification",
-              bg: russian_student,
-              levels: [
-                { name: "A1", desc: "Basic phrases & introductions." },
-                { name: "A2", desc: "Simple dialogues & reading skills." },
-                { name: "B1", desc: "Confident in travel & work situations." },
-              ],
-            },
-
-            //  Arabic
-            {
-              lang: "Arabic",
-              flag: "https://flagcdn.com/w40/sa.png",
-              pattern: "ALPT / Arabic Lang. Proficiency Test",
-              bg: arab_student,
-              levels: [
-                { name: "A1", desc: "Learn alphabets & greetings." },
-                { name: "A2", desc: "Daily conversation & short texts." },
-                { name: "B1", desc: "Understand media & formal speech." },
-              ],
-            },
-
-            //  Mandarin
-            {
-              lang: "Mandarin",
-              flag: "https://flagcdn.com/w40/cn.png",
-              pattern: "HSK (Hanyu Shuiping Kaoshi)",
-              bg: chi_student,
-              levels: [
-                { name: "HSK 1", desc: "Basic vocabulary & sentences." },
-                { name: "HSK 2", desc: "Understand short daily phrases." },
-                { name: "HSK 3", desc: "Converse & read common texts." },
-              ],
-            },
-          ].map((course, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
-              viewport={{ once: true }}
-              className="relative rounded-2xl overflow-hidden group hover:shadow-2xl transition-all duration-300 cursor-pointer"
-              onClick={() => handleLanguageClick(course.lang)}
-            >
-              {/* Language Header (moved outside image) */}
-              <div className="flex items-center justify-between px-3 pt-4 pb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full overflow-hidden border border-white">
-                    <img
-                      src={course.flag}
-                      alt={`${course.lang} flag`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h3 className="text-2xl font-bold text-white">{course.lang}</h3>
-                </div>
-                <span className="text-xs bg-[#9787F3] text-white px-2 py-1 rounded-full">
-                  {course.pattern}
-                </span>
-              </div>
-
-              {/* Image with gradient and text content below */}
-              <div
-                className="relative rounded-b-2xl overflow-hidden"
-                style={{
-                  backgroundImage: `url(${course.bg})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  height: "280px",
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent group-hover:from-black/50 transition-all duration-300"></div>
-                <div className="relative z-10 text-left p-6 flex flex-col justify-end h-full">
-                  <ul className="text-base font-semibold text-gray-200 space-y-1">
-                    {course.levels.map((level, i) => (
-                      <li key={i} className="leading-snug">
-                        <strong>{level.name}:</strong> {level.desc}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-3 text-[#CBE56A] font-semibold">
-                    Click to start learning →
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
 
 
       {/* Explore subjects section */}
@@ -614,7 +699,13 @@ export default function LandingPageAlt() {
             viewport={{ once: true }}
             variants={{
               hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 1.12 } },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.3,
+                  delayChildren: 0.3,   // slight initial delay for smoother entrance
+                },
+              },
             }}
             className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           >
@@ -637,19 +728,20 @@ export default function LandingPageAlt() {
               },
               {
                 name: "Mathematics",
-                img: "https://www.shutterstock.com/image-vector/math-school-subject-pupils-studying-260nw-2193849035.jpg",
+                img: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=fill&w=1200&q=100",
               },
               {
                 name: "Biology",
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwCZsh8ORVYuaRBk5UVIjupZH-uJdpqSrNNA&s",
               },
               {
-                name: "Economics",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQikC6ieHuOnISux2eESzpHmmiq8ag7xTIi5w&s",
-              },
-              {
                 name: "Computer Science",
                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGt5xq-25cqfQWyM8Z0Yu706O8s_aCraXM9A&s",
+              },
+              {
+                name: "More",
+                img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",
+                isMore: true,
               },
             ].map((subject, idx) => (
               <motion.div
@@ -658,7 +750,7 @@ export default function LandingPageAlt() {
                   hidden: { opacity: 0, y: 40 },
                   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
                 }}
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative h-56 rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 cursor-pointer"
                 style={{
@@ -666,19 +758,70 @@ export default function LandingPageAlt() {
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
+                onClick={() => handleSubjectClick(subject)}
               >
-                {/* Overlay for readability */}
+                {/* Overlay */}
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300"></div>
 
                 {/* Subject Name */}
-                <div className="absolute top-3 left-3 bg-white/90 text-[#2D274B] px-3 py-1 rounded-md font-bold text-lg shadow">
+                <div
+                  className={`absolute top-3 left-3 ${
+                    subject.isMore
+                      ? "bg-[#CBE56A] text-[#2D274B]"
+                      : "bg-white/90 text-[#2D274B]"
+                  } px-3 py-1 rounded-md font-bold text-lg shadow`}
+                >
                   {subject.name}
                 </div>
+
+                {/* “More” Hover Text */}
+                {subject.isMore && (
+                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl bg-black/40 opacity-0 group-hover:opacity-100 transition">
+                    Explore More →
+                  </div>
+                )}
               </motion.div>
             ))}
           </motion.div>
         </div>
+
+        {/* Modal for More Subjects */}
+        {showMore && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-lg">
+              <button
+                onClick={() => setShowMore(false)}
+                className="absolute top-3 right-3 text-gray-600 hover:text-black text-2xl"
+              >
+                ✕
+              </button>
+              <h3 className="text-2xl font-bold text-[#2D274B] mb-4">
+                Explore More Subjects
+              </h3>
+              <ul className="space-y-3 text-left">
+                {[
+                  "Economics",
+                  "Hindi",
+                  "Bengali",
+                  "Psychology",
+                  "Philosophy",
+                  "Environmental Science (EVS)",
+                  "Accounts & Finance",
+                ].map((subj, i) => (
+                  <li
+                    key={i}
+                    onClick={() => handleMoreSubjectClick(subj)}
+                    className="cursor-pointer text-[#2D274B] font-semibold hover:text-[#dc8d33] transition"
+                  >
+                    • {subj}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </section>
+
 
 
        {/* How it works section */}
@@ -886,54 +1029,7 @@ export default function LandingPageAlt() {
       </section>
 
       {/* Footer - expanded */}
-      <footer className="bg-[#6b48af] text-white py-12">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
-          <div>
-            <div className="font-semibold text-lg">LEARNiLM🌎WORLD</div>
-            <div className="text-sm text-slate-300 mt-2">© {new Date().getFullYear()} LEARNiLM🌎WORLD — All rights reserved</div>
-            <div className="mt-4 text-sm text-slate-300">Email: support@learnilmworld.com</div>
-            <div className="text-sm text-slate-300">Phone: +1 (555) 123-4567</div>
-          </div>
-
-          <div>
-            <div className="font-semibold">Company</div>
-            <ul className="mt-3 space-y-2 text-sm text-slate-300">
-              <li><Link to="/about" className="hover:underline">About</Link></li>
-              <li><Link to="/careers" className="hover:underline">Careers</Link></li>
-              <li><Link to="/blog" className="hover:underline">Blog</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="font-semibold">Resources</div>
-            <ul className="mt-3 space-y-2 text-sm text-slate-300">
-              <li><Link to="/help" className="hover:underline">Help Center</Link></li>
-              <li><Link to="/terms" className="hover:underline">Terms</Link></li>
-              <li><Link to="/privacy" className="hover:underline">Privacy</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <div className="font-semibold">Stay in touch</div>
-            
-
-            <div className="mt-4 flex items-center gap-3 text-slate-300">
-              <a href="#" aria-label="Facebook"><Facebook /></a>
-              <a href="#" aria-label="Twitter"><Twitter /></a>
-              <a href="#" aria-label="Instagram"><Instagram /></a>
-              <a href="#" aria-label="LinkedIn"><Linkedin /></a>
-            </div>
-            <div className='Logo'>
-              <img src={logo} width={'150px'} />
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 mt-8 border-t border-white/10 pt-6 text-sm  flex flex-col sm:flex-row justify-between">
-          <div>Made with ❤️ in LEARNiLM🌎WORLD</div>
-          <div className="mt-3 sm:mt-0">Version 1.0 • Privacy policy</div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
