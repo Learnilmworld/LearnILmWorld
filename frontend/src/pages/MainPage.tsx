@@ -454,11 +454,11 @@ const [languageMode, setLanguageMode] = useState("");
          {/* Page title (single-line hero) */}
         <div className="text-center mb-4">
           <h1 className="text-4xl md:text-5xl font-extrabold  mb-2 break-keep">
-            Find Your Perfect Language Trainer
+            Find Your Perfect  Trainer
           </h1>
           {/* Description below the hero line */}
           <p className="text-2xl text-white font-bold max-w-3xl mx-auto">
-            Connect with expert language trainers from around the world. Start your journey to fluency today.
+            Connect with expert trainers from around the world. Start your journey to today.
           </p>
         </div>
 
@@ -486,7 +486,7 @@ const [languageMode, setLanguageMode] = useState("");
           <div className="flex gap-4 mb-6">
             <button
               onClick={() => handleLearningTypeChange("language")}
-              className={`px-4 py-2 rounded-lg font-semibold ${
+              className={`px-4 py-2 rounded-lg text-lg font-bold ${
                 learningType === "language"
                   ? "bg-[#CBE56A] text-[#2D274B]"
                   : "bg-gray-200 text-gray-700"
@@ -497,7 +497,7 @@ const [languageMode, setLanguageMode] = useState("");
 
             <button
               onClick={() => handleLearningTypeChange("subject")}
-              className={`px-4 py-2 rounded-lg font-semibold ${
+              className={`px-4 py-2 rounded-lg text-lg font-bold ${
                 learningType === "subject"
                   ? "bg-[#CBE56A] text-[#2D274B]"
                   : "bg-gray-200 text-gray-700"
@@ -515,12 +515,12 @@ const [languageMode, setLanguageMode] = useState("");
 
             {/* Language Filter */}
             {learningType === "language" && (
-            <div className="relative p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              <label className="text-xs font-semibold text-[#2D274B]">What's Next?</label>
+            <div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm ">
+              <label className="text-base font-bold text-[#dc8d33]">What's Next?</label>
 
               <button
                 onClick={() => setShowFilters((prev) => ({ ...prev, language: !prev.language }))}
-                className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm flex justify-between items-center"
+                className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-[#CBE56A] text-sm font-semibold flex justify-between items-center"
               >
                 <span>
                   {filters.language
@@ -560,7 +560,7 @@ const [languageMode, setLanguageMode] = useState("");
             </div>
             )}
 
-            {learningType === "language" && (
+            {/* {learningType === "language" && (
               <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col">
                 <label className="text-xs font-semibold text-[#2D274B] mb-2">
                   Learn Language As:
@@ -575,24 +575,24 @@ const [languageMode, setLanguageMode] = useState("");
                   <option value="subject">Subject</option>
                 </select>
               </div>
-            )}
+            )} */}
 
 
             {/* Specialization / Subjects Dropdown */}
             {learningType === "subject" && (
-            <div className="relative p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              <label className="text-xs font-semibold text-[#2D274B]">Area of Mastery</label>
+            <div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm">
+              <label className="text-base font-bold text-[#dc8d33]">Area of Mastery</label>
 
               <button
                 onClick={() => setShowFilters((prev) => ({ ...prev, subject: !prev.subject }))}
-                className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-sm flex justify-between items-center"
+                className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-[#CBE56A] text-sm  font-semibold flex justify-between items-center"
               >
                 <span>{filters.specialization || "Subject"}</span>
                 <ChevronDown className={`h-4 w-4 ${showFilters.subject ? "rotate-180" : ""}`} />
               </button>
 
               {showFilters.subject && (
-                <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto text-sm">
+                <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto text-base">
                   {[
                     "Mathematics",
                     "Science",
@@ -626,46 +626,35 @@ const [languageMode, setLanguageMode] = useState("");
             </div>
             )}
 
-            {/* Min + Max Price Combined */}
-            <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              <label className="text-xs font-semibold text-[#2D274B]">Price Range ($/hr)</label>
-
-              <div className="flex items-center gap-2 mt-1">
-                <input
-                  type="number"
-                  value={filters.minRate}
-                  onChange={(e) => setFilters(p => ({ ...p, minRate: e.target.value }))}
-                  className="w-1/2 px-2 py-2 border border-gray-300 rounded-lg text-sm"
-                  placeholder="Min"
-                />
-                <input
-                  type="number"
-                  value={filters.maxRate}
-                  onChange={(e) => setFilters(p => ({ ...p, maxRate: e.target.value }))}
-                  className="w-1/2 px-2 py-2 border border-gray-300 rounded-lg text-sm"
-                  placeholder="Max"
-                />
-              </div>
-            </div>
 
             {/* Experience */}
-            <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              <label className="text-xs font-semibold text-[#2D274B]">Experience (yrs)</label>
-              <input
+            <div className="p-3 bg-[#2D274B] rounded-xl shadow-sm  ">
+              <label className="text-base font-semibold text-[#dc8d33]">Experience (yrs)</label>
+              {/* <input
                 type="number"
                 value={filters.experience}
                 onChange={e => setFilters(p => ({ ...p, experience: e.target.value }))}
-                className="w-full mt-1 px-2 py-2 border border-gray-300 rounded-lg text-sm"
-              />
+                className="w-full mt-1 px-2 py-2 border border-gray-300 text-[#dc8d33] bg-[#CBE56A] rounded-lg text-sm font-semibold"
+              /> */}
+              <select
+                value={filters.experience}
+                onChange={e => setFilters(p => ({ ...p, rating: e.target.value }))}
+                className="w-full mt-1 px-2 py-2 border bg-[#CBE56A] rounded-lg text-base font-semibold "
+              >
+                <option value="0">0</option>
+                <option value="2">2</option>
+                <option value="5">5+</option>
+                <option value="10">10+</option>
+              </select>
             </div>
 
             {/* Rating */}
-            <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              <label className="text-xs font-semibold text-[#2D274B]">Rating</label>
+            <div className="p-3 bg-[#2D274B] rounded-xl shadow-sm ">
+              <label className="text-base font-semibold text-[#dc8d33]">Rating</label>
               <select
                 value={filters.rating}
                 onChange={e => setFilters(p => ({ ...p, rating: e.target.value }))}
-                className="w-full mt-1 px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                className="w-full mt-1 px-2 py-2 border bg-[#CBE56A] rounded-lg text-base font-semibold "
               >
                 <option value="">Any</option>
                 <option value="4.5">4.5+</option>
@@ -675,12 +664,12 @@ const [languageMode, setLanguageMode] = useState("");
             </div>
 
             {/* Sort By */}
-            <div className="p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-              <label className="text-xs font-semibold text-[#2D274B]">Sort By</label>
+            <div className="p-3 bg-[#2D274B] rounded-xl shadow-sm ">
+              <label className="text-base font-bold text-[#dc8d33]">Sort By</label>
               <select
                 value={filters.sortBy}
                 onChange={e => setFilters(p => ({ ...p, sortBy: e.target.value }))}
-                className="w-full mt-1 px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                className="w-full mt-1 px-2 py-2 border border-gray-300 bg-[#CBE56A] rounded-lg text-sm font-semibold"
               >
                 <option value="rating">Highest Rated</option>
                 <option value="price_low">Price: Low → High</option>
@@ -689,13 +678,35 @@ const [languageMode, setLanguageMode] = useState("");
               </select>
             </div>
 
+            {/* Min + Max Price Combined */}
+            <div className="p-2 w-60 bg-[#2D274B] rounded-xl shadow-sm ">
+              <label className="text-base font-bold text-[#dc8d33]">Price Range ($/hr)</label>
+
+              <div className="flex items-center gap-2 mt-1">
+                <input
+                  type="number"
+                  value={filters.minRate}
+                  onChange={(e) => setFilters(p => ({ ...p, minRate: e.target.value }))}
+                  className="w-1/2 px-2 py-2 border border-gray-300 text-[#dc8d33] bg-[#CBE56A] rounded-lg text-sm font-semibold"
+                  placeholder="Min"
+                />
+                <input
+                  type="number"
+                  value={filters.maxRate}
+                  onChange={(e) => setFilters(p => ({ ...p, maxRate: e.target.value }))}
+                  className="w-1/2 px-2 py-2 border border-gray-300 text-[#dc8d33] bg-[#CBE56A] rounded-lg text-base font-bold"
+                  placeholder="Max"
+                />
+              </div>
+            </div>
+
           </div>
 
           {/* CLEAR BUTTON */}
           <div className="flex justify-end mt-4">
             <button
               onClick={clearFilters}
-              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-[#2D274B] text-sm font-semibold"
+              className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 text-[#2D274B] text-lg font-bold"
             >
               Clear All
             </button>

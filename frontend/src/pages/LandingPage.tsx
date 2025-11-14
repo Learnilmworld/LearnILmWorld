@@ -228,8 +228,6 @@ export default function LandingPageAlt() {
   };
 
 
-
-
   const flagIcons: Record<string, string> = {
     German: "https://flagcdn.com/w40/de.png",
     French: "https://flagcdn.com/w40/fr.png",
