@@ -7,6 +7,7 @@ import {
 import axios from 'axios'
 import { motion } from 'framer-motion'
 import Footer from '../components/Footer'
+import * as Flags from "country-flag-icons/react/3x2";
 
 /** Trainer types: demoVideo optional */
 interface Trainer {
@@ -27,6 +28,7 @@ interface Trainer {
     imageUrl?: string         // <-- primary image field from your schema
     location?: string
     specializations?: string[]
+    nationalityCode?: string
     isAvailable?: boolean
     averageRating?: number
     totalBookings?: number
@@ -41,7 +43,20 @@ interface Trainer {
 interface ShowFiltersState {
   language: boolean;
   subject: boolean;
+  nationality: boolean;
 }
+
+interface FiltersState {
+  language: string
+  minRate: string
+  maxRate: string
+  experience: string
+  specialization: string
+  rating: string
+  sortBy: string
+  nationality: string | undefined
+}
+
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
@@ -51,16 +66,17 @@ const MainPage: React.FC = () => {
   const [trainers, setTrainers] = useState<Trainer[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-  const [showFilters, setShowFilters] = useState<ShowFiltersState>({language: false, subject: false});
+  const [showFilters, setShowFilters] = useState<ShowFiltersState>({language: false, subject: false, nationality: false});
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FiltersState>({
     language: '',
     minRate: '',
     maxRate: '',
     experience: '',
     specialization: '',
     rating: '',
-    sortBy: 'rating'
+    sortBy: 'rating',
+    nationality:'',
   })
 
 
@@ -77,17 +93,17 @@ const MainPage: React.FC = () => {
     experience: '',
     specialization: '',
     rating: '',
-    sortBy: 'rating'
+    sortBy: 'rating',
+    nationality:'',
   });
 
   // Also reset languageMode when switching away from Language Mode
   setLanguageMode("subject");
-};
+  };
 
 
-const [languageMode, setLanguageMode] = useState(""); 
-// "subject" | "profession"
-
+  const [languageMode, setLanguageMode] = useState(""); 
+  // "subject" | "profession"
 
   // which trainer is currently showing a player (id) — only one at a time
   const [openVideoId, setOpenVideoId] = useState<string | null>(null)
@@ -134,6 +150,23 @@ const [languageMode, setLanguageMode] = useState("");
   const navigate = useNavigate()
   const { user, isAdmin } = useAuth()
 
+  const renderFlag = (code?: string) => {
+    if (!code) return null;
+    const upper = code.toUpperCase();
+
+    const Flag = (Flags as any)[upper];
+    if (!Flag) return null; // invalid ISO code
+
+    return (
+      <div className="w-6 h-6 rounded-full overflow-hidden shadow-sm">
+        <Flag title={upper} className="w-full h-full object-cover" />
+      </div>
+    );
+  };
+
+
+
+
   const handleDashboardClick = () => {
 
     if (!user && !isAdmin) {
@@ -154,53 +187,53 @@ const [languageMode, setLanguageMode] = useState("");
 
   // ---------- data fetching ----------
   useEffect(() => {
-  let mounted = true
-  const fetchData = async () => {
-    try {
-      // 1️ Fetch trainers
-      const response = await axios.get(`${API_BASE_URL}/api/users/trainers`)
-      let data = Array.isArray(response.data) ? response.data : []
+    let mounted = true
+    const fetchData = async () => {
+      try {
+        // 1️ Fetch trainers
+        const response = await axios.get(`${API_BASE_URL}/api/users/trainers`)
+        let data = Array.isArray(response.data) ? response.data : []
 
-      // Keep only verified trainers
-      data = data.filter(trainer => trainer.profile.verificationStatus === 'verified')
+        // Keep only verified trainers
+        data = data.filter(trainer => trainer.profile.verificationStatus === 'verified')
 
-      //  Fetch public review counts (no auth)
-      const countsRes = await axios.get(`${API_BASE_URL}/api/reviews/counts`)
+        //  Fetch public review counts (no auth)
+        const countsRes = await axios.get(`${API_BASE_URL}/api/reviews/counts`)
 
-      // 3️ Merge the counts into trainers
-      const counts = countsRes.data || {}
-      const merged = data.map(trainer => ({
-        ...trainer,
-        profile: {
-          ...trainer.profile,
-          totalBookings: counts[trainer._id] || 0  //  attach reviews count safely
-        }
-      }))
+        // 3️ Merge the counts into trainers
+        const counts = countsRes.data || {}
+        const merged = data.map(trainer => ({
+          ...trainer,
+          profile: {
+            ...trainer.profile,
+            totalBookings: counts[trainer._id] || 0  //  attach reviews count safely
+          }
+        }))
 
-      if (mounted) setTrainers(merged)
-    } catch (error) {
-      console.error('Failed to fetch trainers or counts:', error)
-      if (mounted) setTrainers([])
-    } finally {
-      if (mounted) setLoading(false)
+        if (mounted) setTrainers(merged)
+      } catch (error) {
+        console.error('Failed to fetch trainers or counts:', error)
+        if (mounted) setTrainers([])
+      } finally {
+        if (mounted) setLoading(false)
+      }
     }
-  }
 
-  fetchData()
-  return () => { mounted = false }
-}, [])
+    fetchData()
+    return () => { mounted = false }
+  }, [])
 
   const LANGUAGES = [
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "fr", name: "French", flag: "🇫🇷" },
-  { code: "de", name: "German", flag: "🇩🇪" },
-  { code: "it", name: "Italian", flag: "🇮🇹" },
-  { code: "jp", name: "Japanese", flag: "🇯🇵" }
-];
+    { code: "en", name: "English", flag: "🇺🇸" },
+    { code: "fr", name: "French", flag: "🇫🇷" },
+    { code: "de", name: "German", flag: "🇩🇪" },
+    { code: "it", name: "Italian", flag: "🇮🇹" },
+    { code: "jp", name: "Japanese", flag: "🇯🇵" }
+  ];
 
 
   // ---------- derived filtered list (stable hooks) ----------
-    const filteredTrainers = useMemo(() => {
+  const filteredTrainers = useMemo(() => {
     try {
       let list = (Array.isArray(trainers) ? [...trainers] : []).filter(Boolean);
 
@@ -283,6 +316,14 @@ const [languageMode, setLanguageMode] = useState("");
         list = list.filter(t => getRating(t) >= minRating);
       }
 
+      // Nationality
+      if (filters.nationality) {
+        list = list.filter(
+          t => t.profile?.nationalityCode === filters.nationality
+        );
+      }
+
+
       // Sorting
       switch (filters.sortBy) {
         case 'rating':
@@ -321,6 +362,16 @@ const [languageMode, setLanguageMode] = useState("");
   }, [trainers, searchTerm, filters, getRating]);
 
 
+  // Build a list of unique nationality codes from all trainers
+  const uniqueNationalities = Array.from(
+    new Set(
+      (trainers || [])
+        .map(t => t.profile?.nationalityCode)
+        .filter(Boolean)
+    )
+  );
+
+
   // ---------- stable callbacks ----------
   const clearFilters = useCallback(() => {
     setFilters({
@@ -330,7 +381,8 @@ const [languageMode, setLanguageMode] = useState("");
       experience: '',
       specialization: '',
       rating: '',
-      sortBy: 'rating'
+      sortBy: 'rating',
+      nationality: '',
     })
     setSearchTerm('')
   }, [])
@@ -481,8 +533,7 @@ const [languageMode, setLanguageMode] = useState("");
 
         {/* 6 MINI FILTER BLOCKS */}
         <div className="max-w-6xl mx-auto mb-10 px-4">
-
-
+          {/* Learn a langauge button */}
           <div className="flex gap-4 mb-6">
             <button
               onClick={() => handleLearningTypeChange("language")}
@@ -507,7 +558,7 @@ const [languageMode, setLanguageMode] = useState("");
             </button>
           </div>
 
-
+          {/* heading */}
           <h2 className="text-xl font-bold text-[#2D274B] mb-4">I'm Learning</h2>
 
           {/* 6 ITEMS PER ROW ALWAYS */}
@@ -679,7 +730,7 @@ const [languageMode, setLanguageMode] = useState("");
             </div>
 
             {/* Min + Max Price Combined */}
-            <div className="p-2 w-60 bg-[#2D274B] rounded-xl shadow-sm ">
+            <div className="p-2 bg-[#2D274B] rounded-xl shadow-sm ">
               <label className="text-base font-bold text-[#dc8d33]">Price Range ($/hr)</label>
 
               <div className="flex items-center gap-2 mt-1">
@@ -699,6 +750,51 @@ const [languageMode, setLanguageMode] = useState("");
                 />
               </div>
             </div>
+
+            {/* Nationality Filter */}
+<div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm">
+  <label className="text-base font-bold text-[#dc8d33]">Nationality</label>
+
+  <button
+    onClick={() =>
+      setShowFilters(prev => ({ ...prev, nationality: !prev.nationality }))
+    }
+    className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-[#CBE56A] text-sm font-semibold flex justify-between items-center"
+  >
+    <span className="flex items-center gap-2">
+      {filters.nationality ? (
+        <>
+          {renderFlag(filters.nationality)}
+          {filters.nationality}
+        </>
+      ) : (
+        "Select Nationality"
+      )}
+    </span>
+    <ChevronDown
+      className={`h-4 w-4 ${showFilters.nationality ? "rotate-180" : ""}`}
+    />
+  </button>
+
+  {showFilters.nationality && (
+    <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto">
+      {uniqueNationalities.map(code => (
+        <div
+          key={code}
+          onClick={() => {
+            setFilters(prev => ({ ...prev, nationality: code }));
+            setShowFilters(prev => ({ ...prev, nationality: false }));
+          }}
+          className="cursor-pointer flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded text-sm"
+        >
+          {renderFlag(code)}
+          <span>{code}</span>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
 
           </div>
 
@@ -837,7 +933,13 @@ const [languageMode, setLanguageMode] = useState("");
                     </div>
 
                     <div className="min-w-0">
-                      <h3 className="text-lg font-semibold text-[#2D274B] truncate">{trainer.name || 'Unnamed Trainer'}</h3>
+                      <div className="flex items-center gap-2">
+                    {renderFlag(trainer.profile?.nationalityCode)}
+                    <h3 className="text-lg font-semibold text-[#2D274B] truncate">
+                      {trainer.name || 'Unnamed Trainer'}
+                    </h3>
+                  </div>
+
                       <div className="flex flex-wrap items-center text-sm text-[#6A6592] mt-1 gap-2">
                         <div className="inline-flex items-center gap-1 bg-yellow-50 text-yellow-700 px-2 py-0.5 rounded-full text-sm">
                           <Star className="h-4 w-4" />

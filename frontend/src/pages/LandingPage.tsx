@@ -34,6 +34,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from '../components/Footer'
 
 import heroImage1 from '../assets/Hero_image1.png'
+import TopTrainers from '../components/TopTrainers'
 // import MoreLanguages from '../components/MoreLanguages'
 
 
@@ -364,9 +365,8 @@ export default function LandingPageAlt() {
             </div>
 
             <nav className="hidden sm:flex items-center gap-6">
-              <Link to="/main" className="text-base text-[#dc8d33] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
-              
-              
+              {/* <Link to="/main" className="text-base text-[#dc8d33] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
+               */}
               <Link to="/login" className="text-base font-medium text-[#dc8d33] hover:text-[#CBE56A]">Sign In</Link>
               <Link to="/register" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#CBE56A] text-[#2D274B] text-sm font-semibold shadow hover:scale-105 transition">Get started</Link>
             </nav>
@@ -421,7 +421,7 @@ export default function LandingPageAlt() {
               
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/trainers" className="inline-flex items-center gap-3 px-6 py-3 bg-[#CBE56A] text-[#4B437C] text-lg rounded-lg shadow hover:scale-105 transition" aria-label="Start learning"> 
+                <Link to="/main" className="inline-flex items-center gap-3 px-6 py-3 bg-[#CBE56A] text-[#4B437C] text-lg rounded-lg shadow hover:scale-105 transition" aria-label="Start learning"> 
                   <Play />
                   Start Learning
                 </Link>
@@ -481,6 +481,8 @@ export default function LandingPageAlt() {
           </div>
         </div>
       </main>
+
+      <TopTrainers/>
 
       {/* Language Levels Explanation */}
       <section

@@ -52,9 +52,9 @@ const BecomeTrainer: React.FC = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden sm:flex items-center gap-6">
-                <Link to="/main" className="text-sm text-[#dc8d33] font-semibold hover:text-[#CBE56A]">
+                {/* <Link to="/main" className="text-sm text-[#dc8d33] font-semibold hover:text-[#CBE56A]">
                   Browse our Mentors
-                </Link>
+                </Link> */}
 
                 <Link to="/login" className="text-sm text-[#dc8d33] font-semibold  hover:text-[#CBE56A]">
                   Sign In
@@ -132,7 +132,7 @@ const BecomeTrainer: React.FC = () => {
         </motion.button>
       </section>
 
-      {/* Image + Text Section */}
+      {/* Image + Text Section 1 */}
       <section className="py-20 px-6 md:px-16 flex flex-col-reverse md:flex-row items-center gap-10 max-w-6xl mx-auto">
         <motion.div
           className="flex-1 space-y-6"
@@ -177,7 +177,22 @@ const BecomeTrainer: React.FC = () => {
 
       {/* Global Teaching Section */}
       <section className="py-20 px-6 md:px-16  flex flex-col-reverse md:flex-row items-center gap-10 max-w-6xl mx-auto rounded-2xl shadow-sm">
-        {/* Left Content */}
+        
+        {/* left Image */}
+        <motion.div
+          className="flex-1 flex justify-center"
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <img
+            src={image2}
+            alt="Global teaching"
+            className="rounded-2xl shadow-lg w-full max-w-lg object-cover"
+          />
+        </motion.div>
+
+        {/* right Content */}
         <motion.div
           className="flex-1 space-y-6"
           initial={{ opacity: 0, x: -40 }}
@@ -225,20 +240,7 @@ const BecomeTrainer: React.FC = () => {
             Create Your Tutor Profile
           </button>
         </motion.div>
-
-        {/* Right Image */}
-        <motion.div
-          className="flex-1 flex justify-center"
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <img
-            src={image2}
-            alt="Global teaching"
-            className="rounded-2xl shadow-lg w-full max-w-lg object-cover"
-          />
-        </motion.div>
+       
       </section>
 
 

@@ -23,7 +23,8 @@ router.post('/register', async (req, res) => {
         dob,
         bio,
         resume,
-        phone
+        phone,
+        nationalityCode,
       } = {}
     } = req.body;
 
@@ -47,21 +48,59 @@ router.post('/register', async (req, res) => {
           });
         }
 
-        // Reset trainer data for re-registration
+        // Reset trainer data for re-registration (preserve other fields unless provided)
         existingUser.password = password;
-        existingUser.profile.education =
-          education || req.body.profile?.education || '';
+
+        // Basic profile fields
+        existingUser.profile.education = education || req.body.profile?.education || existingUser.profile.education || '';
         existingUser.profile.teachingExperienceDetails =
-          teachingExperienceDetails ||
-          req.body.profile?.teachingExperienceDetails ||
-          '';
-        existingUser.profile.certifications = Array.isArray(
-          certifications || req.body.profile?.certifications
-        )
-          ? certifications || req.body.profile?.certifications
+          teachingExperienceDetails || req.body.profile?.teachingExperienceDetails || existingUser.profile.teachingExperienceDetails || '';
+
+        // Certifications — normalize same as new registration
+        const incomingCerts = certifications || req.body.profile?.certifications || [];
+        existingUser.profile.certifications = Array.isArray(incomingCerts)
+          ? incomingCerts.map(cert => ({
+            ...cert,
+            year: cert.issuedDate ? new Date(cert.issuedDate).getFullYear() : cert.year || null,
+            certificateImage: typeof cert.certificateImage === 'string'
+              ? cert.certificateImage
+              : '',
+          }))
           : [];
-        existingUser.profile.phone =
-          phone || req.body.profile?.phone || '';
+
+        // Phone, dob, bio
+        existingUser.profile.phone = phone || req.body.profile?.phone || existingUser.profile.phone || '';
+        existingUser.profile.dob = req.body.profile?.dob || dob || existingUser.profile.dob || null;
+        existingUser.profile.bio = req.body.profile?.bio || bio || existingUser.profile.bio || '';
+
+        // Languages (accept array or CSV string)
+        const incomingLanguages = req.body.profile?.languages || req.body.languages || null;
+        existingUser.profile.languages = Array.isArray(incomingLanguages)
+          ? incomingLanguages
+          : typeof incomingLanguages === 'string'
+            ? incomingLanguages.split(',').map(l => l.trim()).filter(Boolean)
+            : existingUser.profile.languages || [];
+
+        // Specializations / subjects (normalize to array)
+        const incomingSubjects = req.body.profile?.subjects || req.body.subjects || null;
+        existingUser.profile.specializations = Array.isArray(incomingSubjects)
+          ? incomingSubjects
+          : typeof incomingSubjects === 'string'
+            ? incomingSubjects.split(',').map(s => s.trim()).filter(Boolean)
+            : existingUser.profile.specializations || [];
+
+        // Standards (accept array or single string)
+        const incomingStandards = req.body.profile?.standards ?? req.body.standards ?? null;
+        existingUser.profile.standards = Array.isArray(incomingStandards)
+          ? incomingStandards
+          : incomingStandards ? [incomingStandards] : existingUser.profile.standards || [];
+
+        // Optional: nationalityCode (ISO2 lowercase) if you add it to frontend
+        existingUser.profile.nationalityCode = req.body.profile?.nationalityCode
+          || req.body.nationalityCode
+          || existingUser.profile.nationalityCode || '';
+
+        // Mark pending & clear rejection time
         existingUser.profile.verificationStatus = 'pending';
         existingUser.profile.rejectionDate = null;
 
@@ -86,10 +125,10 @@ router.post('/register', async (req, res) => {
     };
 
     //  Use extracted or nested values safely
-    const edu = education || req.body.profile?.education || '';
-    const exp =
-      teachingExperienceDetails || req.body.profile?.teachingExperienceDetails || '';
-    const certs = certifications || req.body.profile?.certifications || [];
+    // const edu = education || req.body.profile?.education || '';
+    // const exp =
+    //   teachingExperienceDetails || req.body.profile?.teachingExperienceDetails || '';
+    // const certs = certifications || req.body.profile?.certifications || [];
 
     // Prevent malicious admin creation
     const allowedRoles = ['student', 'trainer'];
@@ -109,24 +148,27 @@ router.post('/register', async (req, res) => {
         phone,
         subjects,
         languages,
-        standards
+        standards,
+        nationalityCode,
       } = req.body.profile || {};
 
       userData.profile = {
         education: education || '',
         teachingExperienceDetails: teachingExperienceDetails || '',
-        experience: parseInt(teachingExperienceDetails) || 0,
+        experience: parseInt(req.body.profile?.experience) || parseInt(teachingExperienceDetails) || 0,
         certifications: Array.isArray(certifications)
           ? certifications.map(cert => ({
             ...cert,
-            issueYear: cert.issuedDate ? new Date(cert.issuedDate).getFullYear() : null,
+            year: cert.issuedDate ? new Date(cert.issuedDate).getFullYear() : null,
           }))
           : [],
         dob: dob || null,
         bio: bio || '',
         phone: phone || '',
         verificationStatus: 'pending',
-        //  New fields
+
+        nationalityCode: nationalityCode || req.body.profile?.nationalityCode || '',
+
         languages: Array.isArray(languages)
           ? languages
           : typeof languages === 'string'
@@ -137,7 +179,8 @@ router.post('/register', async (req, res) => {
           : typeof subjects === 'string'
             ? subjects.split(',').map(s => s.trim()).filter(Boolean)
             : [],
-        standards: standards || ''
+        standards: Array.isArray(standards)
+          ? standards : standards ? [standards] : [],
       };
     } else if (role === 'student') {
       userData.profile = {

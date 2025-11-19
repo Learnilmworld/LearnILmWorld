@@ -15,7 +15,7 @@ const LanguageDetector = {
     const spanishRegex = /[áéíóúñ¿¡]/i;
     const frenchRegex = /[àâçéèêëîïôûùüÿæœ]/i;
     const germanRegex = /[äöüß]/i;
-    
+
     if (hindiRegex.test(text)) return 'hi';
     if (sanskritRegex.test(text) && text.includes('अस्मि') || text.includes('विद्यार्थी')) return 'sa';
     if (japaneseRegex.test(text)) return 'ja';
@@ -33,7 +33,7 @@ const TimeBasedGreeting = {
   getGreeting: (language = 'en') => {
     const hour = new Date().getHours();
     let timeOfDay = '';
-    
+
     if (hour >= 5 && hour < 12) timeOfDay = 'morning';
     else if (hour >= 12 && hour < 17) timeOfDay = 'afternoon';
     else if (hour >= 17 && hour < 21) timeOfDay = 'evening';
@@ -90,7 +90,7 @@ const GeminiService = {
     const API_KEY = process.env.GOOGLE_API_KEY;
 
     if (!API_KEY) {
-      console.log('❌ Gemini API key not configured');
+      console.log(' Gemini API key not configured');
       return { success: false, error: 'API key not configured' };
     }
 
@@ -243,7 +243,7 @@ const SMART_AI = {
 
   getTimeBasedRoleQuestion: (name = '', language = 'en') => {
     const greeting = TimeBasedGreeting.getGreeting(language);
-    
+
     const questions = {
       en: `${greeting}${name ? `, ${name}` : ''}! 👋 Are you a student, mentor, or trainer?`,
       fr: `${greeting}${name ? `, ${name}` : ''}! 👋 Êtes-vous étudiant, mentor ou formateur ?`,
@@ -259,7 +259,7 @@ const SMART_AI = {
   // Sequential info collection messages
   getNameMessage: (language = 'en') => {
     const greeting = TimeBasedGreeting.getGreeting(language);
-    
+
     const messages = {
       en: `${greeting}! 👋 Welcome to LearnILmWorld! To personalize your experience, could you please tell me your name?`,
       hi: `${greeting}! 👋 LearnILmWorld में आपका स्वागत है! आपके अनुभव को व्यक्तिगत बनाने के लिए, कृपया मुझे अपना नाम बताएं?`,
@@ -314,21 +314,21 @@ const SMART_AI = {
 
   detectRole: (message) => {
     const msg = message.toLowerCase();
-    
+
     // English keywords
     if (msg.includes('student') || msg.includes('learner') || msg.includes('study')) return 'student';
     if (msg.includes('trainer') || msg.includes('teacher') || msg.includes('instructor')) return 'trainer';
     if (msg.includes('mentor')) return 'mentor';
-    
+
     // Hindi keywords
     if (msg.includes('छात्र') || msg.includes('विद्यार्थी') || msg.includes('स्टूडेंट')) return 'student';
     if (msg.includes('प्रशिक्षक') || msg.includes('शिक्षक') || msg.includes('टीचर') || msg.includes('ट्रेनर')) return 'trainer';
     if (msg.includes('मेंटर') || msg.includes('मार्गदर्शक')) return 'mentor';
-    
+
     // Sanskrit keywords
     if (msg.includes('छात्रः') || msg.includes('विद्यार्थी') || msg.includes('अस्मि')) return 'student';
     if (msg.includes('मार्गदर्शकः')) return 'mentor';
-    
+
     return null;
   },
 
@@ -401,8 +401,8 @@ const SMART_AI = {
 
     // Step 1: If first interaction, ask for name
     if (!userContext.userInfo && SMART_AI.isFirstInteraction(conversation)) {
-      return { 
-        response: SMART_AI.getNameMessage(language), 
+      return {
+        response: SMART_AI.getNameMessage(language),
         needsInfo: true,
         infoType: 'name',
         context: { ...userContext, collectingInfo: true, currentStep: 'name' }
@@ -495,9 +495,9 @@ const SMART_AI = {
     // Step 3: Ask for role if needed (AFTER info collection is complete)
     if (!userContext.userRole && userContext.needsRole) {
       const name = userContext.userInfo?.name || '';
-      return { 
-        response: SMART_AI.getTimeBasedRoleQuestion(name, language), 
-        needsRole: true 
+      return {
+        response: SMART_AI.getTimeBasedRoleQuestion(name, language),
+        needsRole: true
       };
     }
 
@@ -508,15 +508,15 @@ const SMART_AI = {
         userContext.userRole = role;
         userContext.needsRole = false;
         const name = userContext.userInfo?.name || '';
-        return { 
-          response: SMART_AI.getRoleWelcome(role, name, language), 
-          context: userContext 
+        return {
+          response: SMART_AI.getRoleWelcome(role, name, language),
+          context: userContext
         };
       } else {
         const name = userContext.userInfo?.name || '';
-        return { 
-          response: SMART_AI.getTimeBasedRoleQuestion(name, language), 
-          needsRole: true 
+        return {
+          response: SMART_AI.getTimeBasedRoleQuestion(name, language),
+          needsRole: true
         };
       }
     }
@@ -565,13 +565,13 @@ const SMART_AI = {
 const UnifiedResponseGenerator = {
   generate: async (message, language = 'en', userContext = {}, conversation = []) => {
     console.log(`💬 Processing: "${message}" in language: ${language}`);
-    
+
     // Auto-detect language from message if not specified
     const detectedLanguage = LanguageDetector.detect(message);
     const useLanguage = detectedLanguage !== 'en' ? detectedLanguage : language;
-    
+
     console.log(`🌐 Using language: ${useLanguage}`);
-    
+
     // Skip Gemini for info collection steps to maintain sequential flow
     if (userContext.collectingInfo || userContext.needsRole) {
       console.log('🔤 Using SMART_AI for info/role collection');
@@ -605,7 +605,7 @@ const UnifiedResponseGenerator = {
       // Step 1: Try Gemini with detected language (only after info and role collection)
       console.log('🚀 Attempting Gemini with language:', useLanguage);
       const geminiResult = await GeminiService.generateResponse(message, conversation, useLanguage);
-      
+
       if (geminiResult.success) {
         console.log('✅ Using Gemini response');
         return {
@@ -618,9 +618,9 @@ const UnifiedResponseGenerator = {
       // Step 2: Fallback to SMART_AI if Gemini fails
       console.log('🔄 Gemini failed, using SMART_AI...');
       const fallbackResponse = await SMART_AI.generateResponse(
-        message, 
-        useLanguage, 
-        userContext, 
+        message,
+        useLanguage,
+        userContext,
         conversation
       );
 
@@ -635,10 +635,10 @@ const UnifiedResponseGenerator = {
 
     } catch (error) {
       console.error('Unified response generator error:', error);
-      
+
       // Final fallback to SMART_AI
       const fallbackResponse = await SMART_AI.generateResponse(message, useLanguage, userContext, conversation);
-      
+
       return {
         response: fallbackResponse.response,
         source: 'smart_ai_fallback',
@@ -659,13 +659,13 @@ const UnifiedResponseGenerator = {
 router.post('/start', async (req, res) => {
   try {
     const { language = 'en', message } = req.body;
-    
+
     // Auto-detect language from initial message if provided
     let detectedLanguage = language;
     if (message) {
       detectedLanguage = LanguageDetector.detect(message);
     }
-    
+
     const userId = `guest_${Math.random().toString(36).substr(2, 9)}`;
     const session = new Chatbot({
       sessionId: `chat_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -673,7 +673,7 @@ router.post('/start', async (req, res) => {
       userType: 'guest',
       language: detectedLanguage,
       conversation: [],
-      userContext: { 
+      userContext: {
         collectingInfo: true,
         currentStep: 'name'  // Start with name collection
       }
@@ -719,8 +719,8 @@ router.post('/message', async (req, res) => {
     );
 
     // Add assistant response to conversation
-    session.conversation.push({ 
-      role: 'assistant', 
+    session.conversation.push({
+      role: 'assistant',
       message: unifiedResponse.response,
       source: unifiedResponse.source
     });
@@ -728,7 +728,7 @@ router.post('/message', async (req, res) => {
     // Update user context if provided
     if (unifiedResponse.context) {
       session.userContext = unifiedResponse.context;
-      
+
       // Save user info to database if collected
       if (unifiedResponse.context.userInfo) {
         session.userInfo = unifiedResponse.context.userInfo;

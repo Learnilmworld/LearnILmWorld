@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import axios from 'axios'
+import ReactFlagsSelect from "react-flags-select";
 
 /* -------------------------
    Trainer sub-pages (all inside same file)
@@ -774,6 +775,8 @@ const TrainerProfile = () => {
     languages: Array.isArray(user?.profile?.languages) ? [...user.profile.languages] : [],
     trainerLanguages: Array.isArray(user?.profile?.trainerLanguages) ? [...user.profile.trainerLanguages] : [],
     experience: user?.profile?.experience ?? 0,
+    nationalityCode: user?.profile?.nationalityCode || '',
+    standards: Array.isArray(user?.profile?.standards) ? [...user.profile.standards] : [],
     hourlyRate: user?.profile?.hourlyRate ?? 25,
     phone: user?.profile?.phone || '',
     location: user?.profile?.location || '',
@@ -821,6 +824,7 @@ const TrainerProfile = () => {
   const [newLanguage, setNewLanguage] = useState('')
   const [newSpecialization, setNewSpecialization] = useState('')
   const [newStudentAge, setNewStudentAge] = useState('')
+  const [newStandard, setNewStandard] = useState("")
   const [newProfileImage, setNewProfileImage] = useState('')
 
   useEffect(() => {
@@ -1033,18 +1037,37 @@ const TrainerProfile = () => {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                 <input name="email" type="email" value={formData.email} className="input-field bg-gray-50" disabled />
               </div>
-
+              
+              {/* Phone Number */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
                 <input name="profile.phone" value={formData.profile.phone} onChange={handleChange} className="input-field" placeholder="+1 (555) 123-4567" />
+              </div>
+             {/* Nationality */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Nationality
+                </label>
+
+                <ReactFlagsSelect
+                  selected={formData.profile.nationalityCode}
+                  onSelect={(code) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      profile: { ...prev.profile, nationalityCode: code },
+                    }))
+                  }
+                  searchable
+                  className="w-full"
+                  selectButtonClassName="input-field flex items-center justify-between"
+                  placeholder="Select Nationality"
+                />
               </div>
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Location</label>
                 <input name="profile.location" value={formData.profile.location} onChange={handleChange} className="input-field" placeholder="City, Country" />
-              </div>
-
-              
+              </div>         
             </div>
 
             <div className="mt-6">
@@ -1143,7 +1166,7 @@ const TrainerProfile = () => {
               </div>
             </div>
 
-            {/* Specializations */}
+            {/* Specializations / Subjects */}
             <div className="mt-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">Specializations</label>
               <ul className="space-y-2 mb-4">
@@ -1159,22 +1182,48 @@ const TrainerProfile = () => {
               </div>
             </div>
 
-            {/* Student Age */}
+            {/* Standards */}
             <div className="mt-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Student Age Groups</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Standards (e.g., 5-8, 5-10, etc.)
+              </label>
+
               <ul className="space-y-2 mb-4">
-                {(formData.profile.studentAge || []).map((age, idx) => (
-                  <li key={idx} className="flex items-center justify-between bg-gray-100 p-2 rounded">{age}
-                    <button type="button" onClick={() => removeFromArray('studentAge', idx)} className="text-red-600">Remove</button>
+                {(formData.profile.standards || []).map((std, idx) => (
+                  <li key={idx} className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                    {std}
+                    <button
+                      type="button"
+                      onClick={() => removeFromArray('standards', idx)}
+                      className="text-red-600"
+                    >
+                      Remove
+                    </button>
                   </li>
                 ))}
               </ul>
+
               <div className="flex">
-                <input type="text" value={newStudentAge} onChange={(e) => setNewStudentAge(e.target.value)} className="input-field flex-1 mr-2" placeholder="Add new age group (e.g., Kids)" />
-                <button type="button" onClick={() => { addToArray('studentAge', newStudentAge); setNewStudentAge('') }} className="btn-primary">Add</button>
+                <input
+                  type="text"
+                  value={newStandard}
+                  onChange={(e) => setNewStandard(e.target.value)}
+                  className="input-field flex-1 mr-2"
+                  placeholder="Add new standard (e.g., 5-8)"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    addToArray('standards', newStandard)
+                    setNewStandard('')
+                  }}
+                  className="btn-primary"
+                >
+                  Add
+                </button>
               </div>
             </div>
-
+            
             {/* Trainer Languages (complex) */}
             <div className="mt-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">Trainer Languages</label>

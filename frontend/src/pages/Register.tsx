@@ -36,6 +36,7 @@ interface RegisterFormData {
   subjects?: string
   standards?: string
   customStandardRange?: string
+  nationalityCode?: string
 }
 
 
@@ -62,7 +63,11 @@ const Register: React.FC = () => {
     languages: '',
     standards: '',
     customStandardRange: '',
+    nationalityCode: '',
   })
+
+  const showStandards = formData.role === "trainer" && formData.subjects?.trim() !== "";
+
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -71,12 +76,12 @@ const Register: React.FC = () => {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+    ) => {
+      setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    }
 
 
-    const addCertificate = (certificate: Certificate) => {
+  const addCertificate = (certificate: Certificate) => {
     setFormData(prev => ({
       ...prev,
       certificates: [...(prev.certificates || []), certificate],
@@ -159,11 +164,12 @@ const Register: React.FC = () => {
         return;
       }
 
-      if (!formData.standards) {
-        setError('Please select the standards you can teach.');
+      if (formData.subjects?.trim() !== "" && !formData.standards) {
+        setError("Please select the standards you can teach.");
         setLoading(false);
         return;
       }
+
 
       if (formData.standards === 'Others' && !formData.customStandardRange?.trim()) {
         setError('Please specify your custom standard range.');
@@ -172,7 +178,6 @@ const Register: React.FC = () => {
       }
 
     }
-
 
     const experienceYears = parseInt(formData.experience) || 0;
     // Ensure every certificateImage is a string before sending
@@ -213,6 +218,7 @@ const Register: React.FC = () => {
         certifications: sanitizedCertificates,
         dob: formData.dob,
         bio: formData.bio,
+        nationalityCode: formData.nationalityCode,
         resume: resumeData,
         subjects: formData.subjects?.split(',').map(s => s.trim()).filter(Boolean),
         languages: formData.languages?.split(',').map(l => l.trim()).filter(Boolean),
@@ -374,7 +380,7 @@ const Register: React.FC = () => {
                 </label>
               </div>
             </div>
-
+            {/* name */}
             <div>
               <label
                 htmlFor="name"
@@ -396,7 +402,7 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-
+            {/* email */}
             <div>
               <label
                 htmlFor="email"
@@ -418,7 +424,7 @@ const Register: React.FC = () => {
                 />
               </div>
             </div>
-
+            {/* passowrd */}
             <div>
               <label
                 htmlFor="password"
@@ -451,9 +457,7 @@ const Register: React.FC = () => {
                 </button>
               </div>
             </div>
-
-            
-
+            {/* confirm password */}
             <div>
               <label
                 htmlFor="confirmPassword"
@@ -487,7 +491,7 @@ const Register: React.FC = () => {
               </div>
             </div>
 
-            {/* Phone Number (shown for all users) */}
+            {/* Phone Number + nationality  code */}
             <div>
               <label className="block text-sm font-semibold text-[#2D274B] mb-2">
                 Phone Number
@@ -496,7 +500,11 @@ const Register: React.FC = () => {
                 <PhoneInput
                   country={'in'} // default country code
                   value={formData.phone}
-                  onChange={(phone) => setFormData(prev => ({ ...prev, phone }))}
+                  onChange={(phone, countryData) =>
+                    setFormData(prev => ({
+                      ...prev, phone, nationalityCode: (countryData as any)?.iso2?.toUpperCase() || ''
+                    }))
+                  }
                   inputStyle={{
                     width: '100%',
                     borderRadius: '0.75rem',
@@ -605,7 +613,8 @@ const Register: React.FC = () => {
                   <p className="text-xs text-gray-500 mt-1">You must fill at least one of: Subjects or Languages.</p>
                 </div>
 
-                {/* Standards Field */}
+                {/* Standards Field, only shown when subject field is used*/}
+                {showStandards && (
                 <div>
                   <label className="block text-sm font-semibold text-[#2D274B] mb-2">
                     Standards You Can Teach <span className="text-red-500">*</span>
@@ -638,6 +647,7 @@ const Register: React.FC = () => {
                     />
                   )}
                 </div>
+                )}
 
 
                 {/* Date of Birth */}
@@ -775,7 +785,7 @@ const Register: React.FC = () => {
               </>
             )}
 
-
+            {/* submit button */}
             <button
               type="submit"
               disabled={loading}
@@ -806,6 +816,7 @@ const Register: React.FC = () => {
             </button>
           </form>
 
+          {/* sign in button */}
           <div className="mt-8 text-center">
             <p className="text-[#4B437C] font-bold">
               Already have an account?{' '}

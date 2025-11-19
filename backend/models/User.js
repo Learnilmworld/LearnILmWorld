@@ -24,7 +24,7 @@ const CertificationSchema = new mongoose.Schema({
     },
     default: null
   },
-  // New fields for trainer verification
+
   certificateLink: { type: String, trim: true, default: '' },
   issuedDate: { type: Date, default: null },
   certificateImage: { type: String, trim: true, default: '' }
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true, minlength: 8 },
   role: { type: String, enum: ['student', 'trainer', 'admin'], required: true },
   profile: {
-    // basic
+
     bio: { type: String, trim: true, default: '' },
 
     dob: { type: Date, default: null },
@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
     // primary image URL (single) - used for trainers & students
     imageUrl: { type: String, trim: true, default: '' },
 
-    // already-existing avatar (kept for compatibility)
+    // already-existing avatar (for compatibility)
     avatar: { type: String, trim: true, default: '' },
 
     // student-specific fields (students + trainers can have these; optional)
@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema({
     // languages as array of strings for simple UI usage
     languages: [{ type: String, trim: true }],
 
-    // richer trainer languages (optional)
+    // richer trainer languages (optional) commented out for now.
     // trainerLanguages: { type: [LanguageSchema], default: [] },
 
     experience: { type: Number, min: 0, default: 0 },
@@ -75,6 +75,10 @@ const userSchema = new mongoose.Schema({
 
     phone: { type: String, trim: true, default: '' },
     location: { type: String, trim: true, default: '' },
+
+    nationalityCode: { type: String, trim: true, uppercase: true, default: '' }, // store 'IN', 'US', 'RU' for using flag cdn
+    // always use uppercase or else ReactFlagsSelect will ignore it.
+    // nationalityName: { type: String, trim: true, default: '' }, // optional
 
     // list of specializations
     specializations: { type: [String], default: [] },

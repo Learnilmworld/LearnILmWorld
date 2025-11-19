@@ -7,20 +7,20 @@ const router = express.Router();
 // Get all trainers
 router.get('/trainers', async (req, res) => {
   try {
-    const { 
-      language, 
-      minRate, 
-      maxRate, 
-      experience, 
+    const {
+      language,
+      minRate,
+      maxRate,
+      experience,
       specialization,
       rating,
       availability,
       search
     } = req.query;
 
-    let query = { 
-      role: 'trainer', 
-      isActive: true 
+    let query = {
+      role: 'trainer',
+      isActive: true
     };
 
     // Apply filters
@@ -100,25 +100,42 @@ router.get('/profile/:id', async (req, res) => {
   }
 });
 
-// Update profile
 router.put('/profile', authenticate, async (req, res) => {
   try {
     const updates = req.body;
-    delete updates.password; // Don't allow password updates here
-    delete updates.email; // Don't allow email updates
-    delete updates.role; // Don't allow role updates
-    
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      { $set: updates },
-      { new: true, runValidators: true }
-    ).select('-password');
 
-    res.json(user);
+    // forbidden fields
+    delete updates.password;
+    delete updates.email;
+    delete updates.role;
+
+    const existingUser = await User.findById(req.user._id);
+    if (!existingUser) return res.status(404).json({ message: "User not found" });
+
+    // MERGE, DON'T REPLACE PROFILE
+    if (updates.profile) {
+      existingUser.profile = {
+        ...existingUser.profile.toObject(),
+        ...updates.profile
+      };
+      delete updates.profile;
+    }
+
+    // apply top-level updates
+    Object.assign(existingUser, updates);
+
+    const savedUser = await existingUser.save();
+    const userToSend = savedUser.toObject();
+    delete userToSend.password;
+
+    console.log("SAFE UPDATED USER:", userToSend);
+
+    res.json(userToSend);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 
 // Get dashboard stats
 router.get('/stats', authenticate, async (req, res) => {

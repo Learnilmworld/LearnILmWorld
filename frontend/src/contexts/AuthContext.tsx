@@ -148,7 +148,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateProfile = async (updates: any) => {
     try {
       const response = await axios.put(`${API_BASE_URL}/api/users/profile`, updates)
-      setUser(response.data)
+      setUser(prev => ({
+        ...prev,               // keep old token + email + role  
+        ...response.data      // update changed fields
+      }))
+
       return { success: true }
     } catch (error: any) {
       return {
