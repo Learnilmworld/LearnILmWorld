@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion } from "framer-motion"
-import {
-  HelpCircle,
-  FileText,
-  BookOpen,
-  Briefcase,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
+import { HelpCircle, FileText, BookOpen, Briefcase
 } from "lucide-react"
+// Facebook, Twitter, Instagram, Linkedin, removed ffrom above
 // import logo from "../assets/LearnilmworldLogo.jpg";
 import about_us from '../assets/About_us1.png';
 import our_story from '../assets/our_story.png';
 import careers_img from '../assets/careers_img.png';
-import { Navbar, Nav, Container, Offcanvas, Button } from "react-bootstrap"
+import {Nav, Container, Offcanvas, Button } from "react-bootstrap"
+//  Navbar,  removed from above react-bootstrap
 import Footer from "../components/Footer";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -30,7 +24,7 @@ export default function AboutPage() {
     message: "",
   });
 
-  const [feedbackStatus, setFeedbackStatus] = useState(null);
+  const [feedbackStatus, setFeedbackStatus] = useState<String | null>(null);
   const [showFeedback, setShowFeedback] = React.useState(false);
 
 
@@ -619,7 +613,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-
       {/* TERMS & CONDITIONS */}
       <section id="terms" className="py-24 px-6 bg-[#dc8d33] text-[#2D274B]">
         <div className="max-w-6xl mx-auto text-center">
@@ -694,10 +687,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-
       {/* Footer - expanded */}
       <Footer />
-
     </div>
   )
 }

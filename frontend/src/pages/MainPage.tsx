@@ -751,49 +751,49 @@ const MainPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Nationality Filter */}
-<div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm">
-  <label className="text-base font-bold text-[#dc8d33]">Nationality</label>
+          {/* Nationality Filter */}
+          <div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm">
+            <label className="text-base font-bold text-[#dc8d33]">Nationality</label>
 
-  <button
-    onClick={() =>
-      setShowFilters(prev => ({ ...prev, nationality: !prev.nationality }))
-    }
-    className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-[#CBE56A] text-sm font-semibold flex justify-between items-center"
-  >
-    <span className="flex items-center gap-2">
-      {filters.nationality ? (
-        <>
-          {renderFlag(filters.nationality)}
-          {filters.nationality}
-        </>
-      ) : (
-        "Select Nationality"
-      )}
-    </span>
-    <ChevronDown
-      className={`h-4 w-4 ${showFilters.nationality ? "rotate-180" : ""}`}
-    />
-  </button>
+            <button
+              onClick={() =>
+                setShowFilters(prev => ({ ...prev, nationality: !prev.nationality }))
+              }
+              className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-[#CBE56A] text-sm font-semibold flex justify-between items-center"
+            >
+              <span className="flex items-center gap-2">
+                {filters.nationality ? (
+                  <>
+                    {renderFlag(filters.nationality)}
+                    {filters.nationality}
+                  </>
+                ) : (
+                  "Select Nationality"
+                )}
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 ${showFilters.nationality ? "rotate-180" : ""}`}
+              />
+            </button>
 
-  {showFilters.nationality && (
-    <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto">
-      {uniqueNationalities.map(code => (
-        <div
-          key={code}
-          onClick={() => {
-            setFilters(prev => ({ ...prev, nationality: code }));
-            setShowFilters(prev => ({ ...prev, nationality: false }));
-          }}
-          className="cursor-pointer flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded text-sm"
-        >
-          {renderFlag(code)}
-          <span>{code}</span>
-        </div>
-      ))}
-    </div>
-  )}
-</div>
+            {showFilters.nationality && (
+              <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto">
+                {uniqueNationalities.map(code => (
+                  <div
+                    key={code}
+                    onClick={() => {
+                      setFilters(prev => ({ ...prev, nationality: code }));
+                      setShowFilters(prev => ({ ...prev, nationality: false }));
+                    }}
+                    className="cursor-pointer flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded text-sm"
+                  >
+                    {renderFlag(code)}
+                    <span>{code}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
 
           </div>

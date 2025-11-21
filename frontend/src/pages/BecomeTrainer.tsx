@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronRight,Facebook, Twitter, Instagram, Linkedin
-} from "lucide-react";
+import { ChevronDown, ChevronRight} from "lucide-react";
 import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
-import logo from '../assets/LearnilmworldLogo.jpg'
+// import logo from '../assets/LearnilmworldLogo.jpg'
 import image1 from '../assets/become-trainer3.png'
 import image2 from '../assets/become-trainer4.png'
 import Footer from "../components/Footer";
@@ -317,9 +316,7 @@ const BecomeTrainer: React.FC = () => {
             </motion.div>
           ))}
         </div>
-      </section>
-
-     
+      </section>    
 
       {/* Trainer FAQs Section */}
       <section
@@ -408,7 +405,6 @@ const BecomeTrainer: React.FC = () => {
         </div>
       </section>
 
-
        {/* Call to Action Section */}
       <section className="text-center py-20 px-6 bg-[#dc8d33]">
         <motion.h2
@@ -434,16 +430,3 @@ const BecomeTrainer: React.FC = () => {
 };
 
 export default BecomeTrainer;
-
-
-
-// Empower Learners Across 180+ Countries
-
-// At LearnOSphere, educators connect with a global community of over 800,000 students. Join us and get all the tools you need to teach, inspire, and grow.
-
-// ✅ Continuous Flow of Learners — Reach motivated students from around the world.
-// ✅ Smart Scheduling Tools — Manage your sessions effortlessly with our intuitive calendar.
-// ✅ Interactive Virtual Classrooms — Engage your students with real-time learning tools.
-// ✅ Secure & Flexible Payments — Get paid easily, wherever you are.
-// ✅ Growth-Focused Training — Access exclusive webinars and teaching resources.
-// ✅ Thriving Educator Community — Connect, share, and collaborate with fellow mentors.

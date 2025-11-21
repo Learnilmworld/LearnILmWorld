@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import trainer_profile from "../assets/trainer_profile.png";
+import Marquee from "./Marquee";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
@@ -200,7 +201,6 @@ useEffect(() => {
   setPickRoleMap(map);
 }, []);
 
-
   return (
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -218,82 +218,91 @@ useEffect(() => {
           Highly rated & verified mentors — languages & subjects.
         </p>
 
-        <div className="mt-12 overflow-x-auto scrollbar-hide">
-          <div className="flex gap-8 snap-x snap-mandatory px-2">
-            {trainers.map((trainer, idx) => {
-              const id = trainer._id;
-              const role = id ? pickRoleMap[id] ?? "other" : "other";
-              const showLangs =
-                role === "language" && trainer.profile?.languages?.length;
-              const showSubs =
-                role === "subject" && trainer.profile?.subjects?.length;
-              // Fallback: if neither, show languages if present else subjects
-              const displayList =
-                showLangs
-                  ? trainer.profile!.languages!
-                  : showSubs
-                  ? trainer.profile!.subjects!
-                  : trainer.profile?.languages && trainer.profile.languages.length > 0
-                  ? trainer.profile.languages
-                  : trainer.profile?.subjects || [];
+        <div className="mt-12">
+  <Marquee speed={22}>
+    <div className="flex gap-8 px-2">
+      {trainers.map((trainer, idx) => {
+        const id = trainer._id;
+        const role = id ? pickRoleMap[id] ?? "other" : "other";
+        const showLangs =
+          role === "language" && trainer.profile?.languages?.length;
+        const showSubs =
+          role === "subject" && trainer.profile?.subjects?.length;
 
-              return (
-                <motion.div
-                  key={id ?? idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  viewport={{ once: true }}
-                  className="min-w-[260px] max-w-[260px] bg-[#2D274B] text-white rounded-2xl shadow-xl p-6 snap-center hover:scale-105 transition cursor-pointer"
-                >
-                  {/* role badge */}
-                  <div className="flex justify-end mb-2">
-                    <span className={`text-xs px-2 py-1 rounded-full font-semibold ${role === "language" ? "bg-[#da9649] text-[#2D274B]" : role === "subject" ? "bg-[#CBE56A] text-[#2D274B]" : "bg-white text-[#2D274B]"}`}>
-                      {role === "language" ? "Language" : role === "subject" ? "Subject" : "Trainer"}
-                    </span>
-                  </div>
+        const displayList =
+          showLangs
+            ? trainer.profile!.languages!
+            : showSubs
+            ? trainer.profile!.subjects!
+            : trainer.profile?.languages?.length
+            ? trainer.profile.languages
+            : trainer.profile?.subjects || [];
 
-                  <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-[#CBE56A] shadow">
-                    <img
-                      src={trainer.profile?.imageUrl || trainer_profile}
-                      className="w-full h-full object-cover"
-                      alt={trainer.name || "trainer"}
-                    />
-                  </div>
+        return (
+          <div
+            key={id ?? idx}
+            className="min-w-[260px] max-w-[260px] bg-[#2D274B] text-white rounded-2xl shadow-xl p-6 hover:scale-105 transition cursor-pointer"
+          >
+            {/* role badge */}
+            <div className="flex justify-end mb-2">
+              <span
+                className={`text-xs px-2 py-1 rounded-full font-semibold ${
+                  role === "language"
+                    ? "bg-[#da9649] text-[#2D274B]"
+                    : role === "subject"
+                    ? "bg-[#CBE56A] text-[#2D274B]"
+                    : "bg-white text-[#2D274B]"
+                }`}
+              >
+                {role === "language"
+                  ? "Language"
+                  : role === "subject"
+                  ? "Subject"
+                  : "Trainer"}
+              </span>
+            </div>
 
-                  <h3 className="text-xl font-bold text-center mt-4">
-                    {trainer.name || "Unnamed Trainer"}
-                  </h3>
+            <div className="w-28 h-28 mx-auto rounded-full overflow-hidden border-4 border-[#CBE56A] shadow">
+              <img
+                src={trainer.profile?.imageUrl || trainer_profile}
+                className="w-full h-full object-cover"
+              />
+            </div>
 
-                  {/* display languages or subjects depending on role */}
-                  {displayList && displayList.length > 0 ? (
-                    <p className="text-center text-sm text-[#CBE56A] font-medium mt-1">
-                      {displayList.slice(0, 3).join(", ")}
-                    </p>
-                  ) : (
-                    <p className="text-center text-sm text-[#CBE56A] font-medium mt-1">
-                      {trainer.profile?.experience ? `${trainer.profile.experience} yrs experience` : "Experienced tutor"}
-                    </p>
-                  )}
+            <h3 className="text-xl font-bold text-center mt-4">
+              {trainer.name}
+            </h3>
 
-                  <div className="mt-4 text-sm text-center">
-                    <span className="text-[#CBE56A] font-semibold">
-                      {trainer.profile?.experience ?? 0} yrs
-                    </span>{" "}
-                    experience
-                  </div>
+            {displayList.length > 0 ? (
+              <p className="text-center text-sm text-[#CBE56A] font-medium mt-1">
+                {displayList.slice(0, 3).join(", ")}
+              </p>
+            ) : (
+              <p className="text-center text-sm text-[#CBE56A] font-medium mt-1">
+                Experienced tutor
+              </p>
+            )}
 
-                  <Link
-                    to={`/trainer-profile/${trainer._id}`}
-                    className="block mt-5 w-full text-center bg-[#CBE56A] text-[#2D274B] py-2 rounded-lg font-semibold hover:bg-[#d6f05c] transition"
-                  >
-                    View Profile
-                  </Link>
-                </motion.div>
-              );
-            })}
+            <div className="mt-4 text-sm text-center">
+              <span className="text-[#CBE56A] font-semibold">
+                {trainer.profile?.experience ?? 0} yrs
+              </span>{" "}
+              experience
+            </div>
+
+            <Link
+              to={`/trainer-profile/${trainer._id}`}
+              className="block mt-5 w-full text-center bg-[#CBE56A] text-[#2D274B] py-2 rounded-lg font-semibold hover:bg-[#d6f05c] transition"
+            >
+              View Profile
+            </Link>
           </div>
-        </div>
+        );
+      })}
+    </div>
+  </Marquee>
+</div>
+
       </div>
     </section>
   );

@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
-import { useAuth, User } from '../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
+// , User - removed from above
 import '../theme.css' // ensure theme is imported (or import once in index.tsx)
 
 
-interface LoginResult {
-  success: boolean
-  user?: User
-  error?: string
-  data?: any
-}
+// interface LoginResult {
+//   success: boolean
+//   user?: User
+//   error?: string
+//   data?: any
+// }
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
@@ -24,86 +25,84 @@ const Login: React.FC = () => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const extractUserObject = (result: any) => {
-    if (!result || typeof result !== 'object') return null
+  // const extractUserObject = (result: any) => {
+  //   if (!result || typeof result !== 'object') return null
 
-    // Common shapes:
-    // { user: {...}, success: true }
-    // { data: { user: {...} } }
-    // { data: {...userProps...} }
-    // { user: {...} } or directly user object
-    if ('user' in result && result.user) return result.user
-    if ('data' in result) {
-      if (result.data?.user) return result.data.user
-      // if data itself looks like a user object
-      return result.data
-    }
-    // fallback when login returns the user directly
-    return result
-  }
+  //   // Common shapes:
+  //   // { user: {...}, success: true }
+  //   // { data: { user: {...} } }
+  //   // { data: {...userProps...} }
+  //   // { user: {...} } or directly user object
+  //   if ('user' in result && result.user) return result.user
+  //   if ('data' in result) {
+  //     if (result.data?.user) return result.data.user
+  //     // if data itself looks like a user object
+  //     return result.data
+  //   }
+  //   // fallback when login returns the user directly
+  //   return result
+  // }
 
-  const getRoleFromObject = (userObj: any) => {
-    if (!userObj) return ''
-    // role could be in different keys or nested
-    return (
-      userObj.role ??
-      userObj.roleName ??
-      userObj?.user?.role ??
-      // roles array case
-      (Array.isArray(userObj.roles) && userObj.roles[0]) ??
-      ''
-    )
-  }
+  // const getRoleFromObject = (userObj: any) => {
+  //   if (!userObj) return ''
+  //   // role could be in different keys or nested
+  //   return (
+  //     userObj.role ??
+  //     userObj.roleName ??
+  //     userObj?.user?.role ??
+  //     // roles array case
+  //     (Array.isArray(userObj.roles) && userObj.roles[0]) ??
+  //     ''
+  //   )
+  // }
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
-  setLoading(true)
-  setError('')
+    e.preventDefault()
+    setLoading(true)
+    setError('')
 
-  try {
-    const result = await login(formData.email, formData.password)
-    console.log('Login result:', result)
+    try {
+      const result = await login(formData.email, formData.password)
+      console.log('Login result:', result)
 
-    if (!result.success) {
-      // show the exact message from backend
-      setError(result.error || 'Login failed. Please check credentials.')
-      return
+      if (!result.success) {
+        // show the exact message from backend
+        setError(result.error || 'Login failed. Please check credentials.')
+        return
+      }
+
+      // pull user object if needed
+      const userObj = result.user || result.data || result
+
+      const role = (
+        userObj?.role ||
+        userObj?.roleName ||
+        (Array.isArray(userObj?.roles) && userObj.roles[0]) ||
+        ''
+      ).toString().toLowerCase()
+
+      //  After successful login
+      const redirectPath = localStorage.getItem('redirectAfterLogin');
+
+      if (redirectPath) {
+        localStorage.removeItem('redirectAfterLogin');
+        navigate(redirectPath, { replace: true });
+      } else if (role.includes('student')) {
+        navigate('/student', { replace: true });
+      } else if (role.includes('trainer') || role.includes('educator')) {
+        navigate('/trainer', { replace: true });
+      } else if (role.includes('admin')) {
+        navigate('/admin', { replace: true });
+      } else {
+        navigate('/main', { replace: true });
+      }
+    } catch (err: any) {
+      console.error('Login error', err)
+      setError(err?.response?.data?.message || err?.message || 'Login failed')
+    } finally {
+      setLoading(false)
     }
-
-    // pull user object if needed
-    const userObj = result.user || result.data || result
-
-    const role = (
-      userObj?.role ||
-      userObj?.roleName ||
-      (Array.isArray(userObj?.roles) && userObj.roles[0]) ||
-      ''
-    ).toString().toLowerCase()
-
-    //  After successful login
-    const redirectPath = localStorage.getItem('redirectAfterLogin');
-
-    if (redirectPath) {
-      localStorage.removeItem('redirectAfterLogin');
-      navigate(redirectPath, { replace: true });
-    } else if (role.includes('student')) {
-      navigate('/student', { replace: true });
-    } else if (role.includes('trainer') || role.includes('educator')) {
-      navigate('/trainer', { replace: true });
-    } else if (role.includes('admin')) {
-      navigate('/admin', { replace: true });
-    } else {
-      navigate('/main', { replace: true });
-    }
-  } catch (err: any) {
-    console.error('Login error', err)
-    setError(err?.response?.data?.message || err?.message || 'Login failed')
-  } finally {
-    setLoading(false)
   }
-}
-
-
 
    return (
     <div

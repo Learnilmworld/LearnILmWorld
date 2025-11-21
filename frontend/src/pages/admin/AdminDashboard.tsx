@@ -1,7 +1,8 @@
 // src/pages/AdminDashboard.tsx
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
-import { Home, UserPlus, Users, Calendar, FilePlus, Trash2, LogOut, Menu, X, Edit3, Eye, TrendingUp, User, BookOpen } from 'lucide-react'
+import { Home, UserPlus, Users, Calendar, FilePlus, Trash2, LogOut, X, Edit3,  TrendingUp, User, BookOpen } from 'lucide-react'
+// Eye, Menu, removed from lucide icons
 import { useAuth } from '../../contexts/AuthContext'
 import axios from 'axios'
 import AdminSessions from './AdminSessions'
@@ -9,9 +10,6 @@ import AdminReviews from './AdminReviews'
 
 import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
-
-
-
 
 type AnyObj = Record<string, any>
 
@@ -50,9 +48,7 @@ interface Session {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
-
 /* -------------------------- Admin Home -------------------------- */
-
 
 const AdminHome: React.FC = () => {
   const [stats, setStats] = useState({
@@ -499,7 +495,6 @@ const handleDownloadTrainers = () =>
   )
 }
 
-
 /* -------------------------- Admin Trainers (Updated) -------------------------- */
 const AdminTrainers: React.FC = () => {
   const [trainers, setTrainers] = useState<AnyObj[]>([])
@@ -608,7 +603,6 @@ const AdminTrainers: React.FC = () => {
   )
 }
 
-
 /* -------------------------- Admin Dashboard Root -------------------------- */
 const AdminDashboard: React.FC = () => {
   const { logout } = useAuth() as any
@@ -688,6 +682,5 @@ const AdminDashboard: React.FC = () => {
     </div>
   )
 }
-
 
 export default AdminDashboard
