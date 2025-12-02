@@ -20,8 +20,6 @@ const StepRole: React.FC<Props> = ({ formData, setFormData, onNext, comingFromBa
     }
   }, [formData.role, comingFromBack]);
 
-
-
   const handleSelect = (role: "student" | "trainer") => {
     setFormData(prev => ({ ...prev, role }));
     onNext();

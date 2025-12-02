@@ -1,4 +1,4 @@
-// src/pages/student/StudentLanding.tsx
+// src/pages/student/StudentLanding<div class="p-6 rounded-2xl shadow-md bg-white border border-gray-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"><div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-emerald-500 to-emerald-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-6 h-6 text-white"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg></div><h4 class="font-semibold text-xl text-[#2D274B]">English Training</h4><p class="text-sm text-gray-700 mt-2 leading-relaxed">Improve communication and language skills</p></div>.tsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -38,8 +38,8 @@ const StudentLanding: React.FC = () => {
           <ServiceCard
             icon={<BookOpen className="w-6 h-6 text-white" />}
             bg="bg-gradient-to-br from-emerald-500 to-emerald-600"
-            title="English Training"
-            desc="Improve communication and language skills"
+            title="Subject Mastery"
+            desc="Conceptual Understanding Build a robust framework"
             color="text-emerald-100"
           />
           <ServiceCard

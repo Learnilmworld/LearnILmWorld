@@ -88,54 +88,54 @@ const Chatbot: React.FC = () => {
     return Object.keys(errors).length === 0;
   };
 
- const handleFormSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (!validateForm()) return;
+    if (!validateForm()) return;
 
-  setIsLoading(true);
+    setIsLoading(true);
 
-  try {
-    // 1. START CHAT SESSION (NO USER DATA YET)
-    const startRes = await axios.post(
-      `${API_BASE_URL}/api/chatbot/start`,
-      { language: selectedLanguage },
-      { timeout: 60000 }
-    );
+    try {
+      // 1. START CHAT SESSION (NO USER DATA YET)
+      const startRes = await axios.post(
+        `${API_BASE_URL}/api/chatbot/start`,
+        { language: selectedLanguage },
+        { timeout: 60000 }
+      );
 
-    const newSessionId = startRes.data.sessionId;
-    setSessionId(newSessionId);
+      const newSessionId = startRes.data.sessionId;
+      setSessionId(newSessionId);
 
-    // 2. SAVE USER DATA INTO MONGO USING SESSION ID
-    await axios.post(
-      `${API_BASE_URL}/api/chatbot/save-user`,
-      {
-        sessionId: newSessionId,
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        role: formData.role.toLowerCase()
-      },
-      { timeout: 60000 }
-    );
+      // 2. SAVE USER DATA INTO MONGO USING SESSION ID
+      await axios.post(
+        `${API_BASE_URL}/api/chatbot/save-user`,
+        {
+          sessionId: newSessionId,
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          role: formData.role.toLowerCase()
+        },
+        { timeout: 60000 }
+      );
 
-    //  3. LOAD CONVERSATION FROM DB
-    setMessages(startRes.data.conversation);
-    setHasProvidedData(true);
-    setShowForm(false);
+      //  3. LOAD CONVERSATION FROM DB
+      setMessages(startRes.data.conversation);
+      setHasProvidedData(true);
+      setShowForm(false);
 
-  } catch (error) {
-    const welcomeMessage = `🎉 ${t.welcome}\n\n${t.intro}\n\n• ${t.points.join('\n• ')}\n\n💡 ${t.question}`;
+    } catch (error) {
+      const welcomeMessage = `🎉 ${t.welcome}\n\n${t.intro}\n\n• ${t.points.join('\n• ')}\n\n💡 ${t.question}`;
 
-    setMessages([{
-      role: 'assistant',
-      message: welcomeMessage,
-      timestamp: new Date()
-      }]);
-  } finally {
-    setIsLoading(false);
-  }
-};
+      setMessages([{
+        role: 'assistant',
+        message: welcomeMessage,
+        timestamp: new Date()
+        }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
 
   const handleFormChange = (field: keyof UserData, value: string) => {
@@ -235,14 +235,14 @@ const Chatbot: React.FC = () => {
         className="chatbot-toggle"
         onClick={() => setIsOpen(!isOpen)}
       >
-        💬 Ask LEARNilM
+        💬 Ask iLM
       </button>
 
       {/* Chatbot Modal */}
       {isOpen && (
         <div className="chatbot-modal">
           <div className="chatbot-header">
-            <h3>Ask LEARNilM</h3>
+            <h3>Ask iLM</h3>
             <div className="chatbot-controls">
               <select 
                 value={selectedLanguage}

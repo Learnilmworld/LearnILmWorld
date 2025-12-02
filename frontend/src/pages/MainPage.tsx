@@ -515,7 +515,9 @@ const MainPage: React.FC = () => {
               </div>
             </Link>
 
-            <nav className="flex items-center space-x-4">
+          <nav className="flex items-center space-x-4">
+            {user ? (
+              // If logged in then Dashboard
               <button
                 onClick={handleDashboardClick}
                 className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-[#2D274B] bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
@@ -523,8 +525,18 @@ const MainPage: React.FC = () => {
                 <span className="relative z-10">Dashboard</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-[#9787F3] to-[var(--accent-orange)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               </button>
+            ) : (
+              // If not logged in → Sign In
+              <Link
+                to="/login"
+                className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-[#2D274B] bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                <span className="relative z-10">Sign In</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-[#9787F3] to-[var(--accent-orange)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </Link>
+            )}
+          </nav>
 
-            </nav>
           </div>
         </div>
       </header>
@@ -717,7 +729,7 @@ const MainPage: React.FC = () => {
               /> */}
               <select
                 value={filters.experience}
-                onChange={e => setFilters(p => ({ ...p, rating: e.target.value }))}
+                onChange={e => setFilters(p => ({ ...p, experience: e.target.value }))}
                 className="w-full mt-1 px-2 py-2 border bg-[#CBE56A] rounded-lg text-base font-semibold "
               >
                 <option value="0">0</option>

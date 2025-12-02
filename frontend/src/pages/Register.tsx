@@ -45,7 +45,7 @@ const Register: React.FC = () => {
   const preselect = searchParams.get('preselect') || '' // e.g. subject or language id
 
   const [formData, setFormData] = useState<RegisterFormData>({ ...initialData, role: preRole })
-  const [stepIndex, setStepIndex] = useState<number>(preRole ? 1 : 0)
+  const [stepIndex, setStepIndex] = useState<number>(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // Tracks if user came by pressing BACK
@@ -271,7 +271,7 @@ const Register: React.FC = () => {
                 {/* ['role', 'basic', 'trainerTeach', 'trainerSelectValues', 'trainerDocs', 'trainerDetails', 'final'] */}
                 {currentStep === 'role' && <StepRole formData={formData} setFormData={setFormData} onNext={() => goNext()} comingFromBack={comingFromBack}/>}
 
-                {currentStep === 'basic' && <StepBasicInfo formData={formData} setFormData={setFormData} onNext={() => setStepIndex(i => i + 1)} onBack={() => setStepIndex(i => Math.max(i - 1, 0))} />}
+                {currentStep === 'basic' && <StepBasicInfo formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} />}
 
                 {currentStep === 'learningType' && <StepChooseLearningType formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} />}
          
