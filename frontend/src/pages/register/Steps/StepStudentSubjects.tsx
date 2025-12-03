@@ -83,8 +83,8 @@ const LANGUAGES = [
   "Manipuri",
 ];
 
-// Hobbies unchanged
-const HOBBIES = [
+// Student Hobbies
+export const HOBBIES = [
   "Drawing",
   "Dancing",
   "Singing",

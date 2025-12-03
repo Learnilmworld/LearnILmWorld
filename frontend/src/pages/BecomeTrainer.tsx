@@ -6,6 +6,7 @@ import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
 // import logo from '../assets/LearnilmworldLogo.jpg'
 import image1 from '../assets/become-trainer3.png'
 import image2 from '../assets/become-trainer4.png'
+import bg_img from '../assets/purple_gradient.jpg'
 import Footer from "../components/Footer";
 
 
@@ -16,9 +17,19 @@ const BecomeTrainer: React.FC = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   return (
-    <div className="bg-[#dc8d33] min-h-screen text-[#2D274B]">
-
-        <header className="sticky top-0 z-40 bg-[#2D274B] backdrop-blur-sm border-b border-white/40">
+    <div className="bg-fixed min-h-screen text-[#e0fa84]"
+    style={{
+      backgroundImage:
+        `url(${bg_img})`,
+        position: "relative",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+    }}
+    >
+      {/* text-[#e0fa84] text-[#2D274B] */}
+        <header className="sticky top-0 z-40 bg-[#6B48AF] backdrop-blur-sm border-b border-white/40">
           <Container className="py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -26,7 +37,7 @@ const BecomeTrainer: React.FC = () => {
                   {/* Main Logo */}
                   <Link to="/">
                   <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center">
-                    <span className="text-[#dc8d33]">
+                    <span className="text-[#e0fa84]">
                       LearniLM
                     </span>
                     <motion.span
@@ -36,7 +47,7 @@ const BecomeTrainer: React.FC = () => {
                     >
                       🌎
                     </motion.span>
-                    <span className="text-[#dc8d33]">
+                    <span className="text-[#e0fa84]">
                       World
                     </span>
                     {/* <motion.div
@@ -55,7 +66,7 @@ const BecomeTrainer: React.FC = () => {
                   Browse our Mentors
                 </Link> */}
 
-                <Link to="/login" className="text-sm text-[#dc8d33] font-semibold  hover:text-[#CBE56A]">
+                <Link to="/login" className="text-sm text-gray-50 font-semibold  hover:text-[#CBE56A]">
                   Sign In
                 </Link>
               </nav>
@@ -106,7 +117,7 @@ const BecomeTrainer: React.FC = () => {
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center text-center py-20 px-4">
         <motion.h1
-          className="text-5xl md:text-6xl font-extrabold text-[#2D274B] mb-6"
+          className="text-5xl md:text-6xl font-extrabold text-[#e0fa84] mb-6"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -114,7 +125,7 @@ const BecomeTrainer: React.FC = () => {
           Empower Learners, Inspire Growth 🌟
         </motion.h1>
         <motion.p
-          className="max-w-2xl font-bold text-xl md:text-2xl text-white mb-10"
+          className="max-w-2xl font-bold text-xl md:text-2xl text-[#2D274B] mb-10"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -139,15 +150,15 @@ const BecomeTrainer: React.FC = () => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-4xl font-bold text-[#2D274B]">
+          <h2 className="text-4xl md:text-4xl font-bold text-[#e0fa84]">
             Teach, Inspire, and Make a Difference
           </h2>
-          <p className="text-xl font-bold text-white leading-relaxed">
+          <p className="text-xl font-bold text-[#2D274B] leading-relaxed">
             At LearniLM World, we believe in empowering individuals through knowledge.
             As a trainer, you’ll help learners from diverse backgrounds gain confidence,
             improve communication, and unlock new opportunities in their lives.
           </p>
-          <ul className="list-disc list-outside text-lg text-white font-bold space-y-2">
+          <ul className="list-disc list-outside text-lg text-[#2D274B] font-bold space-y-2">
             <li>Flexible working hours and teaching freedom</li>
             <li>Access to a supportive and growing learning community</li>
             <li>Opportunity to reach learners from around the world</li>
@@ -198,37 +209,37 @@ const BecomeTrainer: React.FC = () => {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-4xl font-bold text-[#2D274B]">
+          <h2 className="text-4xl md:text-4xl font-bold text-[#e0fa84]">
             Empower Learners Across 150+ Countries 🌍
           </h2>
-          <p className="text-xl text-white font-bold leading-relaxed">
+          <p className="text-xl text-[#2D274B] font-bold leading-relaxed">
            Be part of LearniLM 🌎 World — where passionate educators and curious learners come together. Shape the future of learning and grow with our expanding global community. <br/>
             {/* <span className="font-semibold text-[#8CA0E5]">800,000+</span> students.  */}
             {/* Join us and get all the tools you need to teach, inspire, and grow. */}
           </p>
-          <ul className="space-y-3 text-lg text-white font-bold">
+          <ul className="space-y-3 text-lg text-[#2D274B] font-bold">
             <li className="flex items-start gap-3">
-              <span className="text-[#2D274B] text-xl">✔</span>
+              <span className="text-[#e0fa84] text-xl">✔</span>
               Continuous Flow of Learners — Reach motivated students from around the world.
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-[#2D274B] text-xl">✔</span>
+              <span className="text-[#e0fa84] text-xl">✔</span>
               Smart Scheduling Tools — Manage your sessions effortlessly with our intuitive calendar.
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-[#2D274B] text-xl">✔</span>
+              <span className="text-[#e0fa84] text-xl">✔</span>
               Interactive Virtual Classrooms — Engage your students with real-time learning tools.
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-[#2D274B] text-xl">✔</span>
+              <span className="text-[#e0fa84] text-xl">✔</span>
               Secure & Flexible Payments — Get paid easily, wherever you are.
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-[#2D274B] text-xl">✔</span>
+              <span className="text-[#e0fa84] text-xl">✔</span>
               Growth-Focused Training — Access exclusive webinars and teaching resources.
             </li>
             <li className="flex items-start gap-3">
-              <span className="text-[#2D274B] text-xl">✔</span>
+              <span className="text-[#e0fa84] text-xl">✔</span>
               Thriving Educator Community — Connect, share, and collaborate with fellow mentors.
             </li>
           </ul>
@@ -244,8 +255,9 @@ const BecomeTrainer: React.FC = () => {
 
 
       {/* Benefits Section */}
-      <section className="bg-[#2D274B] py-16 px-6 md:px-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#dc8d33] mb-12">
+      {/* e0fa84 bg-[#2D274B] */}
+      <section className=" py-16 px-6 md:px-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#e0fa84] mb-12">
           Why Teach with LearniLM🌍World?
         </h2>
         <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto ">
@@ -280,8 +292,9 @@ const BecomeTrainer: React.FC = () => {
       </section>
 
       {/* Testimonials Section - trainer review */}
-      <section className=" py-20 px-6 bg-[#2D274B]">
-        <h2 className="text-5xl md:text-4xl sm:text-3xl font-bold text-center mb-12 text-[#dc8d33]">
+      {/* bg-[#2D274B]  e0fa84*/}
+      <section className=" py-20 px-6 ">
+        <h2 className="text-5xl md:text-4xl sm:text-3xl font-bold text-center mb-12 text-[#e0fa84]">
           Straight from the Heart ❤️
         </h2>
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 ">
@@ -327,7 +340,7 @@ const BecomeTrainer: React.FC = () => {
           <div className="text-center mb-10">
             <h2
               id="trainer-faq"
-              className="text-4xl md:text-4xl font-bold text-[#2D274B]"
+              className="text-4xl md:text-4xl font-extrabold text-[#e0fa84]"
             >
               Frequently Asked Questions
             </h2>
@@ -406,7 +419,7 @@ const BecomeTrainer: React.FC = () => {
       </section>
 
        {/* Call to Action Section */}
-      <section className="text-center py-20 px-6 bg-[#dc8d33]">
+      <section className="text-center py-20 px-6">
         <motion.h2
           className="text-3xl md:text-4xl font-extrabold mb-6 text-[#2D274B]"
           initial={{ opacity: 0, y: 30 }}

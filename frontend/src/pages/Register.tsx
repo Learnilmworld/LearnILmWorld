@@ -1,5 +1,6 @@
 // File: src/pages/Register.tsx
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+//  useMemo,removd from above
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import StepRole from './register/Steps/StepRole'
@@ -113,6 +114,7 @@ const Register: React.FC = () => {
         location: formData.location || '',
         nationalityCode: formData.nationalityCode || '',
         bio: formData.bio || '',
+        hobbies: formData.hobbies || [], 
       }
 
       // DOB -> Date or null
@@ -142,6 +144,10 @@ const Register: React.FC = () => {
         // if UI stores subjects for trainer in formData.subjects, map to specializations.
         if (Array.isArray(formData.subjects) && formData.subjects.length > 0) {
           profilePayload.specializations = formData.subjects
+        }
+        // Trainer Hobbies → profile.hobbies
+        if (Array.isArray(formData.hobbies) && formData.hobbies.length > 0) {
+          profilePayload.hobbies = formData.hobbies;
         }
 
         // standards (array) — backend field is standards

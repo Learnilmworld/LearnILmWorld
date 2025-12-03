@@ -57,7 +57,6 @@ const userSchema = new mongoose.Schema({
     // primary image URL (single) - used for trainers & students
     imageUrl: { type: String, trim: true, default: '' },
 
-    // already-existing avatar (for compatibility)
     avatar: { type: String, trim: true, default: '' },
 
     // student-specific fields (students + trainers can have these; optional)
@@ -66,9 +65,8 @@ const userSchema = new mongoose.Schema({
 
     // languages as array of strings for simple UI usage
     languages: [{ type: String, trim: true }],
+    hobbies: [{ type: String, trim: true }],
 
-    // richer trainer languages (optional) commented out for now.
-    // trainerLanguages: { type: [LanguageSchema], default: [] },
 
     experience: { type: Number, min: 0, default: 0 },
     hourlyRate: { type: Number, min: 0, default: 25 },
@@ -124,7 +122,6 @@ const userSchema = new mongoose.Schema({
     rejectionDate: { type: Date, default: null },
   },
   isActive: { type: Boolean, default: true },
-  //  isVerified: { type: Boolean, default: false }, // new field
   stats: {
     totalSessions: { type: Number, default: 0 },
     completedSessions: { type: Number, default: 0 },

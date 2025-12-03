@@ -128,7 +128,7 @@ router.put('/profile', authenticate, async (req, res) => {
     const userToSend = savedUser.toObject();
     delete userToSend.password;
 
-    console.log("SAFE UPDATED USER:", userToSend);
+    // console.log("SAFE UPDATED USER:", userToSend);
 
     res.json(userToSend);
   } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { motion } from "framer-motion";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -25,11 +25,15 @@ const LANGUAGE_OPTIONS = [
   { value: "Telugu", label: "Telugu" },
 ];
 
-const HOBBY_OPTIONS = [
-  { value: "Drawing", label: "Drawing" },
-  { value: "Singing", label: "Singing" },
-  { value: "Dancing", label: "Dancing" },
-  { value: "Cooking", label: "Cooking" },
+// Trainer Hobbies (Professional Expertise Labels)
+export const HOBBY_OPTIONS = [
+  { value: "Drawing", label: "Visual Arts / Drawing Instruction" },
+  { value: "Dancing", label: "Dance Instruction" },
+  { value: "Singing", label: "Vocal Coaching / Singing Lessons" },
+  { value: "Guitar", label: "Guitar Instruction" },
+  { value: "Cooking", label: "Culinary Arts / Cooking Classes" },
+  { value: "Yoga", label: "Yoga Instruction" },
+  { value: "Workout Training", label: "Personal Fitness Training" }
 ];
 
 const STANDARD_OPTIONS = [
@@ -58,25 +62,33 @@ function MultiSelect({
   placeholder,
   single = false,
 }: any) {
+  // When single === true:
+  // - Listbox expects value to be a single value (not an array)
+  // - onChange will be called with a single value
+  //
+  // When single === false:
+  // - Listbox expects value to be an array
+  // - onChange will be called with an array
+
   const handleSelection = (val: any) => {
     if (single) {
-      setSelected([val]);
-      return;
-    }
-
-    if (selected.includes(val)) {
-      setSelected(selected.filter((item: any) => item !== val));
+      // val is a single value (or undefined/null)
+      setSelected(val ? [val] : []);
     } else {
-      setSelected([...selected, val]);
+      // val is already an array
+      setSelected(Array.isArray(val) ? val : []);
     }
   };
 
+  // Provide the correct "value" shape to Listbox
+  const listboxValue = single ? (selected && selected.length ? selected[0] : null) : (selected || []);
+
   return (
-    <Listbox value={selected} onChange={handleSelection} multiple={!single}>
+    <Listbox value={listboxValue} onChange={handleSelection} multiple={!single}>
       <div className="relative mt-1">
         <Listbox.Button className="relative w-full cursor-pointer rounded-lg border bg-white py-2 pl-3 pr-10 text-left shadow-sm">
           <span className="block truncate">
-            {selected.length === 0
+            {(!selected || selected.length === 0)
               ? placeholder
               : single
               ? options.find((o: any) => o.value === selected[0])?.label
@@ -134,23 +146,27 @@ function MultiSelect({
    SELECTED CHIPS COMPONENT
 ---------------------------------------- */
 
-function SelectedChips({ items, setItems }: any) {
+function SelectedChips({ items, setItems, options }: any) {
   return (
     <div className="flex flex-wrap gap-2 mt-2">
-      {items.map((item: string, idx: number) => (
-        <span
-          key={idx}
-          className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center gap-2"
-        >
-          {item}
-          <button
-            onClick={() => setItems(items.filter((x: string) => x !== item))}
-            className="text-red-600 hover:text-red-800"
+      {items.map((value: string, idx: number) => {
+        const label = options.find((opt: any) => opt.value === value)?.label || value;
+
+        return (
+          <span
+            key={idx}
+            className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center gap-2"
           >
-            ×
-          </button>
-        </span>
-      ))}
+            {label}
+            <button
+              onClick={() => setItems(items.filter((x: string) => x !== value))}
+              className="text-red-600 hover:text-red-800"
+            >
+              ×
+            </button>
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -186,15 +202,43 @@ export default function StepTrainerTeach({
   const [customTo, setCustomTo] = useState("");
 
   useEffect(() => {
-    setFormData((prev: any) => ({
-      ...prev,
-      teachingType,
-      teachingSubjects: subjects,
-      teachingLanguages: languages,
-      teachingHobbies: hobbies,
-      teachingStandards: standards,
-    }));
+    setFormData((prev: any) => {
+      const updated: any = {
+        ...prev,
+        teachingType,
+        teachingSubjects: subjects,
+        teachingLanguages: languages,
+        teachingHobbies: hobbies,
+        teachingStandards: standards,
+      };
+
+      // Map to backend-expected fields
+      if (teachingType === "subjects") {
+        updated.subjects = subjects;
+      } 
+      else if (teachingType === "languages") {
+        updated.languages = languages;
+      } 
+      else if (teachingType === "hobbies") {
+        updated.hobbies = hobbies;  // ← THIS FIXES YOUR ISSUE
+      }
+
+      updated.standards = standards;
+
+      return updated;
+    });
   }, [teachingType, subjects, languages, hobbies, standards]);
+
+  //Reset selections when teaching type changes
+  useEffect(() => {
+    setSubjects([]);
+    setLanguages([]);
+    setHobbies([]);
+    setStandards([]);
+    setShowCustomStandard(false);
+    setCustomFrom("");
+    setCustomTo("");
+  }, [teachingType]);
 
   const canProceed = () => {
     if (!teachingType) return false;
@@ -248,7 +292,7 @@ export default function StepTrainerTeach({
             setSelected={(vals: string[]) => vals.length <= 3 && setSubjects(vals)}
             placeholder="Select subjects"
           />
-          <SelectedChips items={subjects} setItems={setSubjects} />
+          <SelectedChips items={subjects} setItems={setSubjects} options={SUBJECT_OPTIONS} />
         </div>
       )}
 
@@ -262,7 +306,7 @@ export default function StepTrainerTeach({
             setSelected={(vals: string[]) => vals.length <= 2 && setLanguages(vals)}
             placeholder="Select languages"
           />
-          <SelectedChips items={languages} setItems={setLanguages} />
+          <SelectedChips items={languages} setItems={setLanguages} options={LANGUAGE_OPTIONS} />
         </div>
       )}
 
@@ -276,7 +320,7 @@ export default function StepTrainerTeach({
             setSelected={(vals: string[]) => vals.length <= 2 && setHobbies(vals)}
             placeholder="Select hobbies"
           />
-          <SelectedChips items={hobbies} setItems={setHobbies} />
+          <SelectedChips items={hobbies} setItems={setHobbies} options={HOBBY_OPTIONS} />
         </div>
       )}
 
@@ -297,7 +341,7 @@ export default function StepTrainerTeach({
             placeholder="Select standards"
           />
 
-          <SelectedChips items={standards} setItems={setStandards} />
+          <SelectedChips items={standards} setItems={setStandards} options={STANDARD_OPTIONS} />
 
           {showCustomStandard && (
             <div className="mt-3 p-3 border rounded-lg bg-gray-50 space-y-3">

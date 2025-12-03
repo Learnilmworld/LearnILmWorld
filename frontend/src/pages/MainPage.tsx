@@ -2,12 +2,14 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import {
-  Search, Filter, Star, Globe, Clock, User, MapPin, ChevronDown, X, Play, Heart
+  Search, Star, Clock, User, MapPin, ChevronDown, X, Play, Heart
 } from 'lucide-react'
+// Globe, Filter,
 import axios from 'axios'
 import { motion } from 'framer-motion'
 import Footer from '../components/Footer'
 import * as Flags from "country-flag-icons/react/3x2";
+import bg_img from '../assets/purple_gradient.jpg'
 
 /** Trainer types: demoVideo optional */
 interface Trainer {
@@ -25,9 +27,10 @@ interface Trainer {
     experience?: number
     hourlyRate?: number
     avatar?: string
-    imageUrl?: string         // <-- primary image field from your schema
+    imageUrl?: string         // primary image field from your schema
     location?: string
     specializations?: string[]
+    hobbies?: string[]
     nationalityCode?: string
     isAvailable?: boolean
     averageRating?: number
@@ -55,6 +58,7 @@ interface FiltersState {
   rating: string
   sortBy: string
   nationality: string | undefined
+  hobby?: string;
 }
 
 
@@ -77,6 +81,7 @@ const MainPage: React.FC = () => {
     rating: '',
     sortBy: 'rating',
     nationality:'',
+    hobby: '',   
   })
 
 
@@ -87,6 +92,7 @@ const MainPage: React.FC = () => {
 
     const selectedLang = params.get("language");
     const selectedSubject = params.get("subject");
+    const selectedHobby = params.get("hobby"); 
 
     if (selectedLang) {
       setFilters(prev => ({
@@ -104,9 +110,12 @@ const MainPage: React.FC = () => {
       }));
       setLearningType("subject");
     }
+
+     if (selectedHobby) {
+    setFilters(prev => ({ ...prev, hobby: selectedHobby }));   
+    setLearningType("hobby");  
+  }
   }, [location.search]);
-
-
 
   const [learningType, setLearningType] = useState("language"); 
 
@@ -123,6 +132,7 @@ const MainPage: React.FC = () => {
     rating: '',
     sortBy: 'rating',
     nationality:'',
+    hobby: '',
   });
 
   // Also reset languageMode when switching away from Language Mode
@@ -191,9 +201,6 @@ const MainPage: React.FC = () => {
       </div>
     );
   };
-
-
-
 
   const handleDashboardClick = () => {
 
@@ -294,6 +301,18 @@ const MainPage: React.FC = () => {
           );
         });
       }
+
+      // Hobby Filter
+if (filters.hobby && filters.hobby.trim() !== '') {
+  const hq = filters.hobby.trim().toLowerCase();
+
+  list = list.filter(t =>
+    (t.profile?.hobbies || [])
+      .filter(Boolean)
+      .some(h => h.toLowerCase().includes(hq))
+  );
+}
+
 
       // Language Filter
       if (filters.language.trim() !== '') {
@@ -464,29 +483,36 @@ const MainPage: React.FC = () => {
     navigate(`/book/${topTrainer._id}`)
   }
 
-
-
   // ---------- render ----------
   return (
-    <div className="min-h-screen bg-[#dc8d33] text-[#2D274B]" 
-    // style={{ background: `linear-gradient(180deg,var(--bg-pale-top),var(--bg-pale-bottom))` }}
+    // {/* 2D274B CBE56A e0fa84 6b48af */}
+    <div className="min-h-screen bg-fixed text-[#2D274B]" 
+    style={{
+      backgroundImage:
+        `url(${bg_img})`,
+        position: "relative",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+    }}
     >
       {/* Floating decorative orbs (kept) */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-16 left-8 w-28 h-28 rounded-full" style={{ background: '#9787F3', opacity: 0.06, animation: 'floaty 6s ease-in-out infinite' }} />
-        <div className="absolute top-40 right-12 w-20 h-20 rounded-full" style={{ background: '#9787F3', opacity: 0.06, animation: 'floaty 6s ease-in-out infinite', animationDelay: '1.8s' }} />
-        <div className="absolute bottom-20 left-1/4 w-36 h-36 rounded-full" style={{ background: 'var(--accent-orange)', opacity: 0.04, animation: 'floaty 6s ease-in-out infinite', animationDelay: '3.2s' }} />
+        <div className="absolute top-20 left-10 w-28 h-28 rounded-full" style={{ background: '#9787F3', opacity: 0.46, animation: 'floaty 6s ease-in-out infinite' }} />
+        <div className="absolute top-40 right-20 w-20 h-20 rounded-full" style={{ background: '#9787F3', opacity: 0.66, animation: 'floaty 6s ease-in-out infinite', animationDelay: '1.8s' }} />
+        {/* <div className="absolute bottom-60 right-1/4 w-16 h-16 z-[-2] rounded-full" style={{ background: '#9787F3', opacity: 0.44, animation: 'floaty 6s ease-in-out infinite', animationDelay: '3.2s' }} /> */}
       </div>
 
       {/* Header (smaller) */}
-      <header className="sticky top-0 z-40 bg-[#2D274B]/95 backdrop-blur-sm border-b border-white/30 text-[#dc8d33]">
+      <header className="sticky top-0 z-40 bg-[#6b48af]/95 backdrop-blur-sm border-b border-white/30 text-[#e0fa84]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center py-3 gap-3 sm:gap-0">
             <Link to="/" className="flex items-center">
               <div>
                 <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center">
                 {/* LEARN */}
-                <span className="text-[#dc8d33] bg-clip-text  drop-shadow-lg">
+                <span className="text-[#e0fa84] bg-clip-text  drop-shadow-lg">
                   LearniLM
                 </span>
 
@@ -500,7 +526,7 @@ const MainPage: React.FC = () => {
                 </motion.span>
 
                 {/* World */}
-                <span className=" bg-clip-text text-[#dc8d33] drop-shadow-lg">
+                <span className=" bg-clip-text text-[#e0fa84] drop-shadow-lg">
                   World
                 </span>
 
@@ -515,41 +541,41 @@ const MainPage: React.FC = () => {
               </div>
             </Link>
 
-          <nav className="flex items-center space-x-4">
-            {user ? (
-              // If logged in then Dashboard
-              <button
-                onClick={handleDashboardClick}
-                className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-[#2D274B] bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                <span className="relative z-10">Dashboard</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-[#9787F3] to-[var(--accent-orange)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              </button>
-            ) : (
-              // If not logged in → Sign In
-              <Link
-                to="/login"
-                className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-[#2D274B] bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
-              >
-                <span className="relative z-10">Sign In</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-[#9787F3] to-[var(--accent-orange)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              </Link>
-            )}
-          </nav>
+            <nav className="flex items-center space-x-4">
+              {user ? (
+                // If logged in then Dashboard
+                <button
+                  onClick={handleDashboardClick}
+                  className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-[#2D274B] bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  <span className="relative z-10">Dashboard</span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-[#9787F3] to-[var(--accent-orange)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </button>
+              ) : (
+                // If not logged in → Sign In
+                <Link
+                  to="/login"
+                  className="relative overflow-hidden group px-5 py-2 rounded-xl font-semibold text-[#2D274B] bg-[#CBE56A] hover:bg-[#CBE56A] transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  <span className="relative z-10">Sign In</span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-[#9787F3] to-[var(--accent-orange)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </Link>
+              )}
+            </nav>
 
           </div>
         </div>
       </header>
-
+      {/* 2D274B CBE56A e0fa84 6b48af  */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         
          {/* Page title (single-line hero) */}
         <div className="text-center mb-4">
-          <h1 className="text-4xl md:text-5xl font-extrabold  mb-2 break-keep">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[#e0fa84]  mb-2 break-keep">
             Find Your Perfect  Trainer
           </h1>
           {/* Description below the hero line */}
-          <p className="text-2xl text-white font-bold max-w-3xl mx-auto">
+          <p className="text-2xl  font-bold max-w-3xl mx-auto">
             Connect with expert trainers from around the world. Start your journey to today.
           </p>
         </div>
@@ -601,13 +627,14 @@ const MainPage: React.FC = () => {
           {/* heading */}
           <h2 className="text-xl font-bold text-[#2D274B] mb-4">I'm Learning</h2>
 
+          {/* 2D274B CBE56A e0fa84 6b48af  */}
           {/* 6 ITEMS PER ROW ALWAYS */}
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
 
             {/* Language Filter */}
             {learningType === "language" && (
-            <div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm ">
-              <label className="text-base font-bold text-[#dc8d33]">What's Next?</label>
+            <div className="relative p-3  rounded-xl shadow-sm ">
+              <label className="text-base font-bold text-[#2D274B]">What's Next?</label>
 
               <button
                 onClick={() => setShowFilters((prev) => ({ ...prev, language: !prev.language }))}
@@ -622,7 +649,7 @@ const MainPage: React.FC = () => {
               </button>
 
               {showFilters.language && (
-                <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-40 z-30 max-h-48 overflow-y-auto">
+                <div className="absolute bg-[#CBE56A] shadow-xl rounded-xl p-3 mt-2 w-40 z-30 max-h-48 overflow-y-auto">
                   <input
                     type="text"
                     placeholder="Search..."
@@ -671,8 +698,8 @@ const MainPage: React.FC = () => {
 
             {/* Specialization / Subjects Dropdown */}
             {learningType === "subject" && (
-            <div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm">
-              <label className="text-base font-bold text-[#dc8d33]">Area of Mastery</label>
+            <div className="relative p-3 rounded-xl shadow-sm">
+              <label className="text-base font-bold text-[#2D274B]">Area of Mastery</label>
 
               <button
                 onClick={() => setShowFilters((prev) => ({ ...prev, subject: !prev.subject }))}
@@ -683,7 +710,7 @@ const MainPage: React.FC = () => {
               </button>
 
               {showFilters.subject && (
-                <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto text-base">
+                <div className="absolute bg-[#CBE56A] shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto text-base">
                   {[
                     "Mathematics",
                     "Science",
@@ -719,8 +746,8 @@ const MainPage: React.FC = () => {
 
 
             {/* Experience */}
-            <div className="p-3 bg-[#2D274B] rounded-xl shadow-sm  ">
-              <label className="text-base font-semibold text-[#dc8d33]">Experience (yrs)</label>
+            <div className="p-3 rounded-xl shadow-sm  ">
+              <label className="text-base font-semibold text-[#2D274B]">Experience (yrs)</label>
               {/* <input
                 type="number"
                 value={filters.experience}
@@ -732,7 +759,7 @@ const MainPage: React.FC = () => {
                 onChange={e => setFilters(p => ({ ...p, experience: e.target.value }))}
                 className="w-full mt-1 px-2 py-2 border bg-[#CBE56A] rounded-lg text-base font-semibold "
               >
-                <option value="0">0</option>
+                <option className="hover:bg-white" value="0">0</option>
                 <option value="2">2</option>
                 <option value="5">5+</option>
                 <option value="10">10+</option>
@@ -740,8 +767,8 @@ const MainPage: React.FC = () => {
             </div>
 
             {/* Rating */}
-            <div className="p-3 bg-[#2D274B] rounded-xl shadow-sm ">
-              <label className="text-base font-semibold text-[#dc8d33]">Rating</label>
+            <div className="p-3  rounded-xl shadow-sm ">
+              <label className="text-base font-semibold text-[#2D274B]">Rating</label>
               <select
                 value={filters.rating}
                 onChange={e => setFilters(p => ({ ...p, rating: e.target.value }))}
@@ -755,8 +782,8 @@ const MainPage: React.FC = () => {
             </div>
 
             {/* Sort By */}
-            <div className="p-3 bg-[#2D274B] rounded-xl shadow-sm ">
-              <label className="text-base font-bold text-[#dc8d33]">Sort By</label>
+            <div className="p-3 rounded-xl shadow-sm ">
+              <label className="text-base font-bold text-[#2D274B]">Sort By</label>
               <select
                 value={filters.sortBy}
                 onChange={e => setFilters(p => ({ ...p, sortBy: e.target.value }))}
@@ -770,8 +797,8 @@ const MainPage: React.FC = () => {
             </div>
 
             {/* Min + Max Price Combined */}
-            <div className="py-3 px-2 bg-[#2D274B] rounded-xl shadow-sm ">
-              <label className="text-base font-bold text-[#dc8d33]">Price Range ($/hr)</label>
+            <div className="py-3 px-2 rounded-xl shadow-sm ">
+              <label className="text-base font-bold text-[#2D274B]">Price Range ($/hr)</label>
 
               <div className="flex items-center gap-2 mt-1 text-[#2D274B]">
                 <input
@@ -791,49 +818,49 @@ const MainPage: React.FC = () => {
               </div>
             </div>
 
-          {/* Nationality Filter */}
-          <div className="relative p-3 bg-[#2D274B] rounded-xl shadow-sm">
-            <label className="text-base font-bold text-[#dc8d33]">Nationality</label>
+            {/* Nationality Filter */}
+            <div className="relative p-3  rounded-xl shadow-sm">
+              <label className="text-base font-bold text-[#2D274B]">Nationality</label>
 
-            <button
-              onClick={() =>
-                setShowFilters(prev => ({ ...prev, nationality: !prev.nationality }))
-              }
-              className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-[#CBE56A] text-sm font-semibold flex justify-between items-center"
-            >
-              <span className="flex items-center gap-2">
-                {filters.nationality ? (
-                  <>
-                    {renderFlag(filters.nationality)}
-                    {filters.nationality}
-                  </>
-                ) : (
-                  "Select Nationality"
-                )}
-              </span>
-              <ChevronDown
-                className={`h-4 w-4 ${showFilters.nationality ? "rotate-180" : ""}`}
-              />
-            </button>
+              <button
+                onClick={() =>
+                  setShowFilters(prev => ({ ...prev, nationality: !prev.nationality }))
+                }
+                className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg bg-[#CBE56A] text-sm font-semibold flex justify-between items-center"
+              >
+                <span className="flex items-center gap-2">
+                  {filters.nationality ? (
+                    <>
+                      {renderFlag(filters.nationality)}
+                      {filters.nationality}
+                    </>
+                  ) : (
+                    "Select Nationality"
+                  )}
+                </span>
+                <ChevronDown
+                  className={`h-4 w-4 ${showFilters.nationality ? "rotate-180" : ""}`}
+                />
+              </button>
 
-            {showFilters.nationality && (
-              <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto">
-                {uniqueNationalities.map(code => (
-                  <div
-                    key={code}
-                    onClick={() => {
-                      setFilters(prev => ({ ...prev, nationality: code }));
-                      setShowFilters(prev => ({ ...prev, nationality: false }));
-                    }}
-                    className="cursor-pointer flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded text-sm"
-                  >
-                    {renderFlag(code)}
-                    <span>{code}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+              {showFilters.nationality && (
+                <div className="absolute bg-white shadow-xl rounded-xl p-3 mt-2 w-48 z-30 max-h-48 overflow-y-auto">
+                  {uniqueNationalities.map(code => (
+                    <div
+                      key={code}
+                      onClick={() => {
+                        setFilters(prev => ({ ...prev, nationality: code }));
+                        setShowFilters(prev => ({ ...prev, nationality: false }));
+                      }}
+                      className="cursor-pointer flex items-center gap-2 px-2 py-1 hover:bg-gray-100 rounded text-sm"
+                    >
+                      {renderFlag(code)}
+                      <span>{code}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
 
           </div>

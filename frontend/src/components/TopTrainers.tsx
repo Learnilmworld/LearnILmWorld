@@ -202,19 +202,20 @@ export default function TopTrainers(): JSX.Element {
   }, []);
 
   return (
-    <section className="py-24 bg-[#6b48af]">
+    // bg-[#6b48af]
+    <section className="py-24 ">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-serif font-extrabold text-white text-center"
+          className="text-4xl md:text-5xl font-serif font-extrabold text-[#E0FA84] text-center"
         >
           Meet Our Top Trainers
         </motion.h2>
 
-        <p className="text-center text-xl text-white mt-3 font-medium">
+        <p className="text-center text-xl text-[#2D274B] mt-3 font-medium">
           Highly rated & verified mentors — languages & subjects.
         </p>
 
@@ -253,7 +254,7 @@ export default function TopTrainers(): JSX.Element {
                     <span
                       className={`text-xs px-2 py-1 rounded-full font-semibold ${
                         role === "language"
-                          ? "bg-[#da9649] text-[#2D274B]"
+                          ? "bg-[#704CB2] text-white"
                           : role === "subject"
                           ? "bg-[#CBE56A] text-[#2D274B]"
                           : "bg-white text-[#2D274B]"

@@ -5,6 +5,7 @@ import { HelpCircle, FileText, BookOpen, Briefcase
 } from "lucide-react"
 // Facebook, Twitter, Instagram, Linkedin, removed ffrom above
 // import logo from "../assets/LearnilmworldLogo.jpg";
+import bg_img from '../assets/purple_gradient.jpg'
 import about_us from '../assets/About_us1.png';
 import our_story from '../assets/our_story.png';
 import careers_img from '../assets/careers_img.png';
@@ -71,15 +72,24 @@ export default function AboutPage() {
   
 
   return (
-    <div className="min-h-screen font-inter bg-[#dc8d33] text-[#2D274B] scroll-smooth">
+    <div className="min-h-screen font-inter bg-fixed text-[#e0fa84] scroll-smooth"
+    style={{
+      backgroundImage:
+        `url(${bg_img})`,
+        position: "relative",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+    }}>
       {/* HEADER */}
-      <header className="sticky top-0 z-40 bg-[#2D274B]/95 backdrop-blur-sm border-b border-white/30 text-[#dc8d33]">
+      <header className="sticky top-0 z-40 bg-[#6b48af]/95 backdrop-blur-sm border-b border-white/30 text-[#e0fa84]">
         <Container className="py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/">
               <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center">
-                <span className="text-[#dc8d33]">
+                <span className="text-[#e0fa84]">
                   LearniLM</span>
                 <motion.span 
                 animate={{ rotate: 360 }}
@@ -88,7 +98,7 @@ export default function AboutPage() {
                 >
                 🌎
                 </motion.span>
-                <span className="text-[#dc8d33]">
+                <span className="text-[#e0fa84]">
                   World</span>
                   {/* <motion.div
                   className="absolute top-0 left-0 w-full h-full bg-white/20 rounded-full blur-xl pointer-events-none"
@@ -99,7 +109,7 @@ export default function AboutPage() {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden sm:flex items-center gap-6">
+            <nav className="hidden sm:flex text-gray-50 items-center gap-6">
               <Link to="/main" className="text-base font-medium hover:text-[#CBE56A]">
                 Browse Mentors
               </Link>
@@ -147,10 +157,11 @@ export default function AboutPage() {
       </header>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="pt-24 pb-28 bg-[#dc8d33]">
+      {/* bg-[#dc8d33] */}
+      <section id="about" className="pt-24 pb-28 ">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           {/* MAIN HEADING (Centered above both sides) */}
-          <h1 className="text-5xl md:text-5xl font-serif font-extrabold text-[#2D274B] text-center mb-14">
+          <h1 className="text-5xl md:text-5xl font-serif font-extrabold text-[#e0fa84] text-center mb-14">
             About LearniLM🌎World
           </h1>
 
@@ -164,12 +175,12 @@ export default function AboutPage() {
               className="text-left flex flex-col justify-center h-full"
             >
               {/* SUBHEADING */}
-              <h2 className="text-3xl md:text-4xl text-center font-serif font-bold text-[#2D274B] mb-6">
+              <h2 className="text-3xl md:text-4xl text-center font-serif font-bold text-[#e0fa84] mb-6">
                 Empowering Learners Everywhere
               </h2>
 
 
-              <p className="text-2xl text-white font-bold leading-relaxed max-w-xl">
+              <p className="text-2xl text-[#2D274B] font-bold leading-relaxed max-w-xl">
                 We are on a mission to make quality education and skill-building accessible to everyone —
                 through personalized, flexible, and affordable learning experiences.
               </p>
@@ -207,7 +218,8 @@ export default function AboutPage() {
       </section>
 
       {/* VISION & CORE VALUES */}
-      <section className="py-24 px-6 bg-gradient-to-b from-[#2D274B] to-[#1E1A3A] text-white">
+      {/* e0fa84 bg-gradient-to-b from-[#2D274B] to-[#1E1A3A] */}
+      <section className="py-24 px-6  ">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             variants={fadeInUp}
@@ -226,7 +238,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <p className="text-lg max-w-3xl mx-auto text-gray-200 mb-8 leading-relaxed">
+            <p className="text-lg max-w-3xl mx-auto text-[#2D274B] mb-8 leading-relaxed">
               <strong>Our Vision:</strong> To create a world where learning is limitless, empowering individuals to
               explore, innovate, and grow without barriers — transforming education into a lifelong adventure.
             </p>
@@ -249,7 +261,7 @@ export default function AboutPage() {
                 className="bg-white/10 p-6 rounded-2xl backdrop-blur-md shadow hover:scale-105 transition"
               >
                 <h3 className="text-xl font-bold text-[#CBE56A] mb-2">{v.title}</h3>
-                <p className="text-gray-300">{v.text}</p>
+                <p className="text-[#2D274B]">{v.text}</p>
               </motion.div>
             ))}
           </div>
@@ -258,7 +270,8 @@ export default function AboutPage() {
 
 
       {/* OUR STORY */}
-      <section className="py-24 bg-gradient-to-b from-[#dc8d33] to-[#f3b765] text-[#2D274B] overflow-hidden">
+      {/*e0fa84  bg-gradient-to-b from-[#dc8d33] to-[#f3b765] text-[#2D274B]  */}
+      <section className="py-24overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           {/* HEADING */}
           <motion.h2
@@ -300,13 +313,13 @@ export default function AboutPage() {
               <h3 className="text-3xl font-serif font-extrabold mb-4">
                 How LearniLM🌎World Began
               </h3>
-              <p className="text-lg text-white font-semibold leading-relaxed mb-4">
+              <p className="text-lg text-[#2D274B] font-semibold leading-relaxed mb-4">
                 What started as a simple idea — to make learning truly personal — evolved into a global
                 movement connecting passionate trainers and eager learners across the world.
               </p>
-              <p className="text-lg text-white font-semibold leading-relaxed">
+              <p className="text-lg text-[#2D274B] font-semibold leading-relaxed">
                 Through dedication, creativity, and a belief that knowledge should have no limits,
-                <span className="text-white font-bold"> LearniLM🌎World </span>
+                <span className="text-[#e0fa84] font-bold"> LearniLM🌎World </span>
                 continues to empower individuals to grow academically, professionally, and personally.
               </p>
             </motion.div>
@@ -320,7 +333,7 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mt-20"
           >
-            <p className="italic text-[#2D274B] text-3xl font-light max-w-3xl mx-auto">
+            <p className="italic text-white text-3xl font-bold max-w-3xl mx-auto">
               “Every learner has a story. Ours is about making each one count.”
             </p>
           </motion.div>
@@ -329,7 +342,8 @@ export default function AboutPage() {
 
 
       {/* CAREERS */}
-      <section id="careers" className="py-24 px-6 bg-[#2D274B] text-white">
+      {/* e0fa84 CBE56A*/}
+      <section id="careers" className="py-24 px-6 text-[2D274B]">
         <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ scale: 0 }}
@@ -340,8 +354,8 @@ export default function AboutPage() {
             <Briefcase size={40} className="mx-auto mb-4 text-[#CBE56A]" />
           </motion.div>
 
-          <h2 className="text-4xl font-serif font-bold text-[#CBE56A]">Careers at LearniLM🌎World</h2>
-          <p className="mt-4 text-lg max-w-3xl mx-auto text-gray-200">
+          <h2 className="text-4xl font-serif font-bold text-[#e0fa84]">Careers at LearniLM🌎World</h2>
+          <p className="mt-4 text-lg max-w-3xl mx-auto text-[#2D274B]">
             Join a mission-driven team transforming education. Your ideas matter, your growth is
             supported, and your work makes a real impact.
           </p>
@@ -361,7 +375,7 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="bg-white/10 p-6 rounded-2xl shadow hover:scale-105 transition"
               >
-                <h4 className="text-xl font-bold text-[#CBE56A]">{benefit}</h4>
+                <h4 className="text-xl font-bold text-[#2D274B]">{benefit}</h4>
               </motion.div>
             ))}
           </div>
@@ -385,7 +399,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
             >
               <h3 className="text-2xl font-semibold mb-4 text-[#CBE56A]">Open Roles</h3>
-              <ul className="space-y-2 text-lg">
+              <ul className="space-y-2 text-lg text-[#2D274B]">
                 <li>• Product Manager</li>
                 <li>• Marketing Executive</li>
                 <li>• Full Stack Developer</li>
@@ -404,11 +418,12 @@ export default function AboutPage() {
       </section>
 
       {/* BLOG / INSIGHTS */}
-      <section id="blog" className="py-24 px-6 bg-[#dc8d33] text-[#2D274B]">
+      {/* 2D274B CBE56A e0fa84 */}
+      <section id="blog" className="py-24 px-6  text-[#e0fa84]">
         <div className="max-w-7xl mx-auto text-center">
-          <BookOpen size={40} className="mx-auto mb-4 text-[#2D274B]" />
+          <BookOpen size={40} className="mx-auto mb-4 text-[#CBE56A]" />
           <h2 className="text-4xl font-serif font-bold">From the LearniLM🌎World Desk</h2>
-          <p className="mt-5 text-lg text-white font-semibold max-w-3xl mx-auto">
+          <p className="mt-5 text-lg text-[#2D274B] font-semibold max-w-3xl mx-auto">
             Explore stories, tips, and ideas that inspire learners and educators alike —
             where curiosity meets opportunity.
           </p>
@@ -452,9 +467,9 @@ export default function AboutPage() {
                   className="w-full h-52 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-2xl font-semibold mb-3 text-[#2D274B]">{post.title}</h3>
-                  <p className="text-white/90 mb-4">{post.excerpt}</p>
-                  <p className="text-sm font-semibold text-[#2D274B]">#LearnWithPurpose</p>
+                  <h3 className="text-2xl font-semibold mb-3 text-[#e0fa84]">{post.title}</h3>
+                  <p className="text-[#2D274B]/90 mb-4">{post.excerpt}</p>
+                  <p className="text-sm font-semibold text-[#e0fa84]">#LearnWithPurpose</p>
                 </div>
               </motion.div>
             ))}
@@ -467,13 +482,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-
       {/* HELP CENTRE */}
-      <section id="help" className="py-24 px-6 bg-[#2D274B] text-white">
+      {/* bg-[#2D274B] e0fa84 */}
+      <section id="help" className="py-24 px-6  text-[#2D274B]">
         <div className="max-w-5xl mx-auto text-center">
           <HelpCircle size={40} className="mx-auto mb-4 text-[#CBE56A]" />
-          <h2 className="text-4xl font-serif font-bold text-[#CBE56A]">Help Centre</h2>
-          <p className="mt-4 text-lg max-w-3xl mx-auto text-gray-200">
+          <h2 className="text-4xl font-serif font-bold text-[#e0fa84]">Help Centre</h2>
+          <p className="mt-4 text-lg max-w-3xl mx-auto text-[#2D274B]">
             Need assistance? Find quick answers and guides to help both learners and mentors navigate LearniLM🌎World with ease.
           </p>
 
@@ -509,10 +524,10 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="bg-white/10 rounded-2xl p-5 cursor-pointer hover:bg-white/20 transition"
               >
-                <summary className="text-xl font-semibold text-[#CBE56A]">
+                <summary className="text-xl font-semibold text-[#2D274B]">
                   {faq.q}
                 </summary>
-                <p className="mt-3 text-gray-200 text-base leading-relaxed">
+                <p className="mt-3 text-[#2D274B] text-base leading-relaxed">
                   {faq.a}
                 </p>
               </motion.details>
@@ -521,7 +536,7 @@ export default function AboutPage() {
 
           {/* Contact Help Line + Feedback Form */}
           <div className="mt-12 text-center">
-            <p className="text-lg text-gray-300 font-medium">
+            <p className="text-lg text-[#2D274B] font-medium">
               Still need help? Reach out to us anytime at{" "}
               <span className="text-[#CBE56A] font-semibold">support@learnilmworld.com</span>
             </p>
@@ -534,18 +549,18 @@ export default function AboutPage() {
               Give Feedback
             </button>
 
-            {/* Feedback Modal */}
+            {/* Feedback Form */}
             {showFeedback && (
-              <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-                <div className="bg-[#2D274B] text-white rounded-2xl p-8 w-[90%] max-w-lg relative">
+              <div className="fixed inset-0 bg-[black]/70 flex items-center justify-center z-50">
+                <div className="bg-[#6b48af] text-white rounded-2xl p-8 w-[90%] max-w-lg relative">
                   <button
                     onClick={() => setShowFeedback(false)}
-                    className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl"
+                    className="absolute top-3 right-3 text-red-500 hover:text-red-700 text-3xl font-bold"
                   >
                     ×
                   </button>
 
-                  <h3 className="text-2xl font-bold text-[#dc8d33] mb-4">We value your feedback 🌟</h3>
+                  <h3 className="text-2xl font-bold text-[#d5f56a] mb-4">We value your feedback 🌟</h3>
 
                   <form onSubmit={handleFeedbackSubmit} className="space-y-4">
                     <input
@@ -553,7 +568,7 @@ export default function AboutPage() {
                       placeholder="Your Name"
                       value={feedbackData.name}
                       onChange={(e) => setFeedbackData({ ...feedbackData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#CBE56A] focus:border-[#CBE56A] transition-all duration-300"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-[#CBE56A] focus:border-[#CBE56A] transition-all duration-300"
                       required
                     />
 
@@ -562,14 +577,14 @@ export default function AboutPage() {
                       placeholder="Your Email"
                       value={feedbackData.email}
                       onChange={(e) => setFeedbackData({ ...feedbackData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#CBE56A]"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-200 focus:outline-none focus:border-[#CBE56A]"
                       required
                     />
 
                     <select
                       value={feedbackData.category}
                       onChange={(e) => setFeedbackData({ ...feedbackData, category: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-[#3a3460] border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#CBE56A] focus:border-[#CBE56A] transition-all duration-300 appearance-none"
+                      className="w-full px-4 py-3 rounded-xl bg-[#6b48af] border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#CBE56A] focus:border-[#CBE56A] transition-all duration-300 appearance-none"
                       required
                     >
                       <option value="">Select a category</option>
@@ -583,7 +598,7 @@ export default function AboutPage() {
                       rows={4}
                       value={feedbackData.message}
                       onChange={(e) => setFeedbackData({ ...feedbackData, message: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:border-[#CBE56A]"
+                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-200 focus:outline-none focus:border-[#CBE56A]"
                       required
                     />
 
@@ -614,11 +629,12 @@ export default function AboutPage() {
       </section>
 
       {/* TERMS & CONDITIONS */}
-      <section id="terms" className="py-24 px-6 bg-[#dc8d33] text-[#2D274B]">
+      {/* CBE56A 2D274B e0fa84*/}
+      <section id="terms" className="py-24 px-6  text-[#e0fa84]">
         <div className="max-w-6xl mx-auto text-center">
-          <FileText size={40} className="mx-auto mb-4 text-[#2D274B]" />
+          <FileText size={40} className="mx-auto mb-4 text-[#CBE56A]" />
           <h2 className="text-4xl font-serif font-bold">Terms & Conditions</h2>
-          <p className="mt-4 text-lg text-white font-semibold max-w-3xl mx-auto">
+          <p className="mt-4 text-lg text-[#2D274B] font-semibold max-w-3xl mx-auto">
             By accessing or using LearniLM🌎World, you agree to our policies and terms. These ensure a safe,
             transparent, and fair learning environment for everyone.
           </p>
@@ -679,10 +695,10 @@ export default function AboutPage() {
           </div>
 
           {/* Disclaimer */}
-          <p className="mt-12 text-white text-base font-medium max-w-3xl mx-auto">
+          <p className="mt-12 text-[#2D274B] text-base font-medium max-w-3xl mx-auto">
             These terms are periodically updated to reflect new features or legal requirements.
             For queries, contact us at{" "}
-            <span className="font-semibold text-[#2D274B]">legal@learnilmworld.com</span>.
+            <span className="font-semibold text-[#e0fa84]">legal@learnilmworld.com</span>.
           </p>
         </div>
       </section>

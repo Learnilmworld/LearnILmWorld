@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  Globe,
   Play,
   Users,
   BookOpen,
@@ -12,18 +11,16 @@ import {
   MessageSquare,
   ChevronDown,
   ChevronRight,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Mail
 } from 'lucide-react'
-import { Navbar, Nav, Container, Offcanvas, Button } from 'react-bootstrap'
+//  Facebook,Twitter,Instagram,Linkedin,Mail, Globe,
+import {  Nav, Container, Offcanvas, Button } from 'react-bootstrap'
+// Navbar,from above
 // import logo from "../assets/LearnilmworldLogo.jpg";
-import russian_student from '../assets/russian_student.png'
+// import russian_student from '../assets/russian_student.png'
 import arab_student from '../assets/arabian_student.png'
-import chi_student from '../assets/chinese_student.png'
-import indian_st from '../assets/Indian_student.png';
+// import chi_student from '../assets/chinese_student.png'
+// import indian_st from '../assets/Indian_student.png';
+import bg_img from '../assets/purple_gradient.jpg'
 import french_st from '../assets/French_student.png';
 import german_st from '../assets/German_student.png';
 import british_st from '../assets/British_student.png';
@@ -50,11 +47,12 @@ export default function LandingPageAlt() {
   const [showOffcanvas, setShowOffcanvas] = useState(false)
   const [showMore, setShowMore] = useState(false);
   const [showMoreLanguages, setShowMoreLanguages] = useState(false);
+  const [showMoreHobbies, setShowMoreHobbies] = useState(false);
 
   const navigate = useNavigate();
   const { user } = useAuth();
 
-
+  // languages
   const handleLanguageClick = async (language: string) => {
     // try {
     //   const res = await axios.get(`${API_BASE_URL}/api/users/trainers`);
@@ -159,7 +157,66 @@ export default function LandingPageAlt() {
     setShowMoreLanguages(false);
   };
 
+  // Hobbies
+  const handleHobbyClick = (hobby: any) => {
+    if (hobby.isMore) {
+      setShowMoreHobbies(true);
+      return;
+    }
 
+    const hobbyTrainerMap: Record<string, string> = {
+      Painting: "trainer_id_painting",
+      Dancing: "trainer_id_dancing",
+      Cooking: "trainer_id_cooking",
+      Photography: "68ef33d0cad95b62472f382a",
+      Singing: "68ef33d0cad95b62472f382a",
+      Fitness: "",
+    };
+
+    const trainerId = hobbyTrainerMap[hobby.name];
+
+    if (!trainerId) return alert("Trainer not found yet!");
+
+    if (!user) {
+      localStorage.setItem(
+        "redirectAfterLogin",
+        `/main?hobby=${encodeURIComponent(hobby.name)}`
+      );
+      navigate("/login");
+    } else {
+      navigate(`/main?hobby=${encodeURIComponent(hobby.name)}`);
+    }
+  };
+
+  const handleMoreHobbyClick = (hobbyName: string) => {
+    const trainerMap: Record<string, string> = {
+      Yoga: "68f244c9e88b2371b4194d2c",
+      Calligraphy: "68f244c9e88b2371b4194d2c",
+      Gardening: "",
+      Knitting: "",
+    };
+
+    const trainerId = trainerMap[hobbyName];
+
+    if (!trainerId) {
+      alert("Trainer not available yet!");
+      setShowMoreHobbies(false);
+      return;
+    }
+
+    if (!user) {
+      localStorage.setItem(
+        "redirectAfterLogin",
+        `/main?hobby=${encodeURIComponent(hobbyName)}`
+      );
+      navigate("/login");
+    } else {
+      navigate(`/main?hobby=${encodeURIComponent(hobbyName)}`);
+    }
+
+    setShowMoreHobbies(false);
+  };
+  // subjects
   const handleSubjectClick = (subject: any) => {
     if (subject.isMore) {
       setShowMore(true);
@@ -229,14 +286,14 @@ export default function LandingPageAlt() {
   };
 
 
-  const flagIcons: Record<string, string> = {
-    German: "https://flagcdn.com/w40/de.png",
-    French: "https://flagcdn.com/w40/fr.png",
-    Japanese: "https://flagcdn.com/w40/jp.png",
-    Spanish: "https://flagcdn.com/w40/es.png",
-    English: "https://flagcdn.com/w40/gb.png",
-    Sanskrit: "https://flagcdn.com/w40/in.png"
-  }
+  // const flagIcons: Record<string, string> = {
+  //   German: "https://flagcdn.com/w40/de.png",
+  //   French: "https://flagcdn.com/w40/fr.png",
+  //   Japanese: "https://flagcdn.com/w40/jp.png",
+  //   Spanish: "https://flagcdn.com/w40/es.png",
+  //   English: "https://flagcdn.com/w40/gb.png",
+  //   Sanskrit: "https://flagcdn.com/w40/in.png"
+  // }
 
 
   useEffect(() => setMounted(true), [])
@@ -328,17 +385,22 @@ export default function LandingPageAlt() {
     }
   ]
 
-  // Curated images (Unsplash)
-  const heroImage = 'https://ufhealthjax.org/assets/images/stories/_860x573_crop_center-center_line/Overcoming-Language-Barriers-in-Health-Care.jpg'
-  const cardImage1 = 'https://gurmentor.com/wp-content/uploads/2020/11/gurmentor.com-best-language-learning-methods-and-teaching-approaches-explained-2020-11-17_16-21-09_140956.png'
-  const cardImage2 = 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=600&auto=format&fit=crop'
-  const cardImage3 = 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?q=80&w=900&auto=format&fit=crop'
 
   return (
-    <div className="min-h-screen font-inter bg-[#dc8d33] text-[#2D274B] transition-colors duration-500"> 
+    <div className="min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-fixed"
+      style={{
+      backgroundImage:
+        `url(${bg_img})`,
+        position: "relative",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+    }}
+    > 
 
-      {/* 2D274B */}
-      <header className="sticky top-0 z-40 bg-[#2D274B]/95 backdrop-blur-sm border-b border-white/30 text-[#dc8d33]">
+      {/* 2D274B  text- #dc8d33*/}
+      <header className="sticky top-0 z-40 bg-[#6B48AF]/95 backdrop-blur-sm border-b border-white/30 text-white">
 
         <Container className="py-3">
           <div className="flex items-center justify-between">
@@ -350,13 +412,13 @@ export default function LandingPageAlt() {
                 <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center"> 
                   
                   {/* LEARN */} 
-                  <span className="text-[#dc8d33] bg-clip-text drop-shadow-lg"> LearniLM </span> 
+                  <span className="text-[#e0fa84] bg-clip-text drop-shadow-lg"> LearniLM </span> 
                    
                   {/* Rotating Globe */} 
                   <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }} className="inline-block mx-1 text-3xl" > 🌎 </motion.span> 
 
                    {/* World */} 
-                  <span className="text-[#dc8d33] bg-clip-text drop-shadow-lg"> World </span>
+                  <span className="text-[#e0fa84] bg-clip-text drop-shadow-lg"> World </span>
                  
                   {/* Optional subtle shine */} 
                   {/* <motion.div className="absolute top-0 left-0 w-full h-full bg-white/20 rounded-full blur-xl pointer-events-none" animate={{ x: [-200, 200] }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }} />  */}
@@ -367,7 +429,7 @@ export default function LandingPageAlt() {
             <nav className="hidden sm:flex items-center gap-6">
               {/* <Link to="/main" className="text-base text-[#dc8d33] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
                */}
-              <Link to="/login" className="text-base font-medium text-[#dc8d33] hover:text-[#CBE56A]">Sign In</Link>
+              <Link to="/login" className="text-base font-medium text-[white] hover:text-[#CBE56A]">Sign In</Link>
               <Link to="/register" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#CBE56A] text-[#2D274B] text-sm font-semibold shadow hover:scale-105 transition">Get started</Link>
             </nav>
 
@@ -405,7 +467,7 @@ export default function LandingPageAlt() {
               <h1 className="text-5xl md:text-6xl font-serif leading-tight font-extrabold text-[#2D274B]">
                 Empower your future now, clarity comes with the
                 <br/>
-                <span className="text-white"> Right Mentors.</span>
+                <span className="text-[#e0fa84]"> Right Mentors.</span>
               </h1>
 
               <p className="mt-6 text-2xl text-[#2D274B] font-bold max-w-xl">
@@ -485,8 +547,9 @@ export default function LandingPageAlt() {
       <TopTrainers/>
 
       {/* Language Levels Explanation */}
+      {/*  bg-[#2D274B] */}
       <section
-        className="relative py-28 bg-[#2D274B] text-[#dc8d33]"
+        className="relative py-20 text-[#dc8d33]"
         aria-labelledby="sdil-courses"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
@@ -497,10 +560,10 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-5xl font-extrabold font-serif text-[#dc8d33] tracking-tight"
+            className="text-5xl md:text-5xl font-extrabold font-serif text-[#e0fa84] tracking-tight"
           >
             Languages That Open Doors
-            <span className="block text-[#dc8d33] mt-1">
+            <span className="block text-[#e0fa84] mt-1">
               Speak to the World with Confidence
             </span>
           </motion.h2>
@@ -511,7 +574,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-5 text-xl text-white font-bold max-w-3xl mx-auto"
+            className="mt-5 text-xl text-[#2D274B] font-bold max-w-3xl mx-auto"
           >
             Explore world languages guided by international certification standards.
             Learn from certified trainers across every level.
@@ -700,9 +763,159 @@ export default function LandingPageAlt() {
         </div>
       </section>
 
-      {/* Explore subjects section */}
+      {/* Explore Hobbies Section */}
+      {/* bg-[#2D274B] */}
       <section
-        className="relative py-24 bg-[#dc8d33]"
+        className="relative py-12 "
+        aria-labelledby="sdil-hobbies"
+      >
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
+          {/* Heading */}
+          <motion.h2
+            id="sdil-hobbies"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-5xl font-serif tracking-tight font-extrabold text-[#e0fa84]"
+          >
+            Beyond Academics, Your Passion Awaits
+          </motion.h2>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mt-5 text-2xl text-[#2D274B] font-semibold max-w-2xl mx-auto"
+          >
+            Build creativity and skills with professional <br/>Hobby / Passion trainers.
+          </motion.p>
+
+          {/* Grid Hobbies */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.3, delayChildren: 0.3 },
+              },
+            }}
+            className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          >
+          {[
+            {
+              name: "Painting",
+              img: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXJ0fGVufDB8fDB8fHww",
+            },
+            {
+              name: "Dancing",
+              img: "https://images.unsplash.com/photo-1500336624523-d727130c3328?auto=format&fit=crop&w=1200&q=100",
+            },
+            {
+              name: "Cooking",
+              img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=100",
+            },
+            {
+              name: "Photography",
+              img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaHl8ZW58MHx8MHx8fDA%3D",
+            },
+            {
+              name: "Singing",
+              img: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=100",
+            },
+            {
+              name: "Fitness",
+              img: "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1200&q=100",
+            },
+            {
+              name: "Calligraphy",
+              img: "https://plus.unsplash.com/premium_photo-1661887864467-ae3ca94f7ffa?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            },
+            {
+              name: "More",
+              img: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=100",
+              isMore: true,
+            },
+          ].map((hobby, idx) => (
+              <motion.div
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative h-56 rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                style={{
+                  backgroundImage: `url(${hobby.img})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                onClick={() => handleHobbyClick(hobby)}
+              >
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+
+                {/* Hobby Name */}
+                <div
+                  className={`absolute top-3 left-3 ${
+                    hobby.isMore
+                      ? "bg-[#CBE56A] text-[#2D274B]"
+                      : "bg-white/90 text-[#2D274B]"
+                  } px-3 py-1 rounded-md font-bold text-lg shadow`}
+                >
+                  {hobby.name}
+                </div>
+
+                {/* More Overlay */}
+                {hobby.isMore && (
+                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl bg-black/40 opacity-0 group-hover:opacity-100 transition">
+                    Explore More →
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Modal for More Hobbies */}
+        {showMoreHobbies && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50">
+            <div className="bg-white rounded-2xl p-8 max-w-md w-full relative shadow-lg">
+              <button
+                onClick={() => setShowMoreHobbies(false)}
+                className="absolute top-3 right-3 text-gray-600 hover:text-black text-2xl"
+              >
+                ✕
+              </button>
+              <h3 className="text-2xl font-bold text-[#2D274B] mb-4">
+                Explore More Hobbies
+              </h3>
+              <ul className="space-y-3 text-left">
+                {["Yoga", "Calligraphy", "Gardening", "Knitting"].map((hb, i) => (
+                  <li
+                    key={i}
+                    onClick={() => handleMoreHobbyClick(hb)}
+                    className="cursor-pointer text-[#2D274B] font-semibold hover:text-[#dc8d33] transition"
+                  >
+                    • {hb}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Explore subjects section */}
+      {/* bg-[#dc8d33] */}
+      <section
+        className="relative py-24 "
         aria-labelledby="sdil-subjects"
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
@@ -713,7 +926,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-5xl font-serif tracking-tight font-extrabold"
+            className="text-5xl md:text-5xl font-serif tracking-tight font-extrabold text-[#e0fa84]"
           >
             Subjects You Can Explore
           </motion.h2>
@@ -724,7 +937,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-5 text-xl text-white font-bold max-w-2xl mx-auto"
+            className="mt-5 text-xl text-[#2D274B] font-bold max-w-2xl mx-auto"
           >
             Comprehensive courses across academic and professional subjects for holistic learning.
           </motion.p>
@@ -863,8 +1076,8 @@ export default function LandingPageAlt() {
       <section className="py-16" aria-labelledby="how-it-works">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 id="how-it-works" className="text-4xl font-bold md:text-4xl font-serif">How it works — in 4 simple steps</h2>
-            <p className="mt-3 text-white text-lg font-bold max-w-2xl mx-auto">Designed to get you speaking fast: pick, book, practice and track.</p>
+            <h2 id="how-it-works" className="text-4xl font-bold md:text-4xl font-serif text-[#e0fa84]">How it works — in 4 simple steps</h2>
+            <p className="mt-3 text-[#2D274B] text-lg font-bold max-w-2xl mx-auto">Designed to get you speaking fast: pick, book, practice and track.</p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
@@ -882,12 +1095,13 @@ export default function LandingPageAlt() {
       </section>
 
       {/* Why learners love us section */}
-      <section className="py-16 bg-[#2D274B]">
+      {/* bg-[#2D274B] */}
+      <section className="py-16 ">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-4xl font-semibold font-serif text-[#dc8d33]">Why learners love <br/> LearniLM🌍World</h3>
-              <p className="mt-4 text-white text-lg font-bold max-w-xl">Short lessons, lots of speaking time and tutors focused on practical outcomes. Learn phrases you’ll use the very next day.</p>
+              <h3 className="text-4xl font-semibold font-serif text-[#e0fa84]">Why learners love <br/> LearniLM🌍World</h3>
+              <p className="mt-4 text-lg font-bold max-w-xl text-[#2D274B]">Short lessons, lots of speaking time and tutors focused on practical outcomes. Learn phrases you’ll use the very next day.</p>
 
               <div className="mt-8 grid sm:grid-cols-3 gap-4">
                 {features.map((f, idx) => (
@@ -925,8 +1139,8 @@ export default function LandingPageAlt() {
       <section className="py-16" aria-labelledby="reviews">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h3 id="reviews" className="text-4xl font-serif font-bold">What learners say</h3>
-            <p className="mt-2 text-white font-bold text-lg">Real reviews from students and professionals who used LearniLM🌍World.</p>
+            <h3 id="reviews" className="text-4xl font-serif font-bold text-[#e0fa84]">What learners say</h3>
+            <p className="mt-2 text-[#2D274B] font-bold text-lg">Real reviews from students and professionals who used LearniLM🌍World.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -940,7 +1154,8 @@ export default function LandingPageAlt() {
                   </div>
                 </div>
                 <p className="text-[#4B437C]">“{r.text}”</p>
-                <div className="mt-4 text-sm text-[#4B437C]">{Array.from({ length: r.rating }).map((_, idx) => '★').join('')}</div>
+                {/* removed idx from map((_, idx) => '★') */}
+                <div className="mt-4 text-sm text-[#4B437C]">{Array.from({ length: r.rating }).map((_) => '★').join('')}</div>
               </article>
             ))}
           </div>
@@ -949,7 +1164,7 @@ export default function LandingPageAlt() {
 
      {/* Highlights Section */}
       <section
-        className="relative py-24 bg-[#2D274B] text-white"
+        className="relative py-24  text-white"
         aria-labelledby="sdil-highlights"
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -960,7 +1175,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif text-[#dc8d33] tracking-tight text-center"
+            className="text-4xl md:text-5xl font-serif text-[#e0fa84] tracking-tight text-center"
           >
             Highlights of LearniLM 🌎 World
           </motion.h2>
@@ -971,7 +1186,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-5 text-xl font-bold text-white max-w-2xl mx-auto text-center"
+            className="mt-5 text-xl font-bold text-[#2D274B] max-w-2xl mx-auto text-center"
           >
             Our approach ensures effective learning, flexibility, and comprehensive support.
           </motion.p>
@@ -999,7 +1214,7 @@ export default function LandingPageAlt() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="grid grid-cols-2 gap-8 text-center"
+              className="grid grid-cols-2 gap-8 text-center "
             >
               {[
                 {
@@ -1026,13 +1241,13 @@ export default function LandingPageAlt() {
                 <motion.div
                   key={idx}
                   whileHover={{ scale: 1.05 }}
-                  className="p-6 bg-white/10 rounded-2xl border border-white/20 hover:border-[#dc8d33] transition"
+                  className="p-6 bg-[#6B48AF] rounded-2xl border border-white/20 hover:border-[#dc8d33] transition"
                 >
                   <div className="text-5xl mb-3">{feature.icon}</div>
-                  <h4 className="text-lg font-semibold text-[#dc8d33]">
+                  <h4 className="text-lg font-semibold text-[#e0fa84]">
                     {feature.title}
                   </h4>
-                  <p className="mt-2 text-gray-200 text-sm leading-relaxed">
+                  <p className="mt-2 text-white text-sm leading-relaxed">
                     {feature.desc}
                   </p>
                 </motion.div>
@@ -1046,7 +1261,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
-            className="mt-16 text-lg text-center text-gray-300 max-w-3xl mx-auto"
+            className="mt-16 text-lg text-center text-[#2D274B] max-w-3xl mx-auto"
           >
             Personalized support and guidance ensure every learner’s success at LearniLM 🌎 World.
           </motion.p>
@@ -1076,12 +1291,13 @@ export default function LandingPageAlt() {
           </div>
         </div>
       </section>
+      {/* text-[#e0fa84] text-[#2D274B] */}
 
       {/* CTA  bg-gradient-to-r from-[#9787F3]/10 to-[#f97316]/8*/}
       <section className="py-12 ">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h4 className="text-4xl font-extrabold">Master Your Skills, Confidently</h4>
-          <p className="text-white text-xl font-bold mt-2">Sign up to Claim Your Free Trial Session. Get a Personalized 7-Day Learning Path After Your First Session.</p>
+          <h4 className="text-4xl font-extrabold text-[#e0fa84] ">Master Your Skills, Confidently</h4>
+          <p className="text-[#2D274B] text-xl font-bold mt-2">Sign up to Claim Your Free Trial Session. Get a Personalized 7-Day Learning Path After Your First Session.</p>
           <div className="mt-6 flex justify-center gap-4">
             <Link to="/main" className="inline-flex items-center gap-3 px-6 py-3 rounded-lg bg-[#CBE56A] text-[#2D274B]">Browse trainers <ChevronRight /></Link>
             <Link to="/register" className="inline-flex items-center gap-3 px-6 py-3 rounded-lg border bg-[#CBE56A] border-[#CBE56A] text-[#2D274B] hover:bg-[#CBE56A]">Become a trainer</Link>
