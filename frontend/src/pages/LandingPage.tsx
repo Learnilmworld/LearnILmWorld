@@ -1,22 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import {
-  Play,
-  Users,
-  BookOpen,
-  Award,
-  Clock,
-  Star,
-  MessageSquare,
-  ChevronDown,
-  ChevronRight,
+import { Play, Users, BookOpen, Award, Clock, Star, MessageSquare, ChevronDown,  ChevronRight,
 } from 'lucide-react'
 //  Facebook,Twitter,Instagram,Linkedin,Mail, Globe,
 import {  Nav, Container, Offcanvas, Button } from 'react-bootstrap'
+import { useAuth } from "../contexts/AuthContext"; 
 // Navbar,from above
 // import logo from "../assets/LearnilmworldLogo.jpg";
 // import russian_student from '../assets/russian_student.png'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 import arab_student from '../assets/arabian_student.png'
 // import chi_student from '../assets/chinese_student.png'
 // import indian_st from '../assets/Indian_student.png';
@@ -26,11 +20,22 @@ import german_st from '../assets/German_student.png';
 import british_st from '../assets/British_student.png';
 import spanish_st from '../assets/Spanish_student.png';
 import japanese_st from '../assets/Japanese_student.png';
-import { useAuth } from "../contexts/AuthContext"; 
-import 'bootstrap/dist/css/bootstrap.min.css'
-import Footer from '../components/Footer'
 
 import heroImage1 from '../assets/Hero_image1.png'
+
+import math from '../assets/Math.jpeg'
+import hist from '../assets/history.png'
+import geo from '../assets/Geography.jpeg'
+import phy from '../assets/Physics.jpeg'
+import chem from '../assets/chemistry.jpeg'
+import bio from '../assets/Biology.jpeg'
+import cs from '../assets/Computer Science.jpeg'
+
+
+
+
+
+import Footer from '../components/Footer'
 import TopTrainers from '../components/TopTrainers'
 // import MoreLanguages from '../components/MoreLanguages'
 
@@ -812,6 +817,207 @@ export default function LandingPageAlt() {
         </div>
       </section>
 
+      {/* Explore subjects section */}
+      {/* bg-[#dc8d33] */}
+      <section
+        className="relative py-24 "
+        aria-labelledby="sdil-subjects"
+      >
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
+          {/* Heading */}
+          <motion.h2
+            id="sdil-subjects"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-5xl font-serif tracking-tight font-extrabold text-[#e0fa84]"
+          >
+            Subjects You Can Explore
+          </motion.h2>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mt-5 text-xl text-[#2D274B] font-bold max-w-2xl mx-auto"
+          >
+            Comprehensive courses across academic and professional subjects for holistic learning.
+          </motion.p>
+
+          {/* Grid Subjects */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.3,
+                  delayChildren: 0.3,   // slight initial delay for smoother entrance
+                },
+              },
+            }}
+            className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          >
+            {[
+              {
+                name: "Maths",
+                img: math,
+              },
+              {
+                name: "Physics",
+                img: phy,
+              },
+              {
+                name: "Chemistry",
+                img: chem,
+              },
+              {
+                name: "Biology",
+                img: bio,
+              },
+              {
+                name: "History",
+                img: hist,
+              },
+              {
+                name: "Geography",
+                img: geo,
+              },
+              {
+                name: "Computer Science",
+                img: cs,
+              },
+              {
+                name: "More",
+                img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",
+                isMore: true,
+              },
+            ].map((subject, idx) => (
+              <motion.div
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative h-56 rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                style={{
+                  backgroundImage: `url(${subject.img})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                onClick={() => handleSubjectClick(subject)}
+              >
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300"></div>
+
+                {/* Subject Name */}
+                <div
+                  className={`absolute top-3 left-3 ${
+                    subject.isMore
+                      ? "bg-[#CBE56A] text-[#2D274B]"
+                      : "bg-white/90 text-[#2D274B]"
+                  } px-3 py-1 rounded-md font-bold text-lg shadow`}
+                >
+                  {subject.name}
+                </div>
+
+                {/* “More” Hover Text */}
+                {subject.isMore && (
+                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl bg-black/40 opacity-0 group-hover:opacity-100 transition">
+                    Explore More →
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Modal for More Subjects */}
+        {showMore && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50" onClick={() => setShowMore(false)}>
+            
+            <div className="
+              rounded-3xl p-10 max-w-4xl w-[90%] relative 
+              shadow-2xl
+              bg-gradient-to-br from-[#ffffff] via-[#f8f1ff] to-[#e9d8ff]
+              border border-white/40
+            ">
+              
+              {/* Close Button */}
+              <button
+                onClick={() => setShowMore(false)}
+                className="absolute top-4 right-4 text-[#2D274B] hover:text-black text-2xl"
+              >
+                ✕
+              </button>
+
+              {/* Title */}
+              <h3 className="text-3xl font-bold text-[#2D274B] mb-6">
+                Explore More Subjects
+              </h3>
+
+              {/* Subjects Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
+                {[
+                  { name: "Economics", icon: "📊" },
+                  { name: "Hindi", icon: "📝" },
+                  { name: "Bengali", icon: "📚" },
+                  { name: "Psychology", icon: "🧠" },
+                  { name: "Philosophy", icon: "⚖️" },
+                  { name: "Environmental Science", icon: "🌿" },
+                  { name: "Accounts & Finance", icon: "💰" },
+                ].map((subj, i) => (
+                  <div
+                    key={i}
+                    onClick={() => handleMoreSubjectClick(subj.name)}
+                    className="
+                      group cursor-pointer 
+                      h-36 rounded-2xl 
+                      bg-white 
+                      shadow-md hover:shadow-xl 
+                      border border-slate-200
+                      transition-all duration-300 
+                      flex flex-col items-center justify-center
+                      hover:-translate-y-1 hover:scale-[1.05]
+                    "
+                  >
+                    {/* Icon */}
+                    <div
+                      className="
+                        text-4xl mb-2 
+                        group-hover:scale-125 
+                        transition-transform duration-300
+                      "
+                    >
+                      {subj.icon}
+                    </div>
+
+                    {/* Label */}
+                    <div
+                      className="
+                        text-[#593C9F] text-lg font-semibold 
+                        text-center group-hover:text-[#2D1B69]
+                        transition-colors
+                      "
+                    >
+                      {subj.name}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
       {/* Explore Hobbies Section */}
       {/* bg-[#2D274B] */}
       <section
@@ -858,28 +1064,28 @@ export default function LandingPageAlt() {
           >
           {[
             {
-              name: "Painting",
-              img: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXJ0fGVufDB8fDB8fHww",
-            },
-            {
               name: "Dancing",
               img: "https://images.unsplash.com/photo-1500336624523-d727130c3328?auto=format&fit=crop&w=1200&q=100",
+            },
+            {
+              name: "Fitness",
+              img: "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1200&q=100",
             },
             {
               name: "Cooking",
               img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=100",
             },
             {
-              name: "Photography",
-              img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaHl8ZW58MHx8MHx8fDA%3D",
-            },
-            {
               name: "Singing",
               img: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=100",
             },
             {
-              name: "Fitness",
-              img: "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1200&q=100",
+              name: "Painting",
+              img: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXJ0fGVufDB8fDB8fHww",
+            },
+            {
+              name: "Photography",
+              img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaHl8ZW58MHx8MHx8fDA%3D",
             },
             {
               name: "Calligraphy",
@@ -1003,207 +1209,6 @@ export default function LandingPageAlt() {
                   </div>
                 ))}
 
-              </div>
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Explore subjects section */}
-      {/* bg-[#dc8d33] */}
-      <section
-        className="relative py-24 "
-        aria-labelledby="sdil-subjects"
-      >
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
-          {/* Heading */}
-          <motion.h2
-            id="sdil-subjects"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="text-5xl md:text-5xl font-serif tracking-tight font-extrabold text-[#e0fa84]"
-          >
-            Subjects You Can Explore
-          </motion.h2>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mt-5 text-xl text-[#2D274B] font-bold max-w-2xl mx-auto"
-          >
-            Comprehensive courses across academic and professional subjects for holistic learning.
-          </motion.p>
-
-          {/* Grid Subjects */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.3,
-                  delayChildren: 0.3,   // slight initial delay for smoother entrance
-                },
-              },
-            }}
-            className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-          >
-            {[
-              {
-                name: "History",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUfVuI-52gMsBUjICo8U71bZzPh_Sl60a0rw&s",
-              },
-              {
-                name: "Geography",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStimZbjbIU3wmA6leFoxxaiMHEV44X5zg6Eg&s",
-              },
-              {
-                name: "Physics",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaokOEDxUXqruUqK6jfotlGNnh_cqkv_7YKQ&s",
-              },
-              {
-                name: "Chemistry",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYYeicpqHLfxEoRF1mR5aUn8bda5xZKp_50w&s",
-              },
-              {
-                name: "Mathematics",
-                img: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=fill&w=1200&q=100",
-              },
-              {
-                name: "Biology",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwCZsh8ORVYuaRBk5UVIjupZH-uJdpqSrNNA&s",
-              },
-              {
-                name: "Computer Science",
-                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGt5xq-25cqfQWyM8Z0Yu706O8s_aCraXM9A&s",
-              },
-              {
-                name: "More",
-                img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",
-                isMore: true,
-              },
-            ].map((subject, idx) => (
-              <motion.div
-                key={idx}
-                variants={{
-                  hidden: { opacity: 0, y: 40 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-                }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative h-56 rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 cursor-pointer"
-                style={{
-                  backgroundImage: `url(${subject.img})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                onClick={() => handleSubjectClick(subject)}
-              >
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300"></div>
-
-                {/* Subject Name */}
-                <div
-                  className={`absolute top-3 left-3 ${
-                    subject.isMore
-                      ? "bg-[#CBE56A] text-[#2D274B]"
-                      : "bg-white/90 text-[#2D274B]"
-                  } px-3 py-1 rounded-md font-bold text-lg shadow`}
-                >
-                  {subject.name}
-                </div>
-
-                {/* “More” Hover Text */}
-                {subject.isMore && (
-                  <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl bg-black/40 opacity-0 group-hover:opacity-100 transition">
-                    Explore More →
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Modal for More Subjects */}
-        {showMore && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50" onClick={() => setShowMore(false)}>
-            
-            <div className="
-              rounded-3xl p-10 max-w-4xl w-[90%] relative 
-              shadow-2xl
-              bg-gradient-to-br from-[#ffffff] via-[#f8f1ff] to-[#e9d8ff]
-              border border-white/40
-            ">
-              
-              {/* Close Button */}
-              <button
-                onClick={() => setShowMore(false)}
-                className="absolute top-4 right-4 text-[#2D274B] hover:text-black text-2xl"
-              >
-                ✕
-              </button>
-
-              {/* Title */}
-              <h3 className="text-3xl font-bold text-[#2D274B] mb-6">
-                Explore More Subjects
-              </h3>
-
-              {/* Subjects Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-                {[
-                  { name: "Economics", icon: "📊" },
-                  { name: "Hindi", icon: "📝" },
-                  { name: "Bengali", icon: "📚" },
-                  { name: "Psychology", icon: "🧠" },
-                  { name: "Philosophy", icon: "⚖️" },
-                  { name: "Environmental Science", icon: "🌿" },
-                  { name: "Accounts & Finance", icon: "💰" },
-                ].map((subj, i) => (
-                  <div
-                    key={i}
-                    onClick={() => handleMoreSubjectClick(subj.name)}
-                    className="
-                      group cursor-pointer 
-                      h-36 rounded-2xl 
-                      bg-white 
-                      shadow-md hover:shadow-xl 
-                      border border-slate-200
-                      transition-all duration-300 
-                      flex flex-col items-center justify-center
-                      hover:-translate-y-1 hover:scale-[1.05]
-                    "
-                  >
-                    {/* Icon */}
-                    <div
-                      className="
-                        text-4xl mb-2 
-                        group-hover:scale-125 
-                        transition-transform duration-300
-                      "
-                    >
-                      {subj.icon}
-                    </div>
-
-                    {/* Label */}
-                    <div
-                      className="
-                        text-[#593C9F] text-lg font-semibold 
-                        text-center group-hover:text-[#2D1B69]
-                        transition-colors
-                      "
-                    >
-                      {subj.name}
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -1448,3 +1453,40 @@ export default function LandingPageAlt() {
     </div>
   )
 }
+
+
+// {[
+//               {
+//                 name: "Maths",
+//                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUfVuI-52gMsBUjICo8U71bZzPh_Sl60a0rw&s",
+//               },
+//               {
+//                 name: "Geography",
+//                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStimZbjbIU3wmA6leFoxxaiMHEV44X5zg6Eg&s",
+//               },
+//               {
+//                 name: "Physics",
+//                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaokOEDxUXqruUqK6jfotlGNnh_cqkv_7YKQ&s",
+//               },
+//               {
+//                 name: "Chemistry",
+//                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYYeicpqHLfxEoRF1mR5aUn8bda5xZKp_50w&s",
+//               },
+//               {
+//                 name: "Mathematics",
+//                 img: {math},
+//               },
+//               {
+//                 name: "Biology",
+//                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwCZsh8ORVYuaRBk5UVIjupZH-uJdpqSrNNA&s",
+//               },
+//               {
+//                 name: "Computer Science",
+//                 img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGt5xq-25cqfQWyM8Z0Yu706O8s_aCraXM9A&s",
+//               },
+//               {
+//                 name: "More",
+//                 img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",
+//                 isMore: true,
+//               },
+//             ]

@@ -75,7 +75,7 @@ const TrainerHome = () => {
             Welcome back, {user?.name || 'Trainer'}!
           </h2>
         </div>
-        <p className="text-white/90 font-medium">
+        <p className="text-black/90 font-medium">
           Empower your students and grow your teaching journey
         </p>
       </div>

@@ -110,10 +110,10 @@ const Login: React.FC = () => {
       {/* Home Icon Button */}
       <Link
   to="/"
-  className="absolute top-6 right-6 p-2 rounded-lg bg-white/20 backdrop-blur-md hover:bg-white/30 transition flex items-center justify-center"
+  className="absolute top-6 right-6 p-2 rounded-lg bg-[#4f4382] backdrop-blur-md hover:bg-[#dc8d33]/30 transition flex items-center justify-center"
   aria-label="Go to Home"
 >
-  <Home className="h-6 w-6 text-[#2D274B] hover:text-[#dc8d33] transition-colors duration-300" />
+  <Home className="h-6 w-6 text-white hover:text-[#dc8d33] transition-colors duration-300" />
 </Link>
 
       {/* Decorative orbs */}
@@ -232,7 +232,7 @@ const Login: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center text-base sm:text-lg py-3 rounded-xl font-semibold text-[#dc8d33] hover:opacity-90 transition"
+              className="w-full flex items-center justify-center text-base sm:text-lg py-3 rounded-xl font-semibold text-white hover:opacity-90 transition"
               style={{ backgroundColor: '#4f4382' }}
               aria-disabled={loading}
             >
@@ -252,7 +252,7 @@ const Login: React.FC = () => {
           <div className="mt-8 text-center">
             <p className="text-[#2D274B] font-bold">
               Don't have an account? {' '}
-              <Link to="/register" className="font-bold hover:underline" style={{ color: '#dc8d33' }}>
+              <Link to="/register" className="font-bold hover:underline" style={{ color: '#ea8315' }}>
                 Sign up here
               </Link>
             </p>

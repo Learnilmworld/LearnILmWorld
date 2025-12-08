@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 // BookOpen, Star, Clock, Video, Globe,X, MessageSquare, TrendingUp, Users, MessageCircle removed from lucide icons
 import { useAuth } from '../../contexts/AuthContext'
+import bg_img from '../../assets/purple_gradient.jpg'
 // import axios from 'axios'
 // Component files
 import StudentHome from "./StudentHome";
@@ -51,7 +52,15 @@ const StudentDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#dc8d33]">
+    <div className="min-h-screen bg-fixed" style={{
+          backgroundImage:
+            `url(${bg_img})`,
+            position: "relative",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            width: "100%",
+        }}>
       {/* Overlay for mobile when sidebar is open */}
       {sidebarOpen && (
         <div
@@ -76,9 +85,9 @@ const StudentDashboard: React.FC = () => {
 
             {/* Animated Logo with Link */}
             <Link to="/" className="flex items-center gap-1 group">
-              <div className="text-xl md:text-xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center transition-transform duration-300 group-hover:scale-105">
+              <div className="text-2xl md:text-2xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center transition-transform duration-300 group-hover:scale-105">
                 {/* LearniLM */}
-                <span className="text-[#dc8d33] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">LearniLM</span>
+                <span className="text-[#e0fa84] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">LearniLM</span>
 
                 {/* Rotating Globe */}
                 <motion.span
@@ -90,7 +99,7 @@ const StudentDashboard: React.FC = () => {
                 </motion.span>
 
                 {/* World */}
-                <span className="text-[#dc8d33] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">World</span>
+                <span className="text-[#e0fa84] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">World</span>
               </div>
             </Link>
           </div>

@@ -6,6 +6,7 @@ import {
   Home, Users, Calendar, User, Star, LogOut, Menu
 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import bg_img from '../../assets/purple_gradient.jpg'
 import TrainerHome from './TrainerHome'
 import TrainerSessions from './TrainerSessions'
 import TrainerStudents from './TrainerStudents'
@@ -685,7 +686,15 @@ const EducatorDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#dc8d33]">
+    <div className="min-h-screen bg-fixed" style={{
+          backgroundImage:
+            `url(${bg_img})`,
+            position: "relative",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            width: "100%",
+        }}>
       {/* Overlay for mobile when sidebar is open */}
       {sidebarOpen && (
         <div
@@ -707,8 +716,8 @@ const EducatorDashboard: React.FC = () => {
             </button>
 
             <Link to="/" className="flex items-center gap-1 group">
-              <div className="text-xl md:text-xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center transition-transform duration-300 group-hover:scale-105">
-                <span className="text-[#dc8d33] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">
+              <div className="text-2xl md:text-2xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center transition-transform duration-300 group-hover:scale-105">
+                <span className="text-[#e0fa84] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">
                   LearniLM
                 </span>
                 <motion.span
@@ -718,7 +727,7 @@ const EducatorDashboard: React.FC = () => {
                 >
                   🌎
                 </motion.span>
-                <span className="text-[#dc8d33] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">
+                <span className="text-[#e0fa84] drop-shadow-lg group-hover:text-[#CBE56A] transition-colors">
                   World
                 </span>
               </div>

@@ -26,7 +26,7 @@ const StudentLanding: React.FC = () => {
             Keep Growing, {user?.name || "Learner"}! 🚀
           </h1>
         </div>
-        <p className="text-white/90 font-medium">
+        <p className="text-black/90 font-medium">
           Every step you take brings you closer to mastering your goals with LearniLM🌎World..
         </p>
       </div>
