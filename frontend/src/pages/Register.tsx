@@ -22,7 +22,7 @@ const initialData: RegisterFormData = {
   role: 'student',
   education: '',
   experience: '',
-  certificates: [], 
+  certificates: [],
   dob: '',
   bio: '',
   resume: null,
@@ -46,16 +46,20 @@ const Register: React.FC = () => {
   const preselect = searchParams.get('preselect') || '' // e.g. subject or language id
 
   const [formData, setFormData] = useState<RegisterFormData>({ ...initialData, role: preRole })
-  const [stepIndex, setStepIndex] = useState<number>(0)
+  const rolePreselected = preRole === 'trainer' || preRole === 'student'
+
+  const [stepIndex, setStepIndex] = useState<number>(
+    rolePreselected ? 1 : 0
+  )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // Tracks if user came by pressing BACK
   const [comingFromBack, setComingFromBack] = useState(false);
 
   const steps = formData.role === "trainer"
-  ? ['role', 'basic', 'trainerTeach', 'trainerDocs', 'trainerDetails', 'final'] as const
-  : ['role', 'basic', 'learningType', 'details', 'final'] as const;
-  
+    ? ['role', 'basic', 'trainerTeach', 'trainerDocs', 'trainerDetails', 'final'] as const
+    : ['role', 'basic', 'learningType', 'details', 'final'] as const;
+
   type StepKey = typeof steps[number]
 
 
@@ -106,18 +110,17 @@ const Register: React.FC = () => {
         return
       }
 
-      // build profile payload that matches the schema
       const profilePayload: any = {
         phone: formData.phone || '',
         location: formData.location || '',
         nationalityCode: formData.nationalityCode || '',
         bio: formData.bio || '',
-        hobbies: formData.hobbies || [], 
+        hobbies: formData.hobbies || [],
       }
 
-      // DOB -> Date or null
+      //  Date or null
       if (formData.dob) {
-        // keep ISO string (backend will accept Date-ish string)
+        // keeping ISO string (backend will accept Date-ish string)
         profilePayload.dob = new Date(formData.dob)
       }
 
@@ -125,8 +128,7 @@ const Register: React.FC = () => {
       if (typeof formData.resume === 'string') {
         profilePayload.resume = formData.resume
       } else if (formData.resume instanceof File) {
-        // You probably upload file to storage & get URL. For now send empty string or handle upload first.
-        profilePayload.resume = '' // upload first, then set real URL
+        profilePayload.resume = '' // uploads first, then set real URL
       }
 
       // Trainer-specific mapping
@@ -231,13 +233,13 @@ const Register: React.FC = () => {
     exit: (direction: number) => ({ x: direction < 0 ? 300 : -300, opacity: 0 }),
   }
 
- return (
-  <div
-    className={`min-h-screen w-full flex items-center justify-center px-4 py-10 relative overflow-hidden transition-all duration-700
+  return (
+    <div
+      className={`min-h-screen w-full flex items-center justify-center px-4 py-10 relative overflow-hidden transition-all duration-700
       ${formData.role === 'trainer' ? 'bg-[#2D274B]' : 'bg-[#dc8d33]'}
     `}
-  >
-    {/* Decorative orbs (same as before) */}
+    >
+      {/* Decorative orbs (same as before) */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-32 h-32 rounded-full" style={{ background: '#fff7e1', opacity: 0.16, animation: 'floaty 6s ease-in-out infinite' }} />
         <div className="absolute top-44 right-20 w-24 h-24 rounded-full" style={{ background: '#fff7e1', opacity: 0.26, animation: 'floaty 6s ease-in-out infinite', animationDelay: '1.8s' }} />
@@ -246,67 +248,67 @@ const Register: React.FC = () => {
       </div>
 
 
-    {/* ---------------- Main Container ---------------- */}
-    <div className="w-full max-w-3xl mx-auto relative z-10">
-      {/* Heading */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-extrabold text-gray-50 drop-shadow-lg tracking-wide flex justify-center items-center gap-2 font-[Good Vibes]">
-          
-          {/* Static "Join" part */}
-          <span>Join</span>
+      {/* ---------------- Main Container ---------------- */}
+      <div className="w-full max-w-3xl mx-auto relative z-10">
+        {/* Heading */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-extrabold text-gray-50 drop-shadow-lg tracking-wide flex justify-center items-center gap-2 font-[Good Vibes]">
 
-          {/* Clickable "LearniLM 🌎 World" */}
-          <Link to="/" className="flex items-center gap-2 text-gray-50 hover:text-[#e0fa84]">
-            {/* LearniLM */}
-            <span>LearniLM</span>
+            {/* Static "Join" part */}
+            <span>Join</span>
 
-            {/* Animated Globe */}
-            <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-              className="inline-block text-4xl"
-            >
-              🌎
-            </motion.span>
+            {/* Clickable "LearniLM 🌎 World" */}
+            <Link to="/" className="flex items-center gap-2 text-gray-50 hover:text-[#e0fa84]">
+              {/* LearniLM */}
+              <span>LearniLM</span>
 
-            {/* World */}
-            <span>World</span>
-          </Link>
-        </h1>
+              {/* Animated Globe */}
+              <motion.span
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+                className="inline-block text-4xl"
+              >
+                🌎
+              </motion.span>
 
-        {/* Subtitle */}
-        <p className="text-white/80 mt-2 text-lg font-medium text-center">
-          Start your Learning Journey Today
-        </p>
-      </div>
+              {/* World */}
+              <span>World</span>
+            </Link>
+          </h1>
 
-      {/* Glass Card */}
-      <div className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl p-8 overflow-hidden">
+          {/* Subtitle */}
+          <p className="text-white/80 mt-2 text-lg font-medium text-center">
+            Start your Learning Journey Today
+          </p>
+        </div>
 
-        {/* Error Box */}
-        {error && (
-          <div className="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-xl mb-5 text-sm">
-            {error}
-          </div>
-        )}
+        {/* Glass Card */}
+        <div className="bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl p-8 overflow-hidden">
 
-        {/* ------------ Multi-step Animated Container ------------ */}
-        <div className="relative h-[520px]">
+          {/* Error Box */}
+          {error && (
+            <div className="bg-red-50 border border-red-300 text-red-700 px-4 py-3 rounded-xl mb-5 text-sm">
+              {error}
+            </div>
+          )}
+
+          {/* ------------ Multi-step Animated Container ------------ */}
+          <div className="relative h-[520px]">
             <AnimatePresence initial={false} custom={stepIndex} mode="wait">
               <motion.div key={currentStep} custom={stepIndex} variants={containerVariants} initial="enter" animate="center" exit="exit" transition={{ type: 'spring', stiffness: 230, damping: 24 }} className="absolute inset-0">
-                
+
                 {/* ['role', 'basic', 'trainerTeach', 'trainerSelectValues', 'trainerDocs', 'trainerDetails', 'final'] */}
-                {currentStep === 'role' && <StepRole formData={formData} setFormData={setFormData} onNext={() => goNext()} comingFromBack={comingFromBack}/>}
+                {currentStep === 'role' && <StepRole formData={formData} setFormData={setFormData} onNext={() => goNext()} comingFromBack={comingFromBack} />}
 
                 {currentStep === 'basic' && <StepBasicInfo formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} />}
 
                 {currentStep === 'learningType' && <StepChooseLearningType formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} />}
-         
+
                 {currentStep === 'trainerTeach' && formData.role === 'trainer' && <StepTrainerTeach formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} comingFromBack={comingFromBack} />}
 
                 {currentStep === 'trainerDocs' && formData.role === 'trainer' && <StepTrainerDocuments formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} />}
 
-                  {currentStep === 'details' && (formData.role === 'student' ? (
+                {currentStep === 'details' && (formData.role === 'student' ? (
                   formData.learningType ? <StepStudentSubjects formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} /> : <StepChooseLearningType formData={formData} setFormData={setFormData} onNext={() => goNext()} onBack={goBack} />
                 ) : null)}
 
@@ -318,17 +320,17 @@ const Register: React.FC = () => {
                       onNext={() => goNext()}
                       onBack={goBack}
                     />
-                )}
+                  )}
 
 
                 {currentStep === 'final' && <StepFinal formData={formData} setFormData={setFormData} onBack={goBack} onSubmit={onSubmit} loading={loading} />}
               </motion.div>
             </AnimatePresence>
           </div>
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
 }
 
 export default Register

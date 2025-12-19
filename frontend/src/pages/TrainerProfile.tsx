@@ -5,6 +5,8 @@ import {
   Play, Instagram, Youtube, Linkedin, ArrowLeft, MessageSquare
 } from 'lucide-react'
 import axios from 'axios'
+import Price from '../components/Price'
+import CurrencySelector from '../components/CurrencySelector'
 
 interface Trainer {
   _id: string
@@ -63,7 +65,7 @@ interface Review {
   createdAt: string
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const TrainerProfile: React.FC = () => {
   const { trainerId } = useParams<{ trainerId: string }>()
@@ -211,8 +213,10 @@ const TrainerProfile: React.FC = () => {
                 </div>
               </div>
               <div className="text-right">
+                <CurrencySelector />
                 <div className="text-2xl font-bold text-[var(--accent-orange)]">
-                  ${trainer.profile?.hourlyRate ?? 0}/hr
+                  <Price amount={trainer.profile?.hourlyRate ?? 0} /> / hr
+
                 </div>
                 <Link
                   to={`/book/${trainer._id}`}
@@ -261,33 +265,33 @@ const TrainerProfile: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-5">
               {trainer.profile?.trainerLanguages && trainer.profile.trainerLanguages.length > 0
                 ? trainer.profile.trainerLanguages.map((lang, index) => (
-                    <div
-                      key={index}
-                      className="p-4 bg-[var(--bg-pale-top)] rounded-lg"
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <h4 className="font-semibold text-[var(--text)] text-base">{lang.language}</h4>
-                        <span className="px-3 py-1 bg-[#9787F3] text-white rounded-full text-sm">
-                          {lang.proficiency}
+                  <div
+                    key={index}
+                    className="p-4 bg-[var(--bg-pale-top)] rounded-lg"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="font-semibold text-[var(--text)] text-base">{lang.language}</h4>
+                      <span className="px-3 py-1 bg-[#9787F3] text-white rounded-full text-sm">
+                        {lang.proficiency}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {lang.teachingLevel.map((level, idx) => (
+                        <span
+                          key={idx}
+                          className="px-3 py-1 bg-[var(--accent-orange)]/20 text-gray-800 rounded-md text-sm"
+                        >
+                          {level}
                         </span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {lang.teachingLevel.map((level, idx) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1 bg-[var(--accent-orange)]/20 text-gray-800 rounded-md text-sm"
-                          >
-                            {level}
-                          </span>
-                        ))}
-                      </div>
+                      ))}
                     </div>
-                  ))
+                  </div>
+                ))
                 : trainer.profile?.languages?.map((language, index) => (
-                    <div key={index} className="p-4 bg-[var(--bg-pale-top)] rounded-lg">
-                      <h4 className="font-semibold text-[var(--text)] text-base">{language}</h4>
-                    </div>
-                  ))}
+                  <div key={index} className="p-4 bg-[var(--bg-pale-top)] rounded-lg">
+                    <h4 className="font-semibold text-[var(--text)] text-base">{language}</h4>
+                  </div>
+                ))}
             </div>
           </div>
 

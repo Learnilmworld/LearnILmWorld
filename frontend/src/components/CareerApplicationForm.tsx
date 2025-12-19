@@ -119,6 +119,7 @@ export default function CareerApplicationForm({ onClose }: Props) {
                         <option value="Sales Intern - India">Sales Intern – India</option>
                         <option value="Digital Marketing Intern - India">Digital Marketing Intern – India</option>
                         <option value="UX/UI Designer Intern - India">UX/UI Designer Intern – India</option>
+                        <option value="Q/A Intern - India"> Q/A – India</option>
                         <option value="HR Intern - India">HR Intern – India</option>
                         <option value="Sales Intern - Bahrain">Sales Intern – Bahrain</option>
                         <option value="Sales Intern - Kuwait">Sales Intern – Kuwait</option>

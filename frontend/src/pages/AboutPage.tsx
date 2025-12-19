@@ -415,6 +415,7 @@ export default function AboutPage() {
                     <li>• Sales Intern</li>
                     <li>• Digital Marketing Intern</li>
                     <li>• UX / UI Designer Intern</li>
+                    <li>• Q/A Intern</li>
                     <li>• HR Intern</li>
                   </ul>
                 </div>

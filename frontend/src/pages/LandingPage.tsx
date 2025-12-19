@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Play, Users, BookOpen, Award, Clock, Star, MessageSquare, ChevronDown,  ChevronRight,
+import {
+  Play, Users, BookOpen, Award, Clock, Star, MessageSquare, ChevronDown, ChevronRight,
 } from 'lucide-react'
 //  Facebook,Twitter,Instagram,Linkedin,Mail, Globe,
-import {  Nav, Container, Offcanvas, Button } from 'react-bootstrap'
-import { useAuth } from "../contexts/AuthContext"; 
+import { Nav, Container, Offcanvas, Button } from 'react-bootstrap'
+import { useAuth } from "../contexts/AuthContext";
 // Navbar,from above
 // import logo from "../assets/LearnilmworldLogo.jpg";
 // import russian_student from '../assets/russian_student.png'
@@ -37,6 +38,7 @@ import cs from '../assets/Computer Science.jpeg'
 
 import Footer from '../components/Footer'
 import TopTrainers from '../components/TopTrainers'
+import CurrencySelector from '../components/CurrencySelector'
 // import MoreLanguages from '../components/MoreLanguages'
 
 
@@ -369,7 +371,7 @@ export default function LandingPageAlt() {
   const reviews = [
     {
       name: 'Sarath',
-      
+
       text: 'The trainers are excellent — practical and patient. After a month I was comfortable conducting client calls in Spanish. The homework and recorded sessions were invaluable.',
       rating: 5
     },
@@ -394,15 +396,15 @@ export default function LandingPageAlt() {
   return (
     <div className="min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-fixed"
       style={{
-      backgroundImage:
-        `url(${bg_img})`,
+        backgroundImage:
+          `url(${bg_img})`,
         position: "relative",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         width: "100%",
-    }}
-    > 
+      }}
+    >
 
       {/* 2D274B  text- #dc8d33*/}
       <header className="sticky top-0 z-40 bg-[#6B48AF]/95 backdrop-blur-sm border-b border-white/30 text-white">
@@ -410,23 +412,20 @@ export default function LandingPageAlt() {
         <Container className="py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              
+
               <div className="flex flex-col items-center gap-1">
 
                 {/* Main Logo */}
-                <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center"> 
-                  
-                  {/* LEARN */} 
-                  <span className="text-[#e0fa84] bg-clip-text drop-shadow-lg"> LearniLM </span> 
-                   
-                  {/* Rotating Globe */} 
-                  <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }} className="inline-block mx-1 text-3xl" > 🌎 </motion.span> 
+                <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center">
 
-                   {/* World */} 
+                  {/* LEARN */}
+                  <span className="text-[#e0fa84] bg-clip-text drop-shadow-lg"> LearniLM </span>
+
+                  {/* Rotating Globe */}
+                  <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }} className="inline-block mx-1 text-3xl" > 🌎 </motion.span>
+
+                  {/* World */}
                   <span className="text-[#e0fa84] bg-clip-text drop-shadow-lg"> World </span>
-                 
-                  {/* Optional subtle shine */} 
-                  {/* <motion.div className="absolute top-0 left-0 w-full h-full bg-white/20 rounded-full blur-xl pointer-events-none" animate={{ x: [-200, 200] }} transition={{ repeat: Infinity, duration: 3, ease: "linear" }} />  */}
                 </div>
               </div>
             </div>
@@ -434,6 +433,7 @@ export default function LandingPageAlt() {
             <nav className="hidden sm:flex items-center gap-6">
               {/* <Link to="/main" className="text-base text-[#dc8d33] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
                */}
+              <CurrencySelector variant="header" />
               <Link to="/login" className="text-base font-medium text-[white] hover:text-[#CBE56A]">Sign In</Link>
               <Link to="/register" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#CBE56A] text-[#2D274B] text-sm font-semibold shadow hover:scale-105 transition">Get started</Link>
             </nav>
@@ -471,16 +471,16 @@ export default function LandingPageAlt() {
             >
               <h1 className="text-5xl md:text-6xl font-serif leading-tight font-extrabold text-[#2D274B]">
                 Empower your future now, clarity comes with the
-                <br/>
+                <br />
                 <span className="text-[#e0fa84]"> Right Mentors.</span>
               </h1>
 
               <p className="mt-6 text-2xl text-[#2D274B] font-bold max-w-xl">
-                Personalized Learning, Perfect for Your Pace: Languages & Academic Subjects.Master Every Subject & Language, Backed by Experts.An EdTech solution that fits your life. Unlock your first lesson free and see the difference by coming week. 
-              </p>           
+                Personalized Learning, Perfect for Your Pace: Languages & Academic Subjects.Master Every Subject & Language, Backed by Experts.An EdTech solution that fits your life. Unlock your first lesson free and see the difference by coming week.
+              </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/main" className="inline-flex items-center gap-3 px-6 py-3 bg-[#CBE56A] text-[#4B437C] text-lg rounded-lg shadow hover:scale-105 transition" aria-label="Start learning"> 
+                <Link to="/main" className="inline-flex items-center gap-3 px-6 py-3 bg-[#CBE56A] text-[#4B437C] text-lg rounded-lg shadow hover:scale-105 transition" aria-label="Start learning">
                   <Play />
                   Start Learning
                 </Link>
@@ -490,7 +490,7 @@ export default function LandingPageAlt() {
               </div>
 
               <div className="mt-6 flex items-center gap-3">
-                
+
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border text-sm text-[#4B437C] shadow-sm">✅ Verified Tutors</div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border text-sm text-[#4B437C] shadow-sm">⏱️ 15–60 min Lessons</div>
               </div>
@@ -549,7 +549,7 @@ export default function LandingPageAlt() {
         </div>
       </main>
 
-      <TopTrainers/>
+      <TopTrainers />
 
       {/* Language Levels Explanation */}
       {/*  bg-[#2D274B] */}
@@ -920,11 +920,10 @@ export default function LandingPageAlt() {
 
                 {/* Subject Name */}
                 <div
-                  className={`absolute top-3 left-3 ${
-                    subject.isMore
-                      ? "bg-[#CBE56A] text-[#2D274B]"
-                      : "bg-white/90 text-[#2D274B]"
-                  } px-3 py-1 rounded-md font-bold text-lg shadow`}
+                  className={`absolute top-3 left-3 ${subject.isMore
+                    ? "bg-[#CBE56A] text-[#2D274B]"
+                    : "bg-white/90 text-[#2D274B]"
+                    } px-3 py-1 rounded-md font-bold text-lg shadow`}
                 >
                   {subject.name}
                 </div>
@@ -943,14 +942,14 @@ export default function LandingPageAlt() {
         {/* Modal for More Subjects */}
         {showMore && (
           <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50" onClick={() => setShowMore(false)}>
-            
+
             <div className="
               rounded-3xl p-10 max-w-4xl w-[90%] relative 
               shadow-2xl
               bg-gradient-to-br from-[#ffffff] via-[#f8f1ff] to-[#e9d8ff]
               border border-white/40
             ">
-              
+
               {/* Close Button */}
               <button
                 onClick={() => setShowMore(false)}
@@ -1045,7 +1044,7 @@ export default function LandingPageAlt() {
             viewport={{ once: true }}
             className="mt-5 text-2xl text-[#2D274B] font-semibold max-w-2xl mx-auto"
           >
-            Build creativity and skills with professional <br/>Hobby / Passion trainers.
+            Build creativity and skills with professional <br />Hobby / Passion trainers.
           </motion.p>
 
           {/* Grid Hobbies */}
@@ -1062,41 +1061,41 @@ export default function LandingPageAlt() {
             }}
             className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           >
-          {[
-            {
-              name: "Dancing",
-              img: "https://images.unsplash.com/photo-1500336624523-d727130c3328?auto=format&fit=crop&w=1200&q=100",
-            },
-            {
-              name: "Fitness",
-              img: "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1200&q=100",
-            },
-            {
-              name: "Cooking",
-              img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=100",
-            },
-            {
-              name: "Singing",
-              img: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=100",
-            },
-            {
-              name: "Painting",
-              img: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXJ0fGVufDB8fDB8fHww",
-            },
-            {
-              name: "Photography",
-              img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaHl8ZW58MHx8MHx8fDA%3D",
-            },
-            {
-              name: "Calligraphy",
-              img: "https://plus.unsplash.com/premium_photo-1661887864467-ae3ca94f7ffa?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            },
-            {
-              name: "More",
-              img: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=100",
-              isMore: true,
-            },
-          ].map((hobby, idx) => (
+            {[
+              {
+                name: "Dancing",
+                img: "https://images.unsplash.com/photo-1500336624523-d727130c3328?auto=format&fit=crop&w=1200&q=100",
+              },
+              {
+                name: "Fitness",
+                img: "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1200&q=100",
+              },
+              {
+                name: "Cooking",
+                img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=100",
+              },
+              {
+                name: "Singing",
+                img: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1200&q=100",
+              },
+              {
+                name: "Painting",
+                img: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXJ0fGVufDB8fDB8fHww",
+              },
+              {
+                name: "Photography",
+                img: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG9ncmFwaHl8ZW58MHx8MHx8fDA%3D",
+              },
+              {
+                name: "Calligraphy",
+                img: "https://plus.unsplash.com/premium_photo-1661887864467-ae3ca94f7ffa?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              },
+              {
+                name: "More",
+                img: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=100",
+                isMore: true,
+              },
+            ].map((hobby, idx) => (
               <motion.div
                 key={idx}
                 variants={{
@@ -1118,11 +1117,10 @@ export default function LandingPageAlt() {
 
                 {/* Hobby Name */}
                 <div
-                  className={`absolute top-3 left-3 ${
-                    hobby.isMore
-                      ? "bg-[#CBE56A] text-[#2D274B]"
-                      : "bg-white/90 text-[#2D274B]"
-                  } px-3 py-1 rounded-md font-bold text-lg shadow`}
+                  className={`absolute top-3 left-3 ${hobby.isMore
+                    ? "bg-[#CBE56A] text-[#2D274B]"
+                    : "bg-white/90 text-[#2D274B]"
+                    } px-3 py-1 rounded-md font-bold text-lg shadow`}
                 >
                   {hobby.name}
                 </div>
@@ -1215,7 +1213,7 @@ export default function LandingPageAlt() {
         )}
       </section>
 
-       {/* How it works section */}
+      {/* How it works section */}
       <section className="py-16" aria-labelledby="how-it-works">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -1243,7 +1241,7 @@ export default function LandingPageAlt() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-4xl font-semibold font-serif text-[#e0fa84]">Why learners love <br/> LearniLM🌍World</h3>
+              <h3 className="text-4xl font-semibold font-serif text-[#e0fa84]">Why learners love <br /> LearniLM🌍World</h3>
               <p className="mt-4 text-lg font-bold max-w-xl text-[#2D274B]">Short lessons, lots of speaking time and tutors focused on practical outcomes. Learn phrases you’ll use the very next day.</p>
 
               <div className="mt-8 grid sm:grid-cols-3 gap-4">
@@ -1305,7 +1303,7 @@ export default function LandingPageAlt() {
         </div>
       </section>
 
-     {/* Highlights Section */}
+      {/* Highlights Section */}
       <section
         className="relative py-24  text-white"
         aria-labelledby="sdil-highlights"
@@ -1406,11 +1404,11 @@ export default function LandingPageAlt() {
             viewport={{ once: true }}
             className="mt-16 text-lg text-center text-white font-bold max-w-3xl mx-auto"
           >
-            Personalized support and guidance ensure every learner’s success at <br/> LearniLM 🌎 World.
+            Personalized support and guidance ensure every learner’s success at <br /> LearniLM 🌎 World.
           </motion.p>
         </div>
       </section>
- 
+
       {/* FAQ */}
       <section className="py-16" aria-labelledby="faq-heading">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">

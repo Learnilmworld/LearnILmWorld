@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Play, User, Star, Clock, MapPin, X, Heart } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import * as Flags from 'country-flag-icons/react/3x2'
+import Price from './Price'
 
 
 const renderFlag = (code?: string) => {
@@ -99,7 +100,7 @@ const TrainerCard: React.FC<Props> = ({ trainer, learningType }) => {
         </div>
         <div className="flex-shrink-0">
           <div className="px-3 py-1 bg-[#9787F3] text-white rounded-full font-semibold text-sm sm:text-base">
-            ${Number(trainer.profile?.hourlyRate || 25)}/hr
+            <Price amount={Number(trainer.profile?.hourlyRate || 25)} /> /hr
           </div>
         </div>
 
@@ -125,18 +126,18 @@ const TrainerCard: React.FC<Props> = ({ trainer, learningType }) => {
         const hobbies = trainer.profile?.hobbies || trainer.profile?.interests || trainer.profile?.skills || []
         return hobbies.length > 0
       })() && (
-        <div className="mb-3">
-          <p className="text-xs text-gray-500 mb-1 font-medium">🎨 Hobbies I Teach</p>
-          <div className="flex flex-wrap gap-2">
-            {(trainer.profile?.hobbies || trainer.profile?.interests || trainer.profile?.skills || []).slice(0, 4).map((h: any, i: number) => (
-              <span key={i} className="px-3 py-1 bg-green-50 border border-green-200 rounded-xl text-sm text-green-800 shadow-sm">{h}</span>
-            ))}
-            {(trainer.profile?.hobbies || trainer.profile?.interests || trainer.profile?.skills || []).length > 4 && (
-              <span className="px-3 py-1 bg-gray-200 text-gray-700 rounded-xl text-sm">+{(trainer.profile?.hobbies || trainer.profile?.interests || trainer.profile?.skills || []).length - 4} more</span>
-            )}
+          <div className="mb-3">
+            <p className="text-xs text-gray-500 mb-1 font-medium">🎨 Hobbies I Teach</p>
+            <div className="flex flex-wrap gap-2">
+              {(trainer.profile?.hobbies || trainer.profile?.interests || trainer.profile?.skills || []).slice(0, 4).map((h: any, i: number) => (
+                <span key={i} className="px-3 py-1 bg-green-50 border border-green-200 rounded-xl text-sm text-green-800 shadow-sm">{h}</span>
+              ))}
+              {(trainer.profile?.hobbies || trainer.profile?.interests || trainer.profile?.skills || []).length > 4 && (
+                <span className="px-3 py-1 bg-gray-200 text-gray-700 rounded-xl text-sm">+{(trainer.profile?.hobbies || trainer.profile?.interests || trainer.profile?.skills || []).length - 4} more</span>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
 
       <p className="text-[#6A6592] mb-4 line-clamp-3 flex-1">

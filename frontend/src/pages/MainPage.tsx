@@ -9,6 +9,7 @@ import LearningTypeSelector from '../components/LearningTypeSelector'
 import FiltersPanel from '../components/FiltersPanel'
 import TrainersGrid from '../components/TrainersGrid'
 import { useAuth } from '../contexts/AuthContext'
+import CurrencySelector from '../components/CurrencySelector'
 
 
 const MainPage: React.FC = () => {
@@ -94,6 +95,7 @@ const MainPage: React.FC = () => {
 
 
             <nav className="flex items-center space-x-4">
+              <CurrencySelector variant="header" />
               {!user ? (
                 <Link to="/login" className="px-5 py-2 rounded-xl bg-[#CBE56A] text-[#2D274B]">
                   Sign In
