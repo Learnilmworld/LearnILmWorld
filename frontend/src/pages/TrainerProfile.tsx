@@ -8,6 +8,7 @@ import {
   LoaderIcon
 } from 'lucide-react'
 import axios from 'axios'
+import bg_img from '../assets/bg_main.jpeg'
 import Price from '../components/Price'
 import CurrencySelector from '../components/CurrencySelector'
 
@@ -157,12 +158,22 @@ const TrainerProfile: React.FC = () => {
 
   return (
     <div
+<<<<<<< HEAD
       className="bg-[url('/src/assets/bg_main.jpeg')] min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-[#FFFAF1] bg-fixed"
       style={{
         
         position: "relative",
         backgroundSize: "cover",
         backgroundPosition: "right bottom",
+=======
+      className="min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-[#FFFAF1] bg-fixed"
+      style={{
+        backgroundImage:
+          `url(${bg_img})`,
+        position: "relative",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+>>>>>>> main
         backgroundRepeat: "no-repeat",
         width: "100%",
       }}
@@ -193,11 +204,19 @@ const TrainerProfile: React.FC = () => {
         {/* Left: Profile, Languages, Connect, Demo Video */}
         <div className="lg:col-span-2 space-y-8">
           {/* Profile Card */}
+<<<<<<< HEAD
            <div className="rounded-2xl p-8 bg-white/90 backdrop-blur-md shadow-[0_20px_45px_rgba(45,39,75,0.12)]">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
 
             <div className="flex items-center gap-6">
               <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#9787F3] to-[#7C6CF2] overflow-hidden flex items-center justify-center shadow-md">
+=======
+          <div className="rounded-2xl p-8 bg-white/90 backdrop-blur-md shadow-[0_20px_45px_rgba(45,39,75,0.12)]">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-8">
+
+              <div className="flex items-center gap-6">
+                <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#9787F3] to-[#7C6CF2] overflow-hidden flex items-center justify-center shadow-md">
+>>>>>>> main
 
                   {avatarSrc ? (
                     <img
@@ -212,8 +231,13 @@ const TrainerProfile: React.FC = () => {
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight">{trainer.name}</h1>
                   <div className="flex items-center gap-2 mt-1 text-lg">
+<<<<<<< HEAD
                   <Star className="h-5 w-5 text-yellow-400" />
                   <span className="font-semibold">
+=======
+                    <Star className="h-5 w-5 text-yellow-400" />
+                    <span className="font-semibold">
+>>>>>>> main
                       {trainer.stats?.rating ?? trainer.profile?.averageRating ?? 0}
                     </span>
                     <span className="text-gray-500">({reviews.length} reviews)</span>
@@ -271,7 +295,11 @@ const TrainerProfile: React.FC = () => {
           {/* Languages */}
           <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-md shadow-[0_16px_35px_rgba(45,39,75,0.1)]">
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+<<<<<<< HEAD
             <Globe className="h-5 w-5 text-orange-500" />
+=======
+              <Globe className="h-5 w-5 text-orange-500" />
+>>>>>>> main
               Languages I Teach
             </h3>
             <div className="grid md:grid-cols-2 gap-5">
@@ -311,7 +339,11 @@ const TrainerProfile: React.FC = () => {
           {/* Connect Section */}
           <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-md shadow-[0_16px_35px_rgba(45,39,75,0.1)]">
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+<<<<<<< HEAD
              <LoaderIcon className='h-5 w-5 text-orange-500'/> 
+=======
+              <LoaderIcon className='h-5 w-5 text-orange-500' />
+>>>>>>> main
               Connect</h3>
             <div className="flex gap-4">
               {trainer.profile?.socialMedia?.instagram && (
@@ -350,7 +382,11 @@ const TrainerProfile: React.FC = () => {
           {/* Demo Video */}
           {trainer.profile?.demoVideo && (
             <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-md shadow-[0_16px_35px_rgba(45,39,75,0.1)]">
+<<<<<<< HEAD
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+=======
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+>>>>>>> main
                 <Play className="h-5 w-5 text-orange-500" />
                 Demo Video
               </h3>
@@ -373,8 +409,13 @@ const TrainerProfile: React.FC = () => {
           {/* Specializations */}
           {trainer.profile?.specializations && trainer.profile.specializations.length > 0 && (
             <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-md shadow-[0_16px_35px_rgba(45,39,75,0.1)]">
+<<<<<<< HEAD
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
               <Award className="h-5 w-5 text-orange-500" />
+=======
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <Award className="h-5 w-5 text-orange-500" />
+>>>>>>> main
                 Specializations
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -392,8 +433,13 @@ const TrainerProfile: React.FC = () => {
 
           {/* Availability */}
           <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-md shadow-[0_16px_35px_rgba(45,39,75,0.1)]">
+<<<<<<< HEAD
           <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
             <Calendar className="h-5 w-5 text-orange-500" />
+=======
+            <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-orange-500" />
+>>>>>>> main
               Availability
             </h3>
             <div className="space-y-2 text-sm">
@@ -415,9 +461,15 @@ const TrainerProfile: React.FC = () => {
 
           {/* Teaching Style */}
           <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-md shadow-[0_16px_35px_rgba(45,39,75,0.1)]">
+<<<<<<< HEAD
           <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-orange-500"/>
             Teaching Style</h3>
+=======
+            <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-orange-500" />
+              Teaching Style</h3>
+>>>>>>> main
             <p className="text-lg text-gray-700 leading-relaxed">
               {trainer.profile?.teachingStyle || 'Structured, conversational, and outcome-focused.'}
             </p>
@@ -437,8 +489,13 @@ const TrainerProfile: React.FC = () => {
 
           {/* Reviews */}
           <div className="rounded-2xl p-6 bg-white/90 backdrop-blur-md shadow-[0_16px_35px_rgba(45,39,75,0.1)]">
+<<<<<<< HEAD
           <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
             <MessageSquare className="h-5 w-5 text-orange-500" />
+=======
+            <h3 className="text-xl font-semibold mb-3 flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-orange-500" />
+>>>>>>> main
               Student Reviews ({reviews.length})
             </h3>
             {reviews.length > 0 ? (

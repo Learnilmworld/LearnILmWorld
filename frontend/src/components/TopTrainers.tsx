@@ -25,7 +25,11 @@ export default function TopTrainers(): JSX.Element {
   const [activeTrainer, setActiveTrainer] = useState<Trainer | null>(null);
 
   //Card flipping control
+<<<<<<< HEAD
 const [hoveredTrainerId, setHoveredTrainerId] = useState<string | null>(null);
+=======
+  const [hoveredTrainerId, setHoveredTrainerId] = useState<string | null>(null);
+>>>>>>> main
 
 
   useEffect(() => {
@@ -166,8 +170,13 @@ const [hoveredTrainerId, setHoveredTrainerId] = useState<string | null>(null);
                 onMouseEnter={() => setHoveredTrainerId(id)}
                 onMouseLeave={() => setHoveredTrainerId(null)}
                 onClick={() => {
+<<<<<<< HEAD
                   setActiveTrainer(trainer); 
   }}
+=======
+                  setActiveTrainer(trainer);
+                }}
+>>>>>>> main
               >
                 <div
                   className={`
@@ -294,7 +303,7 @@ const [hoveredTrainerId, setHoveredTrainerId] = useState<string | null>(null);
           className=" fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md"
           onClick={() => {
             setActiveTrainer(null);
-            setIsFlipped(false);
+            // setIsFlipped(false);
           }}
         >
           <div onClick={(e) => e.stopPropagation()}>

@@ -89,6 +89,7 @@ export default function TrainerBackCard({
                     <span>• {trainer.profile?.experience ?? 0} years</span>
                 </div>
 
+<<<<<<< HEAD
 {/* ABOUT */}
 <div className="mt-3 h-[90px] w-full overflow-y-auto no-scrollbar">
   <p className="text-xs text-gray-600 leading-relaxed break-words pr-1">
@@ -96,6 +97,15 @@ export default function TrainerBackCard({
       "Native speaker with PhD-level expertise, specialized in professional and academic preparation."}
   </p>
 </div>
+=======
+                {/* ABOUT */}
+                <div className="mt-3 h-[90px] w-full overflow-y-auto no-scrollbar">
+                    <p className="text-xs text-gray-600 leading-relaxed break-words pr-1">
+                        {trainer.profile?.about ??
+                            "Native speaker with PhD-level expertise, specialized in professional and academic preparation."}
+                    </p>
+                </div>
+>>>>>>> main
 
 
 

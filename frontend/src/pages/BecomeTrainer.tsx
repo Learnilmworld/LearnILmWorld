@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
 // import logo from '../assets/LearnilmworldLogo.jpg'
+<<<<<<< HEAD
 import image1 from '../assets/become-trainer2.4.jpeg'
+=======
+import image1 from '../assets/become-trainer2.4.png'
+>>>>>>> main
 import image2 from '../assets/become-trainer2.2.jpeg'
 import image3 from '../assets/become-trainer2.3.jpeg'
 // import bg_img from '../assets/purple_gradient.jpg'
@@ -116,11 +120,11 @@ const BecomeTrainer: React.FC = () => {
           </div>
         </div>
 
-
       </header>
 
       {/* Hero Section */}
       <section className="py-20 px-4">
+<<<<<<< HEAD
   <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
     {/* LEFT CONTENT */}
@@ -173,6 +177,58 @@ const BecomeTrainer: React.FC = () => {
 
 
 
+=======
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+          {/* LEFT CONTENT */}
+          <div className="text-center lg:text-left">
+            <motion.h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#F64EBB] mb-6 leading-tight"
+            >
+              Empower Learners, <br />
+              Inspire Growth 🌟
+            </motion.h1>
+
+            <motion.p
+              className="max-w-xl mx-auto lg:mx-0 font-semibold text-lg sm:text-xl text-[#2D274B] mb-10"
+            >
+              Join LearniLM🌍World as a Trainer and help students achieve their goals while
+              growing your career in a flexible, rewarding environment.
+            </motion.p>
+
+            <motion.button
+              onClick={() => navigate("/register?role=trainer")}
+              className="px-10 py-4 bg-[#F64EBB] text-white font-semibold text-lg rounded-full shadow-lg hover:bg-[#ea20a4]"
+              whileHover={{ scale: 1.05 }}
+            >
+              Become a Trainer Today
+            </motion.button>
+          </div>
+
+          {/* RIGHT IMAGE */}
+          <motion.div
+            className="flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+          >
+            <img
+              src={image2}
+              alt="Trainer Collaboration"
+              className="
+          w-full
+          max-w-xl
+          lg:max-w-2xl
+          rounded-3xl
+          shadow-xl
+          object-cover
+        "
+            />
+          </motion.div>
+
+        </div>
+      </section>
+
+>>>>>>> main
       {/*  Text Section + 1 Big Image */}
       <section className="py-10 px-6 md:px-16 flex flex-column  md:flex-row items-center gap-10 max-w-6xl mx-auto">
         {/* text + list ul */}
@@ -222,6 +278,7 @@ const BecomeTrainer: React.FC = () => {
 
         {/* stretched image */}
         <div className="w-full px-4">
+<<<<<<< HEAD
   <div className="max-w-6xl mx-auto overflow-hidden rounded-3xl shadow-lg aspect-[7/2]">
           <motion.div
             className="flex-1 flex justify-center"
@@ -236,6 +293,22 @@ const BecomeTrainer: React.FC = () => {
             />
           </motion.div>
         </div>
+=======
+          <div className="max-w-6xl mx-auto overflow-hidden rounded-3xl shadow-lg aspect-[7/2]">
+            <motion.div
+              className="flex-1 flex justify-center"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <img
+                src={image3}
+                alt="Trainer Relaxing Illustration"
+                className=" w-full h-full object-cover object-center"
+              />
+            </motion.div>
+          </div>
+>>>>>>> main
         </div>
 
         {/*Text Under Images */}
