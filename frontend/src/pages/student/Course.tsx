@@ -2,70 +2,50 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import heroImage from "../../assets/office_politics.png"; 
 import CourseCard from "../../components/CourseCard";
-import { Button, Container, Nav, Offcanvas } from "react-bootstrap";
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from "react-router-dom";
 import { Target, ShieldCheck, Zap, BookOpen, Award, Clock, ChevronDown, ChevronUp } from "lucide-react";
 import Footer from "../../components/Footer";
+import Navbar from "../../components/Navbar";
+
+
+
+
+
+const SkeletonCard = () => (
+  <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 animate-pulse">
+    <div className="h-48 bg-gray-300"></div> {/* Image Placeholder */}
+    <div className="p-6 space-y-3">
+      <div className="h-6 bg-gray-300 rounded w-3/4"></div> {/* Title */}
+      <div className="h-4 bg-gray-200 rounded w-full"></div> {/* Desc */}
+      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+      <div className="flex justify-between mt-4">
+        <div className="h-8 bg-gray-300 rounded w-20"></div> {/* Button */}
+      </div>
+    </div>
+  </div>
+);
+
+
+
+
 
 const Courses = () => {
     const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 
 
-  // --- AUTH LOGIC ---
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const localUser = localStorage.getItem("user");
+  
 
-    // Scenario 1: if the data is present in local storage
-    if (token && localUser) {
-      setUser(JSON.parse(localUser));
-    }
-    
-    // Scenario 2: Data not present in local storage
-    if (token && !localUser) {
-       axios.get(`${API_BASE_URL}/api/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` }
-       })
-       .then(response => {
-          const userData = response.data; 
-          setUser(userData);
-          localStorage.setItem("user", JSON.stringify(userData));
-       })
-       .catch(() => {
-          handleLogout();
-       });
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/login");
-  };
+  
 
 
-  const UserAvatar = ({ name, className }) => {
-    const initial = name ? name.charAt(0).toUpperCase() : "?";
-    const colors = ["bg-red-500", "bg-blue-500", "bg-green-500", "bg-purple-500", "bg-pink-500", "bg-indigo-500"];
-    const colorClass = colors[name.length % colors.length];
-
-    return (
-      <div className={`${className} ${colorClass} text-white flex items-center justify-center font-bold border-2 border-white/50 shadow-sm`}>
-        {initial}
-      </div>
-    );
-
-  }
-
-  // Dashboard link logic based on role
-  const dashboardLink = user?.role === "trainer" ? "/trainer" : "/student";
+  
 
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -142,10 +122,18 @@ const Courses = () => {
   
 
   useEffect(() => {
+    setLoading(true)
     axios
       .get(`${API_BASE_URL}/api/courses`)
-      .then((res) => setCourses(res.data))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        setCourses(res.data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error(err)
+        setLoading(false)
+      });
+      
   }, []);
 
 
@@ -172,104 +160,7 @@ const Courses = () => {
   return (
     <div className="min-h-screen bg-[#fef5e4]">
       
-      <header className="sticky top-0 z-40 bg-fixed">
-        <div className="px-4 pt-4">
-          <div className="mx-auto max-w-7xl rounded-full bg-[#6B48AF]/90 backdrop-blur-md shadow-xl border border-white/30" style={{ position: "relative", width: "100%" }}>
-            <Container className="py-2 px-6 md:px-10">
-              <div className="flex items-center justify-between">
-                
-                {/* 1. LOGO (Click -> Home) */}
-                <div className="flex items-center gap-3">
-                  <Link to="/" className="text-3xl md:text-4xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center no-underline hover:scale-105 transition-transform">
-                    <span className="text-[#FFFAF1] bg-clip-text drop-shadow-lg"> LearniLM </span>
-                    <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }} className="inline-block mx-1 text-3xl" > 🌎 </motion.span>
-                    <span className="text-[#FFFAF1] bg-clip-text drop-shadow-lg"> World </span>
-                  </Link>
-                </div>
-
-                {/* 2. DESKTOP NAV */}
-                <nav className="hidden sm:flex items-center gap-6">
-                  {user ? (
-                    <div className="flex items-center gap-4">
-                      {/* User Info Clickable -> Dashboard */}
-                      <Link to={dashboardLink} className="flex items-center gap-3 text-white hover:text-[#CBE56A] transition no-underline group">
-                        
-                        <UserAvatar 
-                          name={user.name} 
-                          className="w-10 h-10 rounded-full" 
-                        />
-                        
-                        <div className="flex flex-col leading-tight">
-                            <span className="font-semibold text-sm">{user.name}</span>
-                            <span className="text-[10px] text-gray-200 uppercase tracking-wider">{user.role}</span>
-                        </div>
-                      </Link>
-
-                      <button 
-                        onClick={handleLogout} 
-                        className="ml-2 px-5 py-2 rounded-full bg-[#F64EBB] text-white text-sm font-semibold shadow hover:bg-pink-600 hover:scale-105 transition"
-                      >
-                        Log Out
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      <Link to="/login" className="text-lg font-medium text-[white] hover:text-[#CBE56A] transition-colors no-underline">
-                        Sign In
-                      </Link>
-                      <Link to="/register" className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-[#F64EBB] text-white text-base font-semibold shadow hover:scale-105 transition no-underline">
-                        Get started
-                      </Link>
-                    </>
-                  )}
-                </nav>
-
-                {/* 3. MOBILE NAV */}
-                <div className="sm:hidden ">
-                  <Button variant="light" onClick={() => setShowOffcanvas(true)} aria-label="Open menu">☰</Button>
-                  <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end">
-                    <Offcanvas.Header closeButton><Offcanvas.Title>Menu</Offcanvas.Title></Offcanvas.Header>
-                    <Offcanvas.Body>
-                      <Nav className="flex-column gap-4">
-                        {user ? (
-                          <>
-                            <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
-                                <UserAvatar 
-                          name={user.name} 
-                          className="w-10 h-10 rounded-full" 
-                        />
-                                <div>
-                                    <p className="font-bold text-gray-800 m-0">{user.name}</p>
-                                    <p className="text-xs text-gray-500 m-0 uppercase">{user.role}</p>
-                                </div>
-                            </div>
-                            <Nav.Link as={Link} to={dashboardLink} onClick={() => setShowOffcanvas(false)}>Dashboard</Nav.Link>
-                            <div className="mt-2">
-                              <button onClick={() => { handleLogout(); setShowOffcanvas(false); }} className="w-full px-4 py-2 rounded-full bg-[#F64EBB] text-white text-sm font-semibold">
-                                Log Out
-                              </button>
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <Nav.Link as={Link} to="/login" onClick={() => setShowOffcanvas(false)}>Sign In</Nav.Link>
-                            <div className="mt-3">
-                              <Link to="/register" onClick={() => setShowOffcanvas(false)} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#9787F3] text-white text-sm font-semibold">
-                                Get started
-                              </Link>
-                            </div>
-                          </>
-                        )}
-                      </Nav>
-                    </Offcanvas.Body>
-                  </Offcanvas>
-                </div>
-
-              </div>
-            </Container>
-          </div>
-        </div>
-      </header>
+      <Navbar/>
 
       {/* --- HERO SECTION --- */}
       <div className="max-w-7xl mx-auto px-6 py-16 md:py-20 overflow-hidden">
@@ -326,13 +217,22 @@ const Courses = () => {
           <p className="text-gray-500 font-medium">Featured Best Selling Courses</p>
         </motion.div>
 
-        <motion.div 
+        {loading ? (
+            <>
+            <SkeletonCard/>
+            <SkeletonCard/>
+            <SkeletonCard/>
+            </>
+          )
+           : (
+            <motion.div 
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
+          
           {displayedCourses.length > 0 ? (
             displayedCourses.map((course: any) => (
               <motion.div key={course._id} variants={fadeInUp}>
@@ -340,11 +240,13 @@ const Courses = () => {
               </motion.div>
             ))
           ) : (
-            <p className="text-center col-span-full text-gray-400">Loading courses...</p>
+            <p className="text-center col-span-full text-gray-400">No courses...</p>
+          
           )}
-        </motion.div>
+          </motion.div>
+          )}
 
-        {courses.length > 3 && (
+        {!loading && courses.length > 3 && (
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAll(!showAll)}

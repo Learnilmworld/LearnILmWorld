@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import {
-  Play, Users, BookOpen, Award, Clock, Star, MessageSquare, ChevronDown, ChevronRight,
-} from 'lucide-react'
 //  Facebook,Twitter,Instagram,Linkedin,Mail, Globe,
 import { Nav, Container, Offcanvas, Button } from 'react-bootstrap'
 import { useAuth } from "../contexts/AuthContext";
+import { BookOpen, ArrowRight, Play, Mic, Headphones, Calendar,Users,  Award, Clock, Star, MessageSquare, ChevronDown, ChevronRight, } from 'lucide-react';
 // Navbar,from above
 // import logo from "../assets/LearnilmworldLogo.jpg";
 // import russian_student from '../assets/russian_student.png'
@@ -47,6 +45,7 @@ import cs from '../assets/Computer Science.jpeg'
 import Footer from '../components/Footer'
 import TopTrainers from '../components/TopTrainers'
 import { LanguageCard } from '../components/LanguageCard'
+import Navbar from '../components/Navbar';
 // import CurrencySelector from '../components/CurrencySelector'
 // import MoreLanguages from '../components/MoreLanguages'
 
@@ -483,82 +482,7 @@ export default function LandingPageAlt() {
 
       {/* 2D274B  text- #dc8d33*/}
       {/* bg-[#6B48AF]/95 backdrop-blur-sm border-b border-white/30 text-white */}
-      <header className="sticky top-0 z-40 bg-fixed">
-        <div className="px-4 pt-4">
-          <div
-            className="
-        mx-auto
-        max-w-7xl
-        rounded-full
-        bg-[#6B48AF]/90
-        backdrop-blur-md
-        shadow-xl
-        border border-white/30
-      "
-            style={{
-              backgroundImage:
-                `url(${bg_img})`,
-              position: "relative",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              width: "100%",
-            }}
-          >
-            <Container className="py-7 px-10">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-
-                  <div className="flex flex-col items-center gap-1">
-
-                    {/* Main Logo */}
-                    <div className="text-3xl md:text-4xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center">
-
-                      {/* LEARN e0fa84*/}
-                      <span className="text-[#FFFAF1] bg-clip-text drop-shadow-lg"> LearniLM </span>
-
-                      {/* Rotating Globe */}
-                      <motion.span animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 12, ease: "linear" }} className="inline-block mx-1 text-3xl" > 🌎 </motion.span>
-
-                      {/* World F64EBB */}
-                      <span className="text-[#FFFAF1] bg-clip-text drop-shadow-lg"> World </span>
-                    </div>
-                  </div>
-                </div>
-
-                <nav className="hidden sm:flex items-center gap-6">
-                  {/* <Link to="/main" className="text-base text-[#dc8d33] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
-               */}
-                  {/* <CurrencySelector variant="header" /> */}
-                  <Link to="/login" className="text-lg font-medium text-[white] hover:text-[#6B48AF]">Sign In</Link>
-                  <Link to="/register" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F64EBB] text-white text-base font-semibold shadow hover:scale-105 transition">Get started</Link>
-                </nav>
-
-                <div className="sm:hidden ">
-                  <Button variant="light" onClick={() => setShowOffcanvas(true)} aria-label="Open menu">☰</Button>
-
-                  <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end" aria-labelledby="offcanvas-nav">
-                    <Offcanvas.Header closeButton>
-                      <Offcanvas.Title id="offcanvas-nav">Menu</Offcanvas.Title>
-                    </Offcanvas.Header>
-                    <Offcanvas.Body>
-                      <Nav className="flex-column gap-2">
-                        <Nav.Link as={Link} to="/main" onClick={() => setShowOffcanvas(false)}>Trainers</Nav.Link>
-                        <Nav.Link as={Link} to="/login" onClick={() => setShowOffcanvas(false)}>Sign In</Nav.Link>
-                        <div className="mt-3">
-                          <Link to="/register" onClick={() => setShowOffcanvas(false)} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#9787F3] text-white text-sm font-semibold">Get started</Link>
-                        </div>
-                      </Nav>
-                    </Offcanvas.Body>
-                  </Offcanvas>
-                </div>
-              </div>
-            </Container>
-          </div>
-        </div>
-
-
-      </header>
+      <Navbar/>
 
       <main className="pt-12 pb-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -570,32 +494,71 @@ export default function LandingPageAlt() {
               className="text-left"
             >
               <h1 className="text-5xl md:text-5xl font-serif leading-tight font-extrabold text-[#2D274B]">
-                Clarity comes with the
+                Helping learners grow,
                 <br />
                 {/* e0fa84 */}
-                <span className="text-[#F64EBB]"> Right Mentors.</span>
+                <span className="text-[#F64EBB]"> emotionally </span>
+                <span className="text-[#2D274B]">and</span>
+                <br />
+                <span className="text-[#F64EBB]">intellenctually</span>
               </h1>
 
-              <p className="mt-6 text-2xl text-[#2D274B] font-bold max-w-xl">
-                Personalized Learning, Perfect for Your Pace: Languages & Academic Subjects.Master Every Subject & Language, Backed by Experts.An EdTech solution that fits your life. Unlock your first lesson free and see the difference by coming week.
-              </p>
+              <p className="mt-6 text-2xl md:text-3xl text-[#2D274B] font-bold max-w-xl">
+          Clarity comes with the <span className="text-[#F64EBB]">Right Mentors</span>
+        </p>
+        <p className='mt-2 text-xl font-bold md:text-2xl text-[#F64EBB]'>Learn from natives. Speak like natives</p>
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/student/courses" className="inline-flex items-center gap-3 px-6 py-3 bg-[#F64EBB] text-white hover:bg-[#6B48AF]  text-lg rounded-lg shadow hover:scale-105 transition" aria-label="Start learning">
-                  <Play />
-                  Browse Courses
-                </Link>
-                {/* CBE56A hover:text-[#4B437C]*/}
-                <Link to="/become-trainer" className="inline-flex items-center gap-3 px-6 py-3 border border-[#9787F3] bg-[#F64EBB] text-blue-50 text-lg rounded-lg  hover:bg-[#6B48AF] transition" aria-label="Become a trainer">
-                  <Users /> Become a Trainer
-                </Link>
-              </div>
+          <div className="mt-10">
+  <div className="flex flex-wrap gap-4 mb-10">
+    <Link 
+      to="/student/courses" 
+      className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#F53886] to-[#A644FF] text-white text-lg font-bold rounded-xl shadow-lg hover:scale-105 transition-transform" 
+    >
+      <BookOpen className="w-5 h-5" />
+      <span>Browse Courses</span>
+      <ArrowRight className="w-5 h-5 ml-1" />
+    </Link>
+    <Link 
+      to="/demo" 
+      className="inline-flex items-center gap-2 px-6 py-3.5 bg-white border border-gray-200 text-gray-900 text-lg font-bold rounded-xl shadow-sm hover:bg-gray-50 transition-colors" 
+    >
+      <Play className="w-5 h-5 text-[#F64EBB] fill-current" />
+      <span>Book a FREE Demo</span>
+    </Link>
+  </div>
 
-              <div className="mt-6 flex items-center gap-3">
+  <div className="flex flex-wrap items-center gap-x-6 gap-y-4 lg:gap-x-8">
+    <div className="flex items-center gap-2">
+      <div className="p-2 bg-teal-50 rounded-full text-[#F64EBB] shrink-0">
+        <Mic className="w-5 h-5" />
+      </div>
+      <div className="flex flex-col whitespace-nowrap">
+        <span className="font-bold text-gray-900 text-base leading-none">Native</span>
+        <span className="text-gray-500 text-xs mt-1">mentors + real accent</span>
+      </div>
+    </div>
 
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border text-sm text-[#4B437C] shadow-sm">✅ Verified Tutors</div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border text-sm text-[#4B437C] shadow-sm">⏱️ 15–60 min Lessons</div>
-              </div>
+    <div className="flex items-center gap-2">
+      <div className="p-2 bg-teal-50 rounded-full text-[#F64EBB] shrink-0">
+        <Headphones className="w-5 h-5" />
+      </div>
+      <div className="flex flex-col whitespace-nowrap">
+        <span className="font-bold text-gray-900 text-base leading-none">Speaking-</span>
+        <span className="text-gray-500 text-xs mt-1">focused practice</span>
+      </div>
+    </div>
+
+    <div className="flex items-center gap-2">
+      <div className="p-2 bg-teal-50 rounded-full text-[#F64EBB] shrink-0">
+        <Calendar className="w-5 h-5" />
+      </div>
+      <div className="flex flex-col whitespace-nowrap">
+        <span className="font-bold text-gray-900 text-base leading-none">Flexible</span>
+        <span className="text-gray-500 text-xs mt-1">weekday/weekend batches</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 
               {/* chaned color to wite from [#7fe808],[#ef4444] and [#9787F3] */}
@@ -650,7 +613,81 @@ export default function LandingPageAlt() {
           </div>
         </div>
       </main>
+{/* Why learners love us section */}
+      {/* bg-[#2D274B] */}
+      <section className="py-16 ">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="gap-8 items-start">
+            {/* LEFT – Heading only */}
+            <div className='flex justify-center items-center text-center'>
+              <h3 className="text-4xl font-semibold font-serif text-[#F64EBB]">
+                Why learners love <br /> LearniLM🌍World
+              </h3>
+            </div>
 
+            {/* EMPTY right cell for row balance */}
+            <div />
+
+            {/* PARAGRAPH – spans both columns */}
+            <div className="lg:col-span-2 flex justify-center items-center text-center">
+              <p className="mt-4 text-lg font-bold max-w-4xl text-[#2D274B]">
+                Short lessons, lots of speaking time and tutors focused on practical
+                outcomes. Learn phrases you’ll use the very next day.
+              </p>
+            </div>
+
+            {/* LEFT – Feature cards */}
+            <div>
+              <div className="mt-8 grid sm:grid-cols-3 gap-4">
+                {features.map((f, idx) => (
+                  <div
+                    key={idx}
+                    className="p-4 bg-blue-50 rounded-xl shadow hover:bg-[#F64EBB] hover:text-gray-200 hover:scale-[1.02] transition"
+                    role="group"
+                  >
+                    <f.icon className="w-9 h-9 text-[#9787F3]" aria-hidden />
+                    <div className="font-bold mt-3">{f.title}</div>
+                    <div className="text-base font-semibold text-[#4B437C] hover:text-gray-50 mt-1">
+                      {f.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT – Shifted down */}
+            <div className="space-y-4 mt-10">
+              <div className="bg-blue-50 p-6 rounded-2xl shadow">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-[#fde68a] flex items-center justify-center">
+                    ⭐
+                  </div>
+                  <div>
+                    <div className="font-extrabold text-xl">Real outcomes</div>
+                    <div className="text-base font-semibold text-[#4B437C]">
+                      Progress reports every 4 lessons
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[#4B437C] font-semibold text-lg">
+                  From small talk to business calls — our curriculum is outcome-focused
+                  so you can see measurable improvement.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-blue-50 p-4 rounded-xl shadow font-extrabold hover:bg-[#F64EBB] hover:text-white">
+                  Quick lessons
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl shadow font-extrabold hover:text-white hover:bg-[#F64EBB]">
+                  Excellent Material
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
       <TopTrainers />
 
       {/* Language Levels Explanation */}
@@ -1329,81 +1366,7 @@ export default function LandingPageAlt() {
         </div>
       </section>
 
-      {/* Why learners love us section */}
-      {/* bg-[#2D274B] */}
-      <section className="py-16 ">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="gap-8 items-start">
-            {/* LEFT – Heading only */}
-            <div className='flex justify-center items-center text-center'>
-              <h3 className="text-4xl font-semibold font-serif text-[#F64EBB]">
-                Why learners love <br /> LearniLM🌍World
-              </h3>
-            </div>
-
-            {/* EMPTY right cell for row balance */}
-            <div />
-
-            {/* PARAGRAPH – spans both columns */}
-            <div className="lg:col-span-2 flex justify-center items-center text-center">
-              <p className="mt-4 text-lg font-bold max-w-4xl text-[#2D274B]">
-                Short lessons, lots of speaking time and tutors focused on practical
-                outcomes. Learn phrases you’ll use the very next day.
-              </p>
-            </div>
-
-            {/* LEFT – Feature cards */}
-            <div>
-              <div className="mt-8 grid sm:grid-cols-3 gap-4">
-                {features.map((f, idx) => (
-                  <div
-                    key={idx}
-                    className="p-4 bg-blue-50 rounded-xl shadow hover:bg-[#F64EBB] hover:text-gray-200 hover:scale-[1.02] transition"
-                    role="group"
-                  >
-                    <f.icon className="w-9 h-9 text-[#9787F3]" aria-hidden />
-                    <div className="font-bold mt-3">{f.title}</div>
-                    <div className="text-base font-semibold text-[#4B437C] hover:text-gray-50 mt-1">
-                      {f.text}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* RIGHT – Shifted down */}
-            <div className="space-y-4 mt-10">
-              <div className="bg-blue-50 p-6 rounded-2xl shadow">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-[#fde68a] flex items-center justify-center">
-                    ⭐
-                  </div>
-                  <div>
-                    <div className="font-extrabold text-xl">Real outcomes</div>
-                    <div className="text-base font-semibold text-[#4B437C]">
-                      Progress reports every 4 lessons
-                    </div>
-                  </div>
-                </div>
-                <p className="text-[#4B437C] font-semibold text-lg">
-                  From small talk to business calls — our curriculum is outcome-focused
-                  so you can see measurable improvement.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded-xl shadow font-extrabold hover:bg-[#F64EBB] hover:text-white">
-                  Quick lessons
-                </div>
-                <div className="bg-blue-50 p-4 rounded-xl shadow font-extrabold hover:text-white hover:bg-[#F64EBB]">
-                  Excellent Material
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
+      
 
       {/* Reviews */}
       {/* <section className="py-16" aria-labelledby="reviews">

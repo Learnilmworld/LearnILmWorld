@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import heroImage from '../assets/French_student1.jpeg'
+import heroImage from '../assets/Indian_student1.jpeg'
+import { useState } from "react";
 
 interface CourseProps {
   _id: string;
@@ -9,14 +10,29 @@ interface CourseProps {
 }
 
 const CourseCard = ({ course }: { course: CourseProps }) => {
+
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full">
       {/* Image Container */}
       <div className="h-48 w-full overflow-hidden relative group">
+        {!isImageLoaded && (
+          <div className="absolute inset-0 bg-gray-300 animate-pulse flex items-center justify-center z-10">
+             {/* Optional: Icon ya text daal sakte hain */}
+             <span className="text-gray-400 text-xs font-medium">Loading...</span> 
+          </div>
+        )}
         <img
           src={course.thumbnail}
           alt={course.title}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          className={`h-full w-full object-cover transition-all duration-700 transform group-hover:scale-105 ${
+            isImageLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+
+          onLoad={()=>setIsImageLoaded(true)}
           onError={(e) => {
 
     console.log("Image Failed for:", course.title);
@@ -24,6 +40,7 @@ const CourseCard = ({ course }: { course: CourseProps }) => {
     e.currentTarget.src = heroImage; 
     
     e.currentTarget.onerror = null; 
+    setIsImageLoaded(true)
   }}
         />
 
