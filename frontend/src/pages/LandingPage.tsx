@@ -833,20 +833,6 @@ export default function LandingPageAlt() {
           {/* Grid Subjects */}
           <div className='flex justify-center'>
 
-<<<<<<< HEAD
-          
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.3,
-                  delayChildren: 0.3,   // slight initial delay for smoother entrance
-=======
 
             <motion.div
               initial="hidden"
@@ -860,7 +846,6 @@ export default function LandingPageAlt() {
                     staggerChildren: 0.3,
                     delayChildren: 0.3,   // slight initial delay for smoother entrance
                   },
->>>>>>> main
                 },
               }}
               className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 box "
@@ -936,15 +921,9 @@ export default function LandingPageAlt() {
                     Explore More →
                   </div>
                 )} */}
-<<<<<<< HEAD
-              </motion.div>
-            ))}
-          </motion.div>
-=======
                 </motion.div>
               ))}
             </motion.div>
->>>>>>> main
           </div>
         </div>
 
