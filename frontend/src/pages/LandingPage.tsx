@@ -581,7 +581,7 @@ export default function LandingPageAlt() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link to="/main" className="inline-flex items-center gap-3 px-6 py-3 bg-[#F64EBB] text-white hover:bg-[#6B48AF]  text-lg rounded-lg shadow hover:scale-105 transition" aria-label="Start learning">
+                <Link to="/student/courses" className="inline-flex items-center gap-3 px-6 py-3 bg-[#F64EBB] text-white hover:bg-[#6B48AF]  text-lg rounded-lg shadow hover:scale-105 transition" aria-label="Start learning">
                   <Play />
                   Start Learning
                 </Link>
@@ -695,7 +695,7 @@ export default function LandingPageAlt() {
           </div>
 
           {/* Responsive Grid with Flags */}
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="mt-16 grid gap-6  justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {languages.map((lang, idx) => (
               <LanguageCard
                 key={idx}
@@ -806,7 +806,7 @@ export default function LandingPageAlt() {
         className="relative py-24 "
         aria-labelledby="sdil-subjects"
       >
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
+        <div className="max-w-6xl  mx-auto px-6 lg:px-8 text-center">
           {/* Heading */}
           <motion.h2
             id="sdil-subjects"
@@ -831,6 +831,9 @@ export default function LandingPageAlt() {
           </motion.p>
 
           {/* Grid Subjects */}
+          <div className='flex justify-center'>
+
+          
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -921,6 +924,7 @@ export default function LandingPageAlt() {
               </motion.div>
             ))}
           </motion.div>
+          </div>
         </div>
 
         {/* Modal for More Subjects */}
@@ -1329,9 +1333,9 @@ export default function LandingPageAlt() {
       {/* bg-[#2D274B] */}
       <section className="py-16 ">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 items-start">
+          <div className="gap-8 items-start">
             {/* LEFT – Heading only */}
-            <div>
+            <div className='flex justify-center items-center text-center'>
               <h3 className="text-4xl font-semibold font-serif text-[#F64EBB]">
                 Why learners love <br /> LearniLM🌍World
               </h3>
@@ -1341,7 +1345,7 @@ export default function LandingPageAlt() {
             <div />
 
             {/* PARAGRAPH – spans both columns */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-2 flex justify-center items-center text-center">
               <p className="mt-4 text-lg font-bold max-w-4xl text-[#2D274B]">
                 Short lessons, lots of speaking time and tutors focused on practical
                 outcomes. Learn phrases you’ll use the very next day.

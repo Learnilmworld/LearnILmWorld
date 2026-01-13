@@ -24,6 +24,7 @@ export function LanguageCard({ data, onConfirm }: LanguageCardProps) {
 
     return (
         <>
+        <div className='flex justify-center'>
             {/* GRID CARD*/}
             <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -148,12 +149,12 @@ export function LanguageCard({ data, onConfirm }: LanguageCardProps) {
                                 >
                                     ✕
                                 </button>
-                            </div>
-
+                            </div>           
                         </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
+                </div>
         </>
     );
 }

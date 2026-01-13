@@ -11,6 +11,7 @@ import adminRoutes from './routes/adminRoutes.js'
 import feedbackRoutes from "./routes/feedbackRoutes.js";
 import chatbotRoutes from './routes/chatbotRoutes.js';
 import careerRoutes from './routes/careerRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -62,12 +63,8 @@ app.use('/api/admin', adminRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/careers', careerRoutes);
+app.use('/api/courses',courseRoutes)
 
-
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
 
 // Test route
 app.get('/api/test', (req, res) => {
@@ -85,8 +82,18 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+// Connect to MongoDB and start server
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log('MongoDB connected');
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
 
 export default app;
