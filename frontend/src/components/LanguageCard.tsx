@@ -24,21 +24,6 @@ export function LanguageCard({ data, onConfirm }: LanguageCardProps) {
 
     return (
         <>
-<<<<<<< HEAD
-        <div className='flex justify-center'>
-            {/* GRID CARD*/}
-            <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setIsOpen(true)}
-                className="group relative h-[200px] w-[230px] rounded-[24px] overflow-hidden cursor-pointer bg-white shadow-[0_20px_30px_5px_rgba(0,0,0,0.3)] transition-all duration-500 ease-out hover:-translate-y-4 hover:shadow-[0_40px_50px_10px_rgba(0,0,0,0.4)]"
-            >
-                {/* Background image */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${data.bg})` }}
-                />
-=======
             <div className='flex justify-center'>
                 {/* GRID CARD*/}
                 <motion.div
@@ -52,7 +37,6 @@ export function LanguageCard({ data, onConfirm }: LanguageCardProps) {
                         className="absolute inset-0 bg-cover bg-center"
                         style={{ backgroundImage: `url(${data.bg})` }}
                     />
->>>>>>> main
 
                     {/* Overlay */}
                     <div className="absolute inset-0 bg-black/10 transition-all duration-300 group-hover:bg-black/0" />
@@ -166,44 +150,11 @@ export function LanguageCard({ data, onConfirm }: LanguageCardProps) {
                                         ✕
                                     </button>
                                 </div>
-<<<<<<< HEAD
-
-
-                                {/* CTA */}
-                                <button
-                                    onClick={() => {
-                                        close();
-                                        onConfirm(data.lang);
-                                    }}
-                                    className="mt-0.5 w-fit px-6 py-3 rounded-full bg-[#FFD86B] text-[#2D274B] font-bold text-lg hover:scale-105 transition"
-                                >
-                                    Click to start learning →
-                                </button>
-
-                                {/* Close */}
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        close();
-                                    }}
-                                    className="absolute top-6 right-6 text-white text-2xl hover:scale-110 transition"
-                                    aria-label="Close"
-                                >
-                                    ✕
-                                </button>
-                            </div>           
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-                </div>
-=======
                             </motion.div>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
->>>>>>> main
         </>
     );
 }
