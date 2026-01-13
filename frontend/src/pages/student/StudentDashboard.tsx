@@ -81,7 +81,6 @@ const StudentDashboard: React.FC = () => {
       {/* ================= SIDEBAR ================= */}
       <div
         className={`fixed inset-y-0 left-0 z-40 w-64
-<<<<<<< HEAD
   bg-gradient-to-b from-[#C9A7F7] to-[#9B6EF3]
   px-6 py-8
   transform transition-transform duration-300
@@ -94,15 +93,6 @@ const StudentDashboard: React.FC = () => {
         {/* Logo */}
         <div className="w-96">
 
-=======
-        bg-gradient-to-b from-[#C9A7F7] to-[#9B6EF3]
-        px-6 py-8
-        transform transition-transform duration-300
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0`}
-      >
-        {/* Logo */}
->>>>>>> main
         <Link
           to="/"
           className="flex items-center mb-10 hover:opacity-90 transition"
@@ -115,7 +105,6 @@ const StudentDashboard: React.FC = () => {
           />
 
           {/* Wordmark */}
-<<<<<<< HEAD
           <div className="flex items-center min-w-0">
           <span className="font-bold text-gray-700 text-base truncate">
             LearniLM
@@ -137,26 +126,6 @@ const StudentDashboard: React.FC = () => {
           </div>
         </Link>
         </div>
-=======
-          <div className="flex items-center leading-none">
-            <span className="font-bold text-gray-700 text-lg">
-              LearniLM
-            </span>
-
-            <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-              className="inline-block text-xl mx-[2px]"
-            >
-              🌎
-            </motion.span>
-
-            <span className="font-bold text-gray-700 text-lg">
-              World
-            </span>
-          </div>
-        </Link>
->>>>>>> main
 
         {/* Student Info */}
         <div className="flex items-center gap-3 mb-10">
@@ -194,7 +163,6 @@ const StudentDashboard: React.FC = () => {
             )
           })}
         </nav>
-<<<<<<< HEAD
         </div>
 
         {/* Logout */}
@@ -205,17 +173,6 @@ const StudentDashboard: React.FC = () => {
     py-3 rounded-full font-semibold
     shadow-md hover:scale-[1.02] transition"
   >
-=======
-
-        {/* Logout */}
-        <div className="absolute bottom-6 left-6 right-6">
-          <button
-            onClick={logout}
-            className="w-full bg-white text-[#6B21A8]
-            py-3 rounded-full font-semibold
-            shadow-md hover:scale-[1.02] transition"
-          >
->>>>>>> main
             Log Out →
           </button>
         </div>
