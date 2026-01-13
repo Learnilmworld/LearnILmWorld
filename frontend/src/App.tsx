@@ -23,12 +23,9 @@ import StudentJoinSession from './components/StudentJoinSession';
 import Chatbot from './components/Chatbot/Chatbot';
 import { CurrencyProvider } from './contexts/CurrencyContext'
 import ScrollToTop from './components/ScrollToTop'
-<<<<<<< HEAD
 import Courses from './pages/student/Course'
 import CoursePlayer from './components/CoursePlayer'
 
-=======
->>>>>>> main
 function App() {
   return (
     <StripeProvider>
@@ -38,11 +35,7 @@ function App() {
 
             <Chatbot />
 
-<<<<<<< HEAD
-            <ScrollToTop/>
-=======
             <ScrollToTop />
->>>>>>> main
 
             <div className="min-h-screen bg-gradient-to-br from-cream-50 to-green-50">
               <Routes>
