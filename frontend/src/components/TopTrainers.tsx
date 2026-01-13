@@ -25,11 +25,7 @@ export default function TopTrainers(): JSX.Element {
   const [activeTrainer, setActiveTrainer] = useState<Trainer | null>(null);
 
   //Card flipping control
-<<<<<<< HEAD
-const [hoveredTrainerId, setHoveredTrainerId] = useState<string | null>(null);
-=======
   const [hoveredTrainerId, setHoveredTrainerId] = useState<string | null>(null);
->>>>>>> main
 
 
   useEffect(() => {
@@ -170,13 +166,8 @@ const [hoveredTrainerId, setHoveredTrainerId] = useState<string | null>(null);
                 onMouseEnter={() => setHoveredTrainerId(id)}
                 onMouseLeave={() => setHoveredTrainerId(null)}
                 onClick={() => {
-<<<<<<< HEAD
-                  setActiveTrainer(trainer); 
-  }}
-=======
                   setActiveTrainer(trainer);
                 }}
->>>>>>> main
               >
                 <div
                   className={`
