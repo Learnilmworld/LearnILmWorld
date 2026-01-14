@@ -111,7 +111,7 @@ const MainPage: React.FC = () => {
 
                   {/* LOGO */}
                   <Link to="/" className="flex items-center">
-                    <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide inline-flex items-center">
+                    <div className="text-3xl md:text-4xl font-[Good Vibes] font-extrabold tracking-wide inline-flex items-center">
                       <span className="text-[#FFFAF1] drop-shadow-lg">
                         LearniLM
                       </span>
