@@ -72,36 +72,39 @@ const TrainerSessions = () => {
   }
 
   return (
-    <div className="space-y-6 max-w-[1200px] mx-auto px-4 py-6">
+    <div className="space-y-6 max-w-[1200px] mx-auto px-3 sm:px-4 py-4 sm:py-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-5">
-        <h2 className="text-2xl font-semibold text-gray-900">My Sessions</h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-5">
+    <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">My Sessions</h2>
         <Link
           to="/trainer/students"
-          className="px-5 py-2 rounded-xl bg-[#3B3361] text-[#CBE56A] font-medium hover:bg-[#CBE56A] hover:text-[#2D274B]"
+          className="inline-flex items-center justify-center
+      px-4 py-2 rounded-xl bg-[#3B3361]
+      text-[#CBE56A] font-medium text-sm
+      hover:bg-[#CBE56A] hover:text-[#2D274B]"
         >
-          <Calendar className="h-5 w-5 mr-2 inline" />
+          <Calendar className="h-4 w-4 mr-2" />
           Create New Session
         </Link>
       </div>
 
       {/* Sessions */}
-      <div className="bg-white rounded-2xl p-6 shadow-md border">
+      <div className="bg-white rounded-2xl p-4 shadow-md border">
         {sessions.length > 0 ? (
           <div className="space-y-4">
             {sessions.map((session) => (
               <div
                 key={session._id || session.id}
-                className="p-5 bg-gray-50 rounded-xl border"
+                className="p-4 sm:p-5 bg-gray-50 rounded-xl border"
               >
-                <div className="flex justify-between gap-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between gap-4">
                   <div className="flex gap-3">
-                    <div className="w-10 h-10 bg-[#CBE56A] rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-[#CBE56A] rounded-lg flex items-center justify-center shrink-0">
                       <Video className="h-5 w-5 text-[#3B3361]" />
                     </div>
 
                     <div>
-                      <h3 className="font-semibold">{session.title}</h3>
+                      <h3 className="font-semibold text-sm sm:text-base">{session.title}</h3>
                       <p className="text-xs text-gray-500">
                         {new Date(session.scheduledDate).toLocaleString()}
                       </p>
@@ -112,16 +115,16 @@ const TrainerSessions = () => {
                   </div>
 
                   {/* Status + Actions */}
-                  <div className="flex flex-col items-end gap-2">
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full bg-gray-200">
+                  <div className="flex flex-row sm:flex-col sm:items-end gap-2 justify-between sm:justify-start">
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-gray-200 self-start sm:self-auto">
                       {session.status.toUpperCase()}
                     </span>
 
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap  gap-2">
                       {session.status === "scheduled" && (
                         <button
                           onClick={() => handleStartSession(session._id)}
-                          className="px-4 py-2 bg-[#3B3361] text-[#CBE56A] rounded-lg text-sm"
+                          className="px-3 py-2 bg-[#3B3361] text-[#CBE56A] rounded-lg text-xs sm:text-sm"
                         >
                           Start
                         </button>
@@ -131,7 +134,7 @@ const TrainerSessions = () => {
                         <>
                           <button
                             onClick={() => handleJoinSession(session._id)}
-                            className="px-4 py-2 bg-[#3B3361] text-[#CBE56A] rounded-lg text-sm flex items-center"
+                            className="px-3 py-2 bg-[#3B3361] text-[#CBE56A] rounded-lg text-xs sm:text-sm flex items-center"
                           >
                             <Video className="h-4 w-4 mr-1" />
                             Join
@@ -139,7 +142,7 @@ const TrainerSessions = () => {
 
                           <button
                             onClick={() => handleEndSession(session._id)}
-                            className="px-4 py-2 bg-red-500 text-white rounded-lg text-sm"
+                            className="px-3 py-2 bg-red-500 text-white rounded-lg text-xs sm:text-sm"
                           >
                             End
                           </button>

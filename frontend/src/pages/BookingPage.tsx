@@ -535,7 +535,6 @@ const BookingPage = () => {
   return (
     <div className="bg-[url('/src/assets/bg_main.jpeg')] min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-[#FFFAF1] bg-fixed"
       style={{
-
         position: "relative",
         backgroundSize: "cover",
         backgroundPosition: "right bottom",
@@ -673,6 +672,7 @@ const BookingPage = () => {
         </div>
       </div>
     </div>
+
   )
 }
 

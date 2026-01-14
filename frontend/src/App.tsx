@@ -23,6 +23,9 @@ import StudentJoinSession from './components/StudentJoinSession';
 import Chatbot from './components/Chatbot/Chatbot';
 import { CurrencyProvider } from './contexts/CurrencyContext'
 import ScrollToTop from './components/ScrollToTop'
+import Courses from './pages/student/Course'
+import CoursePlayer from './components/CoursePlayer'
+
 function App() {
   return (
     <StripeProvider>
@@ -46,6 +49,8 @@ function App() {
                 <Route path="/forget-password" element={<ForgotPassword />} />
                 <Route path="/trainer-profile/:trainerId" element={<TrainerProfile />} />
                 <Route path="/book/:trainerId" element={<BookingPage />} />
+                <Route path="/student/courses" element={<Courses />} />
+                <Route path="student/courses/:id" element={<CoursePlayer />} />
 
                 <Route path="/student/*" element={
                   <PrivateRoute allowedRoles={['student']}>

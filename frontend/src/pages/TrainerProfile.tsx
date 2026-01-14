@@ -83,7 +83,6 @@ const TrainerProfile: React.FC = () => {
       fetchTrainerProfile()
       fetchReviews()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trainerId])
 
   const fetchTrainerProfile = async () => {

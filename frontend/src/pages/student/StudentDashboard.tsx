@@ -81,13 +81,18 @@ const StudentDashboard: React.FC = () => {
       {/* ================= SIDEBAR ================= */}
       <div
         className={`fixed inset-y-0 left-0 z-40 w-64
-        bg-gradient-to-b from-[#C9A7F7] to-[#9B6EF3]
-        px-6 py-8
-        transform transition-transform duration-300
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0`}
+  bg-gradient-to-b from-[#C9A7F7] to-[#9B6EF3]
+  px-6 py-8
+  transform transition-transform duration-300
+  flex flex-col no-scrollbar
+  ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+  lg:translate-x-0`}
       >
+
+        <div className="flex-1 overflow-y-auto overflow-x-hidden pr-1">
         {/* Logo */}
+        <div className="w-96">
+
         <Link
           to="/"
           className="flex items-center mb-10 hover:opacity-90 transition"
@@ -100,24 +105,27 @@ const StudentDashboard: React.FC = () => {
           />
 
           {/* Wordmark */}
-          <div className="flex items-center leading-none">
-            <span className="font-bold text-gray-700 text-lg">
-              LearniLM
-            </span>
+          <div className="flex items-center min-w-0">
+          <span className="font-bold text-gray-700 text-base truncate">
+            LearniLM
+          </span>
 
+          <span className="text-base shrink-0">
             <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-              className="inline-block text-xl mx-[2px]"
-            >
-              🌎
-            </motion.span>
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+            className="inline-block text-xl"
+          >
+            🌎
+          </motion.span>
+                        </span>
 
-            <span className="font-bold text-gray-700 text-lg">
-              World
-            </span>
+          <span className="font-bold text-gray-700 text-base truncate">
+            World
+          </span>
           </div>
         </Link>
+        </div>
 
         {/* Student Info */}
         <div className="flex items-center gap-3 mb-10">
@@ -155,15 +163,16 @@ const StudentDashboard: React.FC = () => {
             )
           })}
         </nav>
+        </div>
 
         {/* Logout */}
-        <div className="absolute bottom-6 left-6 right-6">
+        <div className="mt-6">
           <button
-            onClick={logout}
-            className="w-full bg-white text-[#6B21A8]
-            py-3 rounded-full font-semibold
-            shadow-md hover:scale-[1.02] transition"
-          >
+    onClick={logout}
+    className="w-full bg-white text-[#6B21A8]
+    py-3 rounded-full font-semibold
+    shadow-md hover:scale-[1.02] transition"
+  >
             Log Out →
           </button>
         </div>

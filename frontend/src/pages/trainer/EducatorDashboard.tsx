@@ -50,7 +50,7 @@ const EducatorDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-fixed" style={{
+    <div className="min-h-screen bg-fixed overflow-x-hidden" style={{
       backgroundImage:
         `url(${bg_img})`,
       position: "relative",
@@ -69,17 +69,24 @@ const EducatorDashboard: React.FC = () => {
 
       {/* Sticky Header */}
       <header className="sticky top-0 z-40 bg-[#FFF9F2]">
-        <div className="flex items-center justify-between px-8 py-6">
+      <div className="flex items-center justify-between px-4 lg:px-8 py-4 lg:py-6">
 
           {/* Left: Title */}
-          <div>
-            <h1 className="text-3xl font-bold text-[#6B21A8]">
+          <div className="flex items-center gap-4">
+      {/* HAMBURGER */}
+      <button
+        className="lg:hidden p-2 rounded-lg bg-[#6B21A8] text-white"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <Menu className="w-6 h-6" />
+      </button>
+            <h1 className="text-2xl lg:text-3xl font-bold text-[#6B21A8]">
               Dashboard
             </h1>
           </div>
 
           {/* Right: Stats */}
-          <div className="flex items-center gap-10 text-sm">
+          <div className="hidden md:flex items-center gap-10 text-sm">
 
             <div className="text-center">
               <p className="text-gray-500">Students</p>
@@ -111,13 +118,17 @@ const EducatorDashboard: React.FC = () => {
       <div
         className={`fixed inset-y-0 left-0 z-40 w-64
   bg-gradient-to-b from-[#C9A7F7] to-[#9B6EF3]
-  px-6 py-8
+  p-6 
   transform transition-transform duration-300
+  flex flex-col no-scrollbar
   ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
   lg:translate-x-0`}
       >
 
+        <div className="flex-1 overflow-y-auto overflow-x-hidden pr-1">
         {/* Logo */}
+        <div className="w-96">
+
         <Link
           to="/"
           className="flex items-center mb-10 hover:opacity-90 transition"
@@ -130,24 +141,27 @@ const EducatorDashboard: React.FC = () => {
           />
 
           {/* Wordmark */}
-          <div className="flex items-center leading-none">
-            <span className="font-bold text-gray-700 text-lg">
-              LearniLM
-            </span>
+          <div className="flex items-center min-w-0">
+          <span className="font-bold text-gray-700 text-base truncate">
+            LearniLM
+          </span>
 
+          <span className="text-base shrink-0">
             <motion.span
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-              className="inline-block text-xl mx-[2px]"
-            >
-              🌎
-            </motion.span>
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+            className="inline-block text-xl"
+          >
+            🌎
+          </motion.span>
+                        </span>
 
-            <span className="font-bold text-gray-700 text-lg">
-              World
-            </span>
+          <span className="font-bold text-gray-700 text-base truncate">
+            World
+          </span>
           </div>
         </Link>
+        </div>
 
 
         {/* User */}
@@ -186,15 +200,16 @@ const EducatorDashboard: React.FC = () => {
             )
           })}
         </nav>
+        </div>
 
         {/* Logout */}
-        <div className="absolute bottom-6 left-6 right-6">
+        <div className="mt-6">
           <button
-            onClick={logout}
-            className="w-full bg-white text-[#6B21A8]
-      py-3 rounded-full font-semibold
-      shadow-md hover:scale-[1.02] transition"
-          >
+    onClick={logout}
+    className="w-full bg-white text-[#6B21A8]
+    py-3 rounded-full font-semibold
+    shadow-md hover:scale-[1.02] transition"
+  >
             Log Out →
           </button>
         </div>
