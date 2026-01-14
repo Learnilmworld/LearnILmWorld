@@ -47,19 +47,7 @@ const Navbar=()=>{
     navigate("/login");
   };
 
-  const UserAvatar = ({ name, className }) => {
-    const initial = name ? name.charAt(0).toUpperCase() : "?";
-    const colors = ["bg-red-500", "bg-blue-500", "bg-green-500", "bg-purple-500", "bg-pink-500", "bg-indigo-500"];
-    const colorClass = colors[name.length % colors.length];
-
-
-    return (
-      <div className={`${className} ${colorClass} text-white flex items-center justify-center font-bold border-2 border-white/50 shadow-sm`}>
-        {initial}
-      </div>
-    );
-
-  }
+  
 
   // Dashboard link logic based on role
   const dashboardLink = user?.role === "trainer" ? "/trainer" : "/student";
@@ -103,17 +91,11 @@ const Navbar=()=>{
                           {user ? (
                             <div className="flex items-center gap-4">
                               {/* User Info */}
-                              <Link to={dashboardLink} className="flex items-center gap-3 text-white hover:text-[#CBE56A] transition no-underline group">
+                              <Link to={dashboardLink} className="flex text-lg font-medium items-center gap-3 text-white hover:text-[#CBE56A] transition no-underline group">
                                 
-                                <UserAvatar 
-                                  name={user.name} 
-                                  className="w-10 h-10 rounded-full shrink-0" 
-                                />
+                                Dashboard
                                 
-                                <div className="flex flex-col leading-tight max-w-[100px] xl:max-w-none overflow-hidden">
-                                    <span className="font-semibold text-sm truncate">{user.name}</span>
-                                    <span className="text-[10px] text-gray-200 uppercase tracking-wider truncate">{user.role}</span>
-                                </div>
+                                
                               </Link>
         
                               <button 
@@ -147,16 +129,7 @@ const Navbar=()=>{
                                 
                                 {user ? (
                                   <>
-                                    <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
-                                        <UserAvatar 
-                                          name={user.name} 
-                                          className="w-10 h-10 rounded-full" 
-                                        />
-                                        <div className="overflow-hidden">
-                                            <p className="font-bold text-gray-800 m-0 truncate">{user.name}</p>
-                                            <p className="text-xs text-gray-500 m-0 uppercase truncate">{user.role}</p>
-                                        </div>
-                                    </div>
+                                    
                                     <Nav.Link as={Link} to={dashboardLink} onClick={() => setShowOffcanvas(false)}>Dashboard</Nav.Link>
                                     <div className="mt-2">
                                       <button onClick={() => { handleLogout(); setShowOffcanvas(false); }} className="w-full px-4 py-2 rounded-full bg-[#F64EBB] text-white text-sm font-semibold">

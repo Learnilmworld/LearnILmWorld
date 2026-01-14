@@ -4,13 +4,14 @@ import { motion } from "framer-motion";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
 // import logo from '../assets/LearnilmworldLogo.jpg'
-import image1 from '../assets/become-trainer2.4.jpeg'
+import image1 from '../assets/become-trainer2.4.png'
 import image2 from '../assets/become-trainer2.2.jpeg'
 import image3 from '../assets/become-trainer2.3.jpeg'
 // import bg_img from '../assets/purple_gradient.jpg'
 import bg_img from '../assets/header_bg.jpg'
 import bg_main from '../assets/bg_trainer.jpeg'
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 
 const BecomeTrainer: React.FC = () => {
@@ -31,132 +32,47 @@ const BecomeTrainer: React.FC = () => {
       }}
     >
       {/* text-[#e0fa84] text-[#2D274B] */}
-      <header className="sticky top-0 z-40 ">
-        <div className="px-4 pt-4">
-          <div
-            className="
-        mx-auto
-        max-w-7xl
-        rounded-full
-        bg-[#6B48AF]/90
-        backdrop-blur-md
-        shadow-xl
-        border border-white/30
-      "
-            style={{
-              backgroundImage:
-                `url(${bg_img})`,
-              position: "relative",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              width: "100%",
-            }}
-          >
-            <Container className="px-5 sm:px-10 py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-
-                  <div className="flex flex-col items-center gap-1">
-
-                    {/* Main Logo */}
-                    {/* Main Logo – clickable */}
-                    <Link
-                      to="/"
-                      className="text-3xl md:text-4xl font-[Good Vibes] font-extrabold tracking-wide relative inline-flex items-center cursor-pointer hover:opacity-90 transition"
-                    >
-                      <span className="text-[#FFFAF1] drop-shadow-lg">
-                        LearniLM
-                      </span>
-
-                      <motion.span
-                        animate={{ rotate: 360 }}
-                        transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-                        className="inline-block mx-1 text-3xl"
-                      >
-                        🌎
-                      </motion.span>
-
-                      <span className="text-[#FFFAF1] drop-shadow-lg">
-                        World
-                      </span>
-                    </Link>
-
-                  </div>
-                </div>
-
-                <nav className="hidden sm:flex items-center gap-6">
-                  {/* <Link to="/main" className="text-base text-[#dc8d33] font-medium hover:text-[#CBE56A]">Browse our Mentors</Link>
-               */}
-                  {/* <CurrencySelector variant="header" /> */}
-                  <Link to="/login" className="text-lg font-medium text-[white] hover:text-[#6B48AF]">Sign In</Link>
-                  <Link to="/register" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F64EBB] text-white text-base font-semibold shadow hover:scale-105 transition">Get started</Link>
-                </nav>
-
-                <div className="sm:hidden">
-                  <Button variant="light" onClick={() => setShowOffcanvas(true)} aria-label="Open menu">☰</Button>
-
-                  <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end" aria-labelledby="offcanvas-nav">
-                    <Offcanvas.Header closeButton>
-                      <Offcanvas.Title id="offcanvas-nav">Menu</Offcanvas.Title>
-                    </Offcanvas.Header>
-                    <Offcanvas.Body>
-                      <Nav className="flex-column gap-2">
-                        <Nav.Link as={Link} to="/main" onClick={() => setShowOffcanvas(false)}>Trainers</Nav.Link>
-                        <Nav.Link as={Link} to="/login" onClick={() => setShowOffcanvas(false)}>Sign In</Nav.Link>
-                        <div className="mt-3">
-                          <Link to="/register" onClick={() => setShowOffcanvas(false)} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#9787F3] text-white text-sm font-semibold">Get started</Link>
-                        </div>
-                      </Nav>
-                    </Offcanvas.Body>
-                  </Offcanvas>
-                </div>
-              </div>
-            </Container>
-          </div>
-        </div>
-
-      </header>
+      <Navbar/>
 
       {/* Hero Section */}
       <section className="py-20 px-4">
-  <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-    {/* LEFT CONTENT */}
-    <div className="text-center lg:text-left">
-      <motion.h1
-        className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#F64EBB] mb-6 leading-tight"
-      >
-        Empower Learners, <br />
-        Inspire Growth 🌟
-      </motion.h1>
+          {/* LEFT CONTENT */}
+          <div className="text-center lg:text-left">
+            <motion.h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#F64EBB] mb-6 leading-tight"
+            >
+              Empower Learners, <br />
+              Inspire Growth 🌟
+            </motion.h1>
 
-      <motion.p
-        className="max-w-xl mx-auto lg:mx-0 font-semibold text-lg sm:text-xl text-[#2D274B] mb-10"
-      >
-        Join LearniLM🌍World as a Trainer and help students achieve their goals while
-        growing your career in a flexible, rewarding environment.
-      </motion.p>
+            <motion.p
+              className="max-w-xl mx-auto lg:mx-0 font-semibold text-lg sm:text-xl text-[#2D274B] mb-10"
+            >
+              Join LearniLM🌍World as a Trainer and help students achieve their goals while
+              growing your career in a flexible, rewarding environment.
+            </motion.p>
 
-      <motion.button
-        onClick={() => navigate("/register?role=trainer")}
-        className="px-10 py-4 bg-[#F64EBB] text-white font-semibold text-lg rounded-full shadow-lg hover:bg-[#ea20a4]"
-        whileHover={{ scale: 1.05 }}
-      >
-        Become a Trainer Today
-      </motion.button>
-    </div>
+            <motion.button
+              onClick={() => navigate("/register?role=trainer")}
+              className="px-10 py-4 bg-[#F64EBB] text-white font-semibold text-lg rounded-full shadow-lg hover:bg-[#ea20a4]"
+              whileHover={{ scale: 1.05 }}
+            >
+              Become a Trainer Today
+            </motion.button>
+          </div>
 
-    {/* RIGHT IMAGE */}
-    <motion.div
-      className="flex justify-center lg:justify-end"
-      initial={{ opacity: 0, x: 40 }}
-      whileInView={{ opacity: 1, x: 0 }}
-    >
-      <img
-        src={image2}
-        alt="Trainer Collaboration"
-        className="
+          {/* RIGHT IMAGE */}
+          <motion.div
+            className="flex justify-center lg:justify-end"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+          >
+            <img
+              src={image2}
+              alt="Trainer Collaboration"
+              className="
           w-full
           max-w-xl
           lg:max-w-2xl
@@ -164,13 +80,11 @@ const BecomeTrainer: React.FC = () => {
           shadow-xl
           object-cover
         "
-      />
-    </motion.div>
+            />
+          </motion.div>
 
-  </div>
-</section>
-
-
+        </div>
+      </section>
 
       {/*  Text Section + 1 Big Image */}
       <section className="py-10 px-6 md:px-16 flex flex-column  md:flex-row items-center gap-10 max-w-6xl mx-auto">
@@ -221,20 +135,20 @@ const BecomeTrainer: React.FC = () => {
 
         {/* stretched image */}
         <div className="w-full px-4">
-  <div className="max-w-6xl mx-auto overflow-hidden rounded-3xl shadow-lg aspect-[7/2]">
-          <motion.div
-            className="flex-1 flex justify-center"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <img
-              src={image3}
-              alt="Trainer Relaxing Illustration"
-              className=" w-full h-full object-cover object-center"
-            />
-          </motion.div>
-        </div>
+          <div className="max-w-6xl mx-auto overflow-hidden rounded-3xl shadow-lg aspect-[7/2]">
+            <motion.div
+              className="flex-1 flex justify-center"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <img
+                src={image3}
+                alt="Trainer Relaxing Illustration"
+                className=" w-full h-full object-cover object-center"
+              />
+            </motion.div>
+          </div>
         </div>
 
         {/*Text Under Images */}
@@ -380,17 +294,20 @@ const BecomeTrainer: React.FC = () => {
         aria-labelledby="trainer-faq"
       >
         <motion.div
-          className="flex-1 flex justify-center md:justify-center pb-5"
+          className="w-full px-4 pb-5"
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <img
-            src={image1}
-            alt="Global teaching"
-            className="rounded-2xl shadow-lg w-3/4 md:max-w-xl "
-          />
+          <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl shadow-lg aspect-[7/2]">
+            <img
+              src={image1}
+              alt="Global teaching"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
         </motion.div>
+
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2

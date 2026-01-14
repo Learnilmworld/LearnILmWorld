@@ -5,7 +5,7 @@ import {
   HelpCircle, FileText, BookOpen, Briefcase, HandHeart, ShieldCheck, Lightbulb, Users, CreditCard, RefreshCcw, UserX, XCircle, CalendarX, LifeBuoy, Mail, UserCheck, Scale, Shield, Gavel,
 } from "lucide-react"
 // Facebook, Twitter, Instagram, Linkedin, removed ffrom above
-import logo from "../assets/LearnilmworldLogo.jpg";
+import bg_head from "../assets/header_bg.jpg";
 import bg_img from '../assets/bg_main.jpeg'
 import about_us from '../assets/About_us1.png';
 import our_story from '../assets/our_story.png';
@@ -89,13 +89,22 @@ export default function AboutPage() {
       {/* HEADER */}
       <header className="sticky top-0 z-50">
         <div className="mx-auto max-w-7xl px-4 pt-3 pb-1">
-          <div className="flex items-center justify-between rounded-full bg-[#6B48AF]/90 backdrop-blur-md shadow-xl px-6 py-3">
+          <div className="flex items-center justify-between rounded-full backdrop-blur-md shadow-xl px-6 py-3"
+            style={{
+              backgroundImage:
+                `url(${bg_head})`,
+              position: "relative",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              width: "100%",
+            }}>
 
             {/* Logo */}
             <Link to="/" className="flex items-center gap-1">
-              <div className='Logo rounded-full'>
+              {/* <div className='Logo rounded-full'>
                 <img className={'rounded-full'} src={logo} width={'50px'} />
-              </div>
+              </div> */}
               <span className="text-2xl font-[Good Vibes] font-bold text-[#e0fa84]">
                 LearniLM
               </span>
@@ -192,13 +201,15 @@ export default function AboutPage() {
           </div>
 
           {/* CTA Button */}
-          <button
-            className="px-10 py-4 rounded-full
-                 bg-[#7A1FA2] hover:bg-[#5A005F]
-                 transition text-white text-xl font-bold shadow-lg"
-          >
-            Start Learning Today →
-          </button>
+          <Link to="/login">
+            <button
+              className="px-10 py-4 rounded-full
+               bg-[#7A1FA2] hover:bg-[#5A005F]
+               transition text-white text-xl font-bold shadow-lg"
+            >
+              Start Learning Today →
+            </button>
+          </Link>
         </div>
       </section>
 
