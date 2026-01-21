@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 //  Facebook,Twitter,Instagram,Linkedin,Mail, Globe,
-import { Nav, Container, Offcanvas, Button } from 'react-bootstrap'
+// import { Nav, Container, Offcanvas, Button } from 'react-bootstrap'
 import { useAuth } from "../contexts/AuthContext";
 import { BookOpen, ArrowRight, Play, Mic, Headphones, Calendar, Users, Award, Clock, Star, MessageSquare, ChevronDown, ChevronRight, } from 'lucide-react';
 // Navbar,from above
@@ -11,8 +11,8 @@ import { BookOpen, ArrowRight, Play, Mic, Headphones, Calendar, Users, Award, Cl
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 // import bg_img from '../assets/purple_gradient.jpg'
-import bg_main from '../assets/bg_main.jpeg'
-import bg_img from '../assets/header_bg.jpg'
+// import bg_main from '../assets/bg_main.jpeg'
+// import bg_img from '../assets/header_bg.jpg'
 
 import french_st from '../assets/French_student1.jpeg';
 import german_st from '../assets/German_student1.jpeg';
@@ -33,7 +33,7 @@ import arab_flag from '../assets/arab_flag.jpeg'
 
 // import heroImage1 from '../assets/Hero_image1.png'
 // import heroImage2 from '../assets/Hero_image2.jpg'
-import heroImage3 from '../assets/Hero_image3.png'
+// import heroImage3 from '../assets/Hero_image3.png'
 
 import math from '../assets/Math.jpeg'
 import hist from '../assets/history.png'
@@ -58,7 +58,7 @@ import Navbar from '../components/Navbar';
 export default function LandingPageAlt() {
   const [mounted, setMounted] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [showOffcanvas, setShowOffcanvas] = useState(false)
+  // const [showOffcanvas, setShowOffcanvas] = useState(false)
   const [showMore, setShowMore] = useState(false);
   const [showMoreLanguages, setShowMoreLanguages] = useState(false);
   const [showMoreHobbies, setShowMoreHobbies] = useState(false);
