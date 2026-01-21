@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
+// import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
 // import logo from '../assets/LearnilmworldLogo.jpg'
 import image1 from '../assets/become-trainer2.4.png'
 import image2 from '../assets/become-trainer2.2.jpeg'
 import image3 from '../assets/become-trainer2.3.jpeg'
 // import bg_img from '../assets/purple_gradient.jpg'
-import bg_img from '../assets/header_bg.jpg'
-import bg_main from '../assets/bg_trainer.jpeg'
+// import bg_img from '../assets/header_bg.jpg'
+// import bg_main from '../assets/bg_trainer.jpeg'
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
@@ -17,7 +17,7 @@ import Navbar from "../components/Navbar";
 const BecomeTrainer: React.FC = () => {
   const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  // const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   return (
     <div className="bg-fixed min-h-screen overflow-x-hidden text-[#e0fa84] bg-[#fef5e4]"
