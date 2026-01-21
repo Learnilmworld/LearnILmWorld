@@ -106,12 +106,12 @@ const MainPage: React.FC = () => {
                 width: "100%",
               }}
             >
-              <div className="px-6 sm:px-10 py-3">
+              <div className="px-6 sm:px-10 py-7">
                 <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
 
                   {/* LOGO */}
                   <Link to="/" className="flex items-center">
-                    <div className="text-2xl md:text-3xl font-[Good Vibes] font-extrabold tracking-wide inline-flex items-center">
+                    <div className="text-3xl md:text-4xl font-[Good Vibes] font-extrabold tracking-wide inline-flex items-center">
                       <span className="text-[#FFFAF1] drop-shadow-lg">
                         LearniLM
                       </span>
