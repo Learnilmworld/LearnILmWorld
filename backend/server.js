@@ -63,7 +63,7 @@ app.use('/api/admin', adminRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/careers', careerRoutes);
-app.use('/api/courses',courseRoutes)
+app.use('/api/courses', courseRoutes);
 
 
 // Test route

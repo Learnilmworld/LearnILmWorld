@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import heroImage from "../../assets/office_politics.png"; 
-import CourseCard from "../../components/CourseCard";
+import heroImage from "../assets/office_politics.png";
+import CourseCard from "../components/CourseCard";
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from "react-router-dom";
 import { Target, ShieldCheck, Zap, BookOpen, Award, Clock, ChevronDown, ChevronUp } from "lucide-react";
-import Footer from "../../components/Footer";
-import Navbar from "../../components/Navbar";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 
 
@@ -31,7 +31,7 @@ const SkeletonCard = () => (
 
 
 const Courses = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -40,12 +40,12 @@ const Courses = () => {
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 
 
-  
-
-  
 
 
-  
+
+
+
+
 
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -76,35 +76,35 @@ const Courses = () => {
 
   //Features
   const features = [
-    { 
-      title: "Research-Backed Methods", 
-      desc: "All strategies grounded in the latest psychology and organizational research.", 
-      icon: <Target className="w-6 h-6 text-yellow-500" /> 
+    {
+      title: "Research-Backed Methods",
+      desc: "All strategies grounded in the latest psychology and organizational research.",
+      icon: <Target className="w-6 h-6 text-yellow-500" />
     },
-    { 
-      title: "100% Ethical Approach", 
-      desc: "Learn to succeed without compromising your values or integrity.", 
-      icon: <ShieldCheck className="w-6 h-6 text-yellow-500" /> 
+    {
+      title: "100% Ethical Approach",
+      desc: "Learn to succeed without compromising your values or integrity.",
+      icon: <ShieldCheck className="w-6 h-6 text-yellow-500" />
     },
-    { 
-      title: "Actionable Frameworks", 
-      desc: "Practical tools you can apply immediately in your workplace.", 
-      icon: <Zap className="w-6 h-6 text-yellow-500" /> 
+    {
+      title: "Actionable Frameworks",
+      desc: "Practical tools you can apply immediately in your workplace.",
+      icon: <Zap className="w-6 h-6 text-yellow-500" />
     },
-    { 
-      title: "Expert Instructors", 
-      desc: "Learn from professionals with decades of corporate experience.", 
-      icon: <BookOpen className="w-6 h-6 text-yellow-500" /> 
+    {
+      title: "Expert Instructors",
+      desc: "Learn from professionals with decades of corporate experience.",
+      icon: <BookOpen className="w-6 h-6 text-yellow-500" />
     },
-    { 
-      title: "Certificate of Completion", 
-      desc: "Earn credentials to showcase your professional development.", 
-      icon: <Award className="w-6 h-6 text-yellow-500" /> 
+    {
+      title: "Certificate of Completion",
+      desc: "Earn credentials to showcase your professional development.",
+      icon: <Award className="w-6 h-6 text-yellow-500" />
     },
-    { 
-      title: "Lifetime Access", 
-      desc: "Learn at your own pace with unlimited access to all materials.", 
-      icon: <Clock className="w-6 h-6 text-yellow-500" /> 
+    {
+      title: "Lifetime Access",
+      desc: "Learn at your own pace with unlimited access to all materials.",
+      icon: <Clock className="w-6 h-6 text-yellow-500" />
     },
   ];
 
@@ -119,7 +119,7 @@ const Courses = () => {
     { q: "Are the courses available in multiple languages?", a: "Yes, the courses are available in multiple languages." },
   ];
 
-  
+
 
   useEffect(() => {
     setLoading(true)
@@ -133,7 +133,7 @@ const Courses = () => {
         console.error(err)
         setLoading(false)
       });
-      
+
   }, []);
 
 
@@ -159,28 +159,28 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-[#fef5e4]">
-      
-      <Navbar/>
+
+      <Navbar />
 
       {/* --- HERO SECTION --- */}
       <div className="max-w-7xl mx-auto px-6 py-16 md:py-20 overflow-hidden">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
             className="md:w-1/2 space-y-6"
           >
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight" style={{ color: "#f74dc2" }}>
+            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight" style={{ color: "#5186cd" }}>
               Exclusive Courses <br /> offered by Us
             </h1>
             <p className="text-gray-600 text-lg max-w-md">
               Explore the courses that fit your needs and navigate the workplace with confidence.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-6 py-3 bg-[#f74dc2] text-white rounded-lg font-semibold shadow hover:bg-pink-600 transition">
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-6 py-3 bg-[#276dc9] text-white rounded-lg font-semibold shadow hover:bg-[#205eb0] transition">
                 Browse Courses
               </motion.button>
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-6 py-3 bg-[#f1ead6] border border-gray-300 text-gray-800 rounded-lg font-semibold hover:bg-gray-100 transition">
@@ -189,7 +189,7 @@ const Courses = () => {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -204,53 +204,53 @@ const Courses = () => {
 
       {/* --- COURSES GRID SECTION --- */}
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <motion.div 
-          initial="hidden" 
-          whileInView="visible" 
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
           variants={fadeInUp}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: "#f74dc2" }}>
+          <h2 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: "#5186cd" }}>
             Workplace Mastery, The Office Winner's Playbooks
           </h2>
           <p className="text-gray-500 font-medium">Featured Best Selling Courses</p>
         </motion.div>
 
         {loading ? (
-            <>
-            <SkeletonCard/>
-            <SkeletonCard/>
-            <SkeletonCard/>
-            </>
-          )
-           : (
-            <motion.div 
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          
-          {displayedCourses.length > 0 ? (
-            displayedCourses.map((course: any) => (
-              <motion.div key={course._id} variants={fadeInUp}>
-                 <CourseCard course={course} />
-              </motion.div>
-            ))
-          ) : (
-            <p className="text-center col-span-full text-gray-400">No courses...</p>
-          
-          )}
-          </motion.div>
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        )
+          : (
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+
+              {displayedCourses.length > 0 ? (
+                displayedCourses.map((course: any) => (
+                  <motion.div key={course._id} variants={fadeInUp}>
+                    <CourseCard course={course} />
+                  </motion.div>
+                ))
+              ) : (
+                <p className="text-center col-span-full text-gray-400">No courses...</p>
+
+              )}
+            </motion.div>
           )}
 
         {!loading && courses.length > 3 && (
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="px-8 py-3 rounded-full border-2 border-pink-500 text-pink-600 font-semibold hover:bg-pink-50 transition-colors duration-300"
+              className="px-8 py-3 rounded-full border-2 border-[#5186cd] text-[#276dc9] font-semibold hover:bg-[#205eb0] transition-colors duration-300"
             >
               {showAll ? "Show Less ↑" : "View More Courses ↓"}
             </button>
@@ -260,7 +260,7 @@ const Courses = () => {
 
       {/* --- PRICING SECTION --- */}
       <div className="max-w-7xl mx-auto px-6 py-20 pb-32">
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -268,8 +268,8 @@ const Courses = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {plans.map((plan, index) => (
-            <motion.div 
-              key={index} 
+            <motion.div
+              key={index}
               variants={fadeInUp}
               whileHover={{ y: -10 }}
               className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col"
@@ -287,7 +287,7 @@ const Courses = () => {
                   </li>
                 ))}
               </ul>
-              <button className={`w-full py-3 rounded-lg font-semibold transition ${plan.btnStyle === "primary" ? "bg-[#f74dc2] text-white hover:bg-pink-600 shadow-md" : "bg-white border border-gray-300 text-gray-900 hover:bg-gray-50"}`}>
+              <button className={`w-full py-3 rounded-lg font-semibold transition ${plan.btnStyle === "primary" ? "bg-[#276dc9] text-white hover:bg-[#205eb0] shadow-md" : "bg-white border border-gray-300 text-gray-900 hover:bg-gray-50"}`}>
                 {plan.btnStyle === "primary" ? "Sign up" : "Sign up"}
               </button>
             </motion.div>
@@ -298,7 +298,7 @@ const Courses = () => {
       {/* --- FEATURES SECTION --- */}
       <div className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -312,13 +312,13 @@ const Courses = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((item, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }} 
+                whileHover={{ scale: 1.05 }}
                 className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 <div className="w-12 h-12 bg-yellow-50 rounded-xl flex items-center justify-center mb-6">
@@ -335,7 +335,7 @@ const Courses = () => {
       {/* --- FAQ SECTION --- */}
       <div className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -348,8 +348,8 @@ const Courses = () => {
 
           <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -370,19 +370,19 @@ const Courses = () => {
       </div>
 
       {/* --- CALL TO ACTION --- */}
-      <div className="py-20 px-6">      
-        <motion.div 
+      <div className="py-20 px-6">
+        <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 50 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto bg-[#7551bc] rounded-[2.5rem] py-10 px-6 md:px-16 text-center text-white shadow-2xl relative overflow-hidden"
+          className="max-w-4xl mx-auto bg-[#5186cd] rounded-[2.5rem] py-10 px-6 md:px-16 text-center text-white shadow-2xl relative overflow-hidden"
         >
           <div className="relative z-10">
             <h2 className="text-2xl md:text-4xl font-serif font-bold mb-6 text-white leading-tight">Ready to Transform Your Career?</h2>
             <p className="text-gray-300 text-base mb-10 max-w-2xl mx-auto">Join thousands of professionals who have mastered the art of ethical office politics. Start your journey to career success today.</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-4 py-4 bg-[#f74dc2] text-white rounded-lg font-bold hover:bg-[#f74dc2] transition flex items-center justify-center shadow-lg">
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-4 py-4  text-[#276dc9] bg-white rounded-lg font-bold  transition flex items-center justify-center shadow-lg">
                 Get Started Now <span className="ml-2">→</span>
               </motion.button>
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-4 py-4 bg-transparent border border-gray-600 text-white rounded-lg font-bold hover:bg-gray-800 transition shadow-lg">

@@ -6,6 +6,7 @@ import sendEmail from '../utils/sendEmail.js'
 import Session from '../models/Session.js';
 import Booking from '../models/Booking.js';
 import Review from '../models/Review.js';
+import adminCourseRoutes from './admin/adminCourseRoutes.js';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -14,7 +15,8 @@ const router = express.Router();
 
 // Apply authentication and admin role check to all routes
 router.use(authenticate, authorize(['admin']));
-
+// after authnticate for admin access only. 
+router.use("/courses", adminCourseRoutes);
 
 // ============= ADMIN DASHBOARD STATS ===========
 
