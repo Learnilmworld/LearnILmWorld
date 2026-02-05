@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/header_logo.jpeg";
+import logo from "../assets/logo.png";
 import { Button, Nav, Offcanvas } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,9 +19,11 @@ const Navbar = () => {
 
   if (loading) return null;
 
+  const isAuthResolved = !loading;
+
   return (
     <header className="sticky top-0 z-40 overflow-hidden">
-      <div className="flex w-full h-[75px] md:h-[85px] bg-[#fef5e4]">
+      <div className="flex w-full h-[75px] md:h-[85px] bg-[white]">
         {/* LEFT */}
         <div className="w-fit flex items-center pl-2 md:pl-10 pr-0 mr-[-1px]">
           <Link to="/" className="h-full flex items-center">
@@ -34,55 +36,67 @@ const Navbar = () => {
         </div>
 
         {/* RIGHT */}
-        <div className="flex-1 bg-[#5186cd] flex items-center justify-end pr-4 md:pr-10">
+        <div className="flex-1 bg-[white] flex items-center justify-end pr-4 md:pr-10">
 
           {/* DESKTOP NAV */}
           <nav className="hidden lg:flex items-center gap-8">
-            <Link
-              to="/about#about"
-              className="text-lg font-medium text-white hover:text-[#CBE56A] transition no-underline"
-            >
-              About
-            </Link>
-            <Link
-              to="/about#careers"
-              className="text-lg font-medium text-white hover:text-[#CBE56A] transition no-underline"
-            >
-              Careers
-            </Link>
+            {isAuthResolved ? (
+              <>
+                <Link
+                  to="/about#about"
+                  className="text-lg font-medium text-[#203989] hover:text-[black] transition no-underline"
+                >
+                  About
+                </Link>
+                <Link
+                  to="/about#careers"
+                  className="text-lg font-medium text-[#203989] hover:text-[black] transition no-underline"
+                >
+                  Careers
+                </Link>
 
-            {user ? (
-              <div className="flex items-center gap-4">
-                <Link
-                  to={dashboardLink}
-                  className="text-lg font-medium text-white hover:text-[#CBE56A] transition no-underline"
-                >
-                  Dashboard
-                </Link>
-                <button
-                  onClick={() => {
-                    logout();
-                    navigate("/login");
-                  }}
-                  className="px-6 py-2 rounded-full bg-white text-[#276dc9] text-sm font-bold shadow hover:bg-gray-100 hover:scale-105 transition"
-                >
-                  Log Out
-                </button>
-              </div>
+                {user ? (
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => {
+                        logout();
+                        navigate("/login");
+                      }}
+                      className="text-lg font-medium text-[#203989] hover:text-[black] transition no-underline"
+                    >
+                      Log Out
+                    </button>
+                    <Link
+                      to={dashboardLink}
+                      className="px-6 py-2 rounded-full bg-[#024AAC] text-[white] text-sm font-bold shadow hover:scale-105 transition"
+                    >
+                      Dashboard
+                    </Link>
+
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-6">
+                    <Link
+                      to="/login"
+                      className="text-lg font-medium text-[#203989] hover:text-[black] transition no-underline"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      to="/register"
+                      className="px-6 py-2 rounded-full bg-[#024AAC] text-[white] text-base font-bold shadow hover:scale-105 transition no-underline"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="flex items-center gap-6">
-                <Link
-                  to="/login"
-                  className="text-lg font-medium text-white hover:text-[#CBE56A] transition no-underline"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/register"
-                  className="px-6 py-2 rounded-full bg-white text-[#276dc9] text-base font-bold shadow hover:scale-105 transition no-underline"
-                >
-                  Get Started
-                </Link>
+              // 👇 Skeleton / placeholder
+              <div className="flex gap-6 animate-pulse">
+                <div className="h-5 w-20 bg-white/40 rounded" />
+                <div className="h-5 w-20 bg-white/40 rounded" />
+                <div className="h-9 w-28 bg-white/40 rounded-full" />
               </div>
             )}
           </nav>

@@ -131,7 +131,7 @@ export default function TopTrainers(): JSX.Element {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-serif font-extrabold text-[#5186cd] text-center"
+          className="text-4xl md:text-5xl  font-extrabold text-[#5186cd] text-center"
         >
           Meet Our Top Trainers
         </motion.h2>
@@ -266,23 +266,44 @@ export default function TopTrainers(): JSX.Element {
           })}
         </div>
 
-        {/* More Trainers bg-[#CBE56A] text-[#2D274B]*/}
-        <div className="flex justify-center mt-10">
+        {/* CTA Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mt-10">
+          {/* More Trainers bg-[#CBE56A] text-[#2D274B]*/}
           <Link
             to="/main"
             className="
-              px-8 py-3 
-              bg-[#276dc9] 
-              text-[white] 
-              font-semibold 
-              rounded-xl 
-              shadow-md 
-              hover:bg-[#4879b8] 
-              transition 
-              text-lg
-            "
+      inline-flex items-center justify-center
+      px-8 py-3
+      bg-[#276dc9]
+      text-white
+      font-semibold
+      rounded-xl
+      shadow-md
+      hover:bg-[#4879b8]
+      transition
+      text-lg
+    "
           >
             More Trainers
+          </Link>
+
+          {/* Become a Trainer */}
+          <Link
+            to="/become-trainer"
+            className="
+      inline-flex items-center justify-center
+      px-8 py-3
+      bg-[#276dc9]
+      text-white
+      font-semibold
+      rounded-xl
+      shadow-md
+      hover:bg-[#4879b8]
+      transition
+      text-lg
+    "
+          >
+            Become a Trainer
           </Link>
         </div>
 

@@ -14,6 +14,9 @@ export default {
         cream: '#FFF0BD',
         'coral-light': '#FDAB9E',
         coral: '#E50046'
+      },
+      fontFamily:{
+        montreal: ['"Montreal Serial"', 'sans-serif']
       }
     }
   },

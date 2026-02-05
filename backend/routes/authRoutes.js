@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { authenticate } from '../middleware/auth.js';
 import axios from "axios";
+import { OAuth2Client } from 'google-auth-library';
 
 const isValidLink = async (url) => {
   try {
@@ -16,6 +17,8 @@ const isValidLink = async (url) => {
 
 
 const router = express.Router();
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Register
 router.post('/register', async (req, res) => {
@@ -717,4 +720,110 @@ router.get('/verify-trainer/:token', async (req, res) => {
   }
 });
 
+//for google authentication
+router.post('/google-login', async (req, res) => {
+  const { tokenId } = req.body;
+
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: tokenId,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email } = payload;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist. Please register first." });
+    }
+
+    if (user.role === 'trainer') {
+      if (user.profile.verificationStatus === 'pending') {
+        return res.status(403).json({
+          message: 'Your account verification is still pending. Please wait until it is approved.'
+        });
+      }
+      if (user.profile.verificationStatus === 'rejected') {
+        return res.status(403).json({
+          message: 'Your account verification was rejected.'
+        });
+      }
+    }
+    const token = jwt.sign(
+      { userId: user._id, role: user.role }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '7d' }
+    );
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profile: user.profile
+      }
+    });
+
+  } catch (error) {
+    console.error("Google Login Error:", error);
+    res.status(400).json({ message: "Google authentication failed" });
+  }
+});
+
+
+//for facebook login
+router.post('/facebook-login', async (req, res) => {
+  const { accessToken } = req.body;
+  try {
+    const url = `https://graph.facebook.com/v19.0/me?fields=id,name,email,picture&access_token=${accessToken}`;
+    const { data } = await axios.get(url);
+    const { email, name, id } = data;
+    if (!email) {
+      return res.status(400).json({ message: "Facebook email not found." });
+    }
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist. Please register first." });
+    }
+
+    if (user.role === 'trainer') {
+      if (user.profile.verificationStatus === 'pending') {
+        return res.status(403).json({
+          message: 'Your account verification is still pending. Please wait until it is approved.'
+        });
+      }
+      if (user.profile.verificationStatus === 'rejected') {
+        return res.status(403).json({
+          message: 'Your account verification was rejected.'
+        });
+      }
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, role: user.role }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '7d' }
+    );
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profile: user.profile
+      }
+    });
+
+  } catch (error) {
+    if (error.response) {
+        console.error("Facebook Error Detail:", error.response.data);
+    }
+  }
+});
 export default router;

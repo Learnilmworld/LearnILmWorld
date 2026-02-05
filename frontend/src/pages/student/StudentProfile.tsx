@@ -12,7 +12,7 @@ const StudentProfile: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    secondaryEmail: '',
+    // secondaryEmail: '',
     profile: {
       bio: '',
       languages: [] as string[],
@@ -33,7 +33,7 @@ const StudentProfile: React.FC = () => {
     setFormData({
       name: user.name || '',
       email: user.email || '',
-      secondaryEmail: user.secondaryEmail || '',
+      // secondaryEmail: user.secondaryEmail || '',
       profile: {
         bio: user?.profile?.bio || '',
         languages: user?.profile?.languages || [],
@@ -101,20 +101,20 @@ const StudentProfile: React.FC = () => {
       return
     }
 
-    if (formData.secondaryEmail) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(formData.secondaryEmail)) {
-        setError('Secondary email is invalid')
-        setLoading(false)
-        return
-      }
-    }
+    // if (formData.secondaryEmail) {
+    //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    //   if (!emailRegex.test(formData.secondaryEmail)) {
+    //     setError('Secondary email is invalid')
+    //     setLoading(false)
+    //     return
+    //   }
+    // }
 
 
     try {
       const payload = {
         name: formData.name,
-        secondaryEmail: formData.secondaryEmail,
+        // secondaryEmail: formData.secondaryEmail,
         profile: {
           bio: formData.profile.bio,
           languages: formData.profile.languages,
@@ -248,7 +248,8 @@ const StudentProfile: React.FC = () => {
               />
             </div>
 
-            <div>
+            {/* secondary email Removed */}
+            {/* <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Secondary Email (Optional)
               </label>
@@ -260,7 +261,7 @@ const StudentProfile: React.FC = () => {
                 placeholder="Enter a secondary email for account recovery"
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9787F3] transition-all text-sm font-medium"
               />
-            </div>
+            </div> */}
 
           </div>
 

@@ -19,6 +19,7 @@ const TrainerProfile = () => {
     avatar: user?.profile?.avatar || '',
     languages: Array.isArray(user?.profile?.languages) ? [...user.profile.languages] : [],
     trainerLanguages: Array.isArray(user?.profile?.trainerLanguages) ? [...user.profile.trainerLanguages] : [],
+    hobbies: Array.isArray(user?.profile?.hobbies) ? [...user.profile.hobbies] : [],
     experience: user?.profile?.experience ?? 0,
     nationalityCode: user?.profile?.nationalityCode || '',
     standards: Array.isArray(user?.profile?.standards) ? [...user.profile.standards] : [],
@@ -26,14 +27,14 @@ const TrainerProfile = () => {
     phone: user?.profile?.phone || '',
     location: user?.profile?.location || '',
     specializations: Array.isArray(user?.profile?.specializations) ? [...user.profile.specializations] : [],
-    certifications: Array.isArray(user?.profile?.certifications) 
-      ? user.profile.certifications.map((cert : any) => ({
-          name: cert.name || '',
-          issuer: cert.issuer || '',
-          year: cert.year || null,
-          certificateImage: cert.certificateImage || '',
-          certificateLink: cert.certificateLink || ''
-        }))
+    certifications: Array.isArray(user?.profile?.certifications)
+      ? user.profile.certifications.map((cert: any) => ({
+        name: cert.name || '',
+        issuer: cert.issuer || '',
+        year: cert.year || null,
+        certificateImage: cert.certificateImage || '',
+        certificateLink: cert.certificateLink || ''
+      }))
       : [],
     availability: Array.isArray(user?.profile?.availability) ? [...user.profile.availability] : [],
     profileImages: Array.isArray(user?.profile?.profileImages) ? [...user.profile.profileImages] : [],
@@ -59,14 +60,14 @@ const TrainerProfile = () => {
     { key: 'certificateLink', type: 'url', placeholder: 'https://certificate-link.com' }
   ]
 
-
-  const [formData, setFormData] = useState<{ name: string; email: string; secondaryEmail: string;  profile: ProfileType; }>
-  ({
-    name: user?.name || '',
-    email: user?.email || '',
-    secondaryEmail: user?.secondaryEmail || '',
-    profile: defaultProfile
-  })
+  // secondaryEmail: string;
+  // secondaryEmail: user?.secondaryEmail || '',
+  const [formData, setFormData] = useState<{ name: string; email: string; profile: ProfileType; }>
+    ({
+      name: user?.name || '',
+      email: user?.email || '',
+      profile: defaultProfile
+    })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
@@ -80,7 +81,7 @@ const TrainerProfile = () => {
 
   useEffect(() => {
     // ensure availability has 7 days (preserve existing)
-    const ALL_DAYS = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday']
+    const ALL_DAYS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     const existing = (formData.profile.availability || []).reduce((acc, a) => { if (a && a.day) acc[a.day] = a; return acc }, {})
     const availability = ALL_DAYS.map(d => existing[d] || { day: d, startTime: null, endTime: null, available: false })
     if ((formData.profile.availability || []).length < 7) {
@@ -91,7 +92,7 @@ const TrainerProfile = () => {
 
   /* --- Generic handlers --- */
   const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type } = e.target;
 
@@ -143,16 +144,15 @@ const TrainerProfile = () => {
     }));
   };
 
-
   const addToArray = (field: keyof typeof defaultProfile, value: any) => {
     if (!value) return
     setFormData(prev => ({ ...prev, profile: { ...prev.profile, [field]: [...(prev.profile[field] || []), value] } }))
   }
   const removeFromArray = (field: keyof typeof defaultProfile, index: number) => {
-    setFormData(prev => ({ ...prev, profile: { ...prev.profile, [field]: (prev.profile[field] || []).filter((_ : any, i: number) => i !== index) } }))
+    setFormData(prev => ({ ...prev, profile: { ...prev.profile, [field]: (prev.profile[field] || []).filter((_: any, i: number) => i !== index) } }))
   }
 
-  const updateObjectInArray = ( field: keyof typeof defaultProfile, index: number, subfield: string, value: any ) => {
+  const updateObjectInArray = (field: keyof typeof defaultProfile, index: number, subfield: string, value: any) => {
     setFormData(prev => {
       const arr = Array.isArray(prev.profile[field]) ? [...prev.profile[field]] : []
       arr[index] = { ...arr[index], [subfield]: value }
@@ -184,34 +184,34 @@ const TrainerProfile = () => {
   //   updateObjectInArray('certifications', index, 'year', year)
   // }
 
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files && e.target.files[0]
-      if (!file) return
-      const reader = new FileReader()
-      reader.onload = () => {
-        const dataUrl = reader.result as string
-        setFormData(prev => ({
-          ...prev,
-          profile: {
-            ...prev.profile,
-            imageUrl: dataUrl
-          }
-        }))
-      }
-      reader.readAsDataURL(file)
-    }
-  
-    const handleRemoveImage = () => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      const dataUrl = reader.result as string
       setFormData(prev => ({
         ...prev,
         profile: {
           ...prev.profile,
-          imageUrl: ''
+          imageUrl: dataUrl
         }
       }))
     }
+    reader.readAsDataURL(file)
+  }
 
-  const handleSubmit = async (e:any) => {
+  const handleRemoveImage = () => {
+    setFormData(prev => ({
+      ...prev,
+      profile: {
+        ...prev.profile,
+        imageUrl: ''
+      }
+    }))
+  }
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     setLoading(true); setError(''); setSuccess('')
 
@@ -225,20 +225,20 @@ const TrainerProfile = () => {
     try {
 
       if (!user) {
-      setError('User not found')
-      setLoading(false)
-      return
-    }
-    
-       const updatedProfile = {
-      ...user.profile,       // existing fields
-      ...formData.profile    // updated fields from form
-    }
+        setError('User not found')
+        setLoading(false)
+        return
+      }
 
-      const result = await updateProfile({ 
-      ...formData, 
-      profile: updatedProfile 
-    }) // expects updateProfile from context to return { success, error? }
+      const updatedProfile = {
+        ...user.profile,       // existing fields
+        ...formData.profile    // updated fields from form
+      }
+
+      const result = await updateProfile({
+        name: formData.name,
+        profile: updatedProfile
+      }) // expects updateProfile from context to return { success, error? }
 
       if (result?.success) setSuccess('Profile updated successfully!')
       else setError(result?.error || 'Failed to update profile')
@@ -257,52 +257,52 @@ const TrainerProfile = () => {
       <div className="bg-gray-50 rounded-2xl p-8 shadow-xl">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold text-gray-900">My Profile</h2>
-          
+
         </div>
 
-         {/* Image: preview + URL + file upload */}
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Profile image</label>
+        {/* Image: preview + URL + file upload */}
+        <div>
+          <label className="block text-sm font-bold text-gray-700 mb-2">Profile image</label>
 
-            <div className="flex items-start gap-4">
-              <div className="w-28 h-28 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border">
-                {formData.profile.imageUrl ? (
-                  // preview (base64 or remote url)
-                  // eslint-disable-next-line jsx-a11y/img-redundant-alt
-                  <img src={formData.profile.imageUrl} alt="Profile preview" className="w-full h-full object-cover" />
-                ) : (
-                  <div className="text-xs text-slate-500 px-2 text-center">No image</div>
+          <div className="flex items-start gap-4">
+            <div className="w-28 h-28 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden border">
+              {formData.profile.imageUrl ? (
+                // preview (base64 or remote url)
+                // eslint-disable-next-line jsx-a11y/img-redundant-alt
+                <img src={formData.profile.imageUrl} alt="Profile preview" className="w-full h-full object-cover" />
+              ) : (
+                <div className="text-xs text-slate-500 px-2 text-center">No image</div>
+              )}
+            </div>
+
+            <div className="flex-1 space-y-2">
+              <input
+                type="url"
+                id="profile.imageUrl"
+                name="profile.imageUrl"
+                value={formData.profile.imageUrl}
+                onChange={handleChange}
+                placeholder="Paste image URL (or upload below)"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5a3] focus:border-[#0ea5a3] transition-all duration-300 font-medium"
+              />
+
+              <div className="flex gap-2 items-center">
+                <label className="cursor-pointer inline-block">
+                  <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                  <span className="px-4 py-2 rounded-lg bg-gray-100 border font-medium text-sm hover:bg-gray-200">Upload image</span>
+                </label>
+
+                {formData.profile.imageUrl && (
+                  <button type="button" onClick={handleRemoveImage} className="px-4 py-2 rounded-lg bg-red-50 border text-red-600 text-sm hover:bg-red-100">
+                    Remove
+                  </button>
                 )}
               </div>
 
-              <div className="flex-1 space-y-2">
-                <input
-                  type="url"
-                  id="profile.imageUrl"
-                  name="profile.imageUrl"
-                  value={formData.profile.imageUrl}
-                  onChange={handleChange}
-                  placeholder="Paste image URL (or upload below)"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0ea5a3] focus:border-[#0ea5a3] transition-all duration-300 font-medium"
-                />
-
-                <div className="flex gap-2 items-center">
-                  <label className="cursor-pointer inline-block">
-                    <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
-                    <span className="px-4 py-2 rounded-lg bg-gray-100 border font-medium text-sm hover:bg-gray-200">Upload image</span>
-                  </label>
-
-                  {formData.profile.imageUrl && (
-                    <button type="button" onClick={handleRemoveImage} className="px-4 py-2 rounded-lg bg-red-50 border text-red-600 text-sm hover:bg-red-100">
-                      Remove
-                    </button>
-                  )}
-                </div>
-
-                <div className="text-xs text-slate-500">Tip: Paste an image URL or upload a file. Upload uses a local base64 preview — to persist, your updateProfile should accept image data or you should upload to storage and save resulting URL.</div>
-              </div>
+              <div className="text-xs text-slate-500">Tip: Paste an image URL or upload a file. Upload uses a local base64 preview — to persist, your updateProfile should accept image data or you should upload to storage and save resulting URL.</div>
             </div>
           </div>
+        </div>
 
         {success && <div className="bg-green-50 border-2 border-green-200 text-green-700 px-4 py-3 rounded-xl mb-6">{success}</div>}
         {error && <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6">{error}</div>}
@@ -321,8 +321,8 @@ const TrainerProfile = () => {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
                 <input name="email" type="email" value={formData.email} className="input-field bg-gray-50" disabled />
               </div>
-              {/* secondary email */}
-              <div>
+              {/* secondary email Removed now */}
+              {/* <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Secondary Email</label>
                 <input
                   type="email"
@@ -332,15 +332,15 @@ const TrainerProfile = () => {
                   className="input-field"
                   placeholder="Enter secondary email"
                 />
-              </div>
+              </div> */}
 
-              
+
               {/* Phone Number */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
                 <input name="profile.phone" value={formData.profile.phone} onChange={handleChange} className="input-field" placeholder="+1 (555) 123-4567" />
               </div>
-             {/* Nationality */}
+              {/* Nationality */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Nationality
@@ -364,7 +364,7 @@ const TrainerProfile = () => {
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Location</label>
                 <input name="profile.location" value={formData.profile.location} onChange={handleChange} className="input-field" placeholder="City, Country" />
-              </div>         
+              </div>
             </div>
 
             <div className="mt-6">
@@ -521,7 +521,7 @@ const TrainerProfile = () => {
                 </button>
               </div>
             </div>
-            
+
             {/* Trainer Languages (complex) */}
             <div className="mt-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">Trainer Languages</label>
@@ -544,7 +544,7 @@ const TrainerProfile = () => {
               <label className="block text-sm font-semibold text-gray-700 mb-2">Certifications</label>
               {(formData.profile.certifications || []).map((cert: any, idx: number) => (
                 <div key={idx} className="bg-gray-100 p-4 rounded mb-4 space-y-2">
-                  
+
                   {certFields.map(f => (
                     <input
                       key={f.key}
@@ -579,13 +579,13 @@ const TrainerProfile = () => {
 
               <button
                 type="button"
-                onClick={() => addComplexToArray  ('certifications', {
-                    name: '',
-                    issuer: '',
-                    year: null,
-                    certificateImage: '',
-                    certificateLink: ''
-                  })
+                onClick={() => addComplexToArray('certifications', {
+                  name: '',
+                  issuer: '',
+                  year: null,
+                  certificateImage: '',
+                  certificateLink: ''
+                })
                 }
                 className="btn-primary"
               >
@@ -622,7 +622,7 @@ const TrainerProfile = () => {
                 <input type="url" name="profile.demoVideo" value={formData.profile.demoVideo} onChange={handleChange} className="input-field" placeholder="https://www.youtube.com/watch?v=..." />
               </div>
 
-              
+
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Instagram URL</label>
