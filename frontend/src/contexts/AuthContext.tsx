@@ -8,11 +8,11 @@ export interface User {
   id: string
   name: string
   email: string
-  secondaryEmail?: string;
   role: Role
   profile?: any
   stats?: any
 }
+// removed from above secondaryEmail?: string;
 
 interface AuthContextType {
   user: User | null
@@ -20,6 +20,8 @@ interface AuthContextType {
   loading: boolean
   login: (email: string, password: string) => Promise<{ success: boolean; user?: User; error?: string; data?: any }>
   register: (userData: any) => Promise<{ success: boolean; user?: User; error?: string; data?: any }>
+  googleLogin: (tokenId: string) => Promise<{ success: boolean; user?: User; error?: string; data?: any }>
+  facebookLogin: (accessToken: string, userID: string) => Promise<any>
   logout: () => void
   updateProfile: (updates: any) => Promise<{ success: boolean; error?: string }>
   forgotPassword: (email: string) => Promise<void>
@@ -140,6 +142,52 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }
 
+  const googleLogin = async (tokenId: string) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/google-login`, { tokenId })
+      const { token: jwtToken, user: userFromServer } = response.data
+
+      if (jwtToken) {
+        localStorage.setItem('token', jwtToken)
+        axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`
+        setToken(jwtToken)
+      }
+
+      setUser(userFromServer)
+
+      return { success: true, user: userFromServer }
+    } catch (error: any) {
+      return {
+        success: false,
+        error: error.response?.data?.message || 'Google Login failed'
+      }
+    }
+  }
+
+  const facebookLogin = async (accessToken: string, userID: string) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/facebook-login`, {
+        accessToken,
+        userID
+      })
+      const { token: jwtToken, user: userFromServer } = response.data
+      if (jwtToken) {
+        localStorage.setItem('token', jwtToken)
+        axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`
+        setToken(jwtToken)
+      }
+      setUser(userFromServer)
+
+      return { success: true, user: userFromServer }
+    } catch (error: any) {
+      console.error('Facebook Logic Error:', error)
+      return {
+        success: false,
+        error: error.response?.data?.message || 'Facebook Login failed'
+      }
+    }
+  }
+
   const logout = () => {
     localStorage.removeItem('token')
     delete axios.defaults.headers.common['Authorization']
@@ -171,6 +219,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     loading,
     login,
     register,
+    googleLogin,
+    facebookLogin,
     logout,
     updateProfile,
     forgotPassword,

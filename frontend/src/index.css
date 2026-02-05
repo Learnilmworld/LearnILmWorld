@@ -240,3 +240,10 @@
   -ms-overflow-style: none;  /* IE & Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+@font-face {
+  font-family: 'Montreal Serial';
+  src: url('.\assets\fonts\Montreal Serial.ttf') format('truetype'); 
+  font-weight: normal;
+  font-style: normal;
+}

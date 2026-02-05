@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Home } from 'lucide-react'
-import { useAuth } from '../contexts/AuthContext'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Home } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 // , User - removed from above
-import '../theme.css' // ensure theme is imported (or import once in index.tsx)
-
+import "../theme.css"; // ensure theme is imported (or import once in index.tsx)
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { useFacebook } from "../hooks/useFacebook";
 
 // interface LoginResult {
 //   success: boolean
@@ -14,16 +16,18 @@ import '../theme.css' // ensure theme is imported (or import once in index.tsx)
 // }
 
 const Login: React.FC = () => {
-  const navigate = useNavigate()
-  const { login } = useAuth()
-  const [formData, setFormData] = useState({ email: '', password: '' })
-  const [showPassword, setShowPassword] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const navigate = useNavigate();
+  const { login, googleLogin } = useAuth();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { facebookLogin } = useAuth()
+  const { loginWithFacebook } = useFacebook()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   // const extractUserObject = (result: any) => {
   //   if (!result || typeof result !== 'object') return null
@@ -57,56 +61,111 @@ const Login: React.FC = () => {
   // }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      const result = await login(formData.email, formData.password)
-      console.log('Login result:', result)
+      const result = await login(formData.email, formData.password);
+      console.log("Login result:", result);
 
       if (!result.success) {
         // show the exact message from backend
-        setError(result.error || 'Login failed. Please check credentials.')
-        return
+        setError(result.error || "Login failed. Please check credentials.");
+        return;
       }
 
       // pull user object if needed
-      const userObj = result.user || result.data || result
+      const userObj = result.user || result.data || result;
 
       const role = (
         userObj?.role ||
         userObj?.roleName ||
         (Array.isArray(userObj?.roles) && userObj.roles[0]) ||
-        ''
-      ).toString().toLowerCase()
+        ""
+      )
+        .toString()
+        .toLowerCase();
 
       //  After successful login
-      const redirectPath = localStorage.getItem('redirectAfterLogin');
+      const redirectPath = localStorage.getItem("redirectAfterLogin");
 
       if (redirectPath) {
-        localStorage.removeItem('redirectAfterLogin');
+        localStorage.removeItem("redirectAfterLogin");
         navigate(redirectPath, { replace: true });
-      } else if (role.includes('student')) {
-        navigate('/student', { replace: true });
-      } else if (role.includes('trainer') || role.includes('educator')) {
-        navigate('/trainer', { replace: true });
-      } else if (role.includes('admin')) {
-        navigate('/admin', { replace: true });
+      } else if (role.includes("student")) {
+        navigate("/student", { replace: true });
+      } else if (role.includes("trainer") || role.includes("educator")) {
+        navigate("/trainer", { replace: true });
+      } else if (role.includes("admin")) {
+        navigate("/admin", { replace: true });
       } else {
-        navigate('/main', { replace: true });
+        navigate("/main", { replace: true });
       }
     } catch (err: any) {
-      console.error('Login error', err)
-      setError(err?.response?.data?.message || err?.message || 'Login failed')
+      console.error("Login error", err);
+      setError(err?.response?.data?.message || err?.message || "Login failed");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
+
+  const handleGoogleLoginSuccess = async (credentialResponse: any) => {
+    setError("");
+    setLoading(true);
+    try {
+      const result = await googleLogin(credentialResponse.credential);
+
+      if (!result.success) {
+        setError(result.error || "Google Login Failed");
+        return;
+      }
+
+      const userObj = result.user;
+      const role = userObj?.role;
+
+      if (role === "student") navigate("/student", { replace: true });
+      else if (role === "trainer") navigate("/trainer", { replace: true });
+      else if (role === "admin") navigate("/admin", { replace: true });
+    } catch (err: any) {
+      console.error("Google Login Failed", err);
+      setError(err?.response?.data?.message || "Google Login Failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFacebookClick = async () => {
+    setError('');
+    
+    try {
+      const fbResponse: any = await loginWithFacebook();
+      setLoading(true);
+      const result = await facebookLogin(fbResponse.accessToken, fbResponse.userID);
+
+      if (!result.success) {
+        setError(result.error || 'Facebook Login Failed');
+        return;
+      }
+      const role = result.user?.role;
+      if (role === 'student') navigate('/student', { replace: true });
+      else if (role === 'trainer') navigate('/trainer', { replace: true });
+      else if (role === 'admin') navigate('/admin', { replace: true });
+      else navigate('/main', { replace: true });
+
+    } catch (err: any) {
+      console.error("Facebook Error:", err);
+      if (typeof err === 'string' && err.includes('cancel')) {
+        return;
+      }
+      setError('Facebook login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center py-12 bg-[#5186cd]">
+    <div className="min-h-screen flex items-center justify-center py-12 bg-[#5186cd]">
       {/* Home Icon Button */}
       <Link
         to="/"
@@ -121,57 +180,70 @@ const Login: React.FC = () => {
         <div
           className="absolute top-20 left-10 w-32 h-32 rounded-full"
           style={{
-            background: '#426fab',
+            background: "#426fab",
             opacity: 0.44,
-            animation: 'floaty 6s ease-in-out infinite',
+            animation: "floaty 6s ease-in-out infinite",
           }}
         />
         <div
           className="absolute top-44 right-16 w-24 h-24 rounded-full"
           style={{
-            background: '#426fab',
-            opacity: 0.40,
-            animation: 'floaty 6s ease-in-out infinite',
-            animationDelay: '1.8s',
+            background: "#426fab",
+            opacity: 0.4,
+            animation: "floaty 6s ease-in-out infinite",
+            animationDelay: "1.8s",
           }}
         />
         <div
           className="absolute bottom-24 left-1/4 w-40 h-40 rounded-full"
           style={{
-            background: '#426fab',
+            background: "#426fab",
             opacity: 0.43,
-            animation: 'floaty 6s ease-in-out infinite',
-            animationDelay: '3.2s',
+            animation: "floaty 6s ease-in-out infinite",
+            animationDelay: "3.2s",
           }}
         />
         <div
           className="absolute bottom-44 right-44 w-24 h-24 rounded-full"
           style={{
-            background: '#426fab',
+            background: "#426fab",
             opacity: 0.42,
-            animation: 'floaty 6s ease-in-out infinite',
-            animationDelay: '1.8s',
+            animation: "floaty 6s ease-in-out infinite",
+            animationDelay: "1.8s",
           }}
         />
       </div>
 
       <div className="max-w-md w-full mx-4 relative z-10">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-extrabold text-[white] mb-2">Welcome Back</h1>
-          <p className="text-[white] text-lg font-extrabold">Sign in to Continue your Learning Journey</p>
+          <h1 className="text-4xl font-extrabold text-[white] mb-2">
+            Welcome Back
+          </h1>
+          <p className="text-[white] text-lg font-extrabold">
+            Sign in to Continue your Learning Journey
+          </p>
         </div>
 
         <div className="glass-effect rounded-2xl p-8 shadow-2xl bg-white/80 backdrop-blur">
           {error && (
             <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6">
-              <div className="flex items-center gap-2">⚠️ <span>{error}</span></div>
+              <div className="flex items-center gap-2">
+                ⚠️ <span>{error}</span>
+              </div>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6" aria-live="polite">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+            aria-live="polite"
+          >
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-base font-semibold text-[#2D274B] mb-2">
+              <label
+                htmlFor="email"
+                className="block text-base font-semibold text-[#2D274B] mb-2"
+              >
                 Email Address
               </label>
               <div className="relative">
@@ -191,13 +263,16 @@ const Login: React.FC = () => {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-base font-semibold text-[#2D274B] mb-2">
+              <label
+                htmlFor="password"
+                className="block text-base font-semibold text-[#2D274B] mb-2"
+              >
                 Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#9787F3] h-5 w-5" />
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   value={formData.password}
@@ -209,10 +284,14 @@ const Login: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#8C83C9] hover:text-[#4B437C] transition-colors duration-300"
                 >
-                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -222,7 +301,7 @@ const Login: React.FC = () => {
               <Link
                 to="/forget-password"
                 className="text-sm font-semibold hover:underline"
-                style={{ color: '#2D274B' }}
+                style={{ color: "#2D274B" }}
               >
                 Forgot Password?
               </Link>
@@ -238,7 +317,10 @@ const Login: React.FC = () => {
             >
               {loading ? (
                 <div className="loading-dots" aria-hidden>
-                  <div></div><div></div><div></div><div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
                 </div>
               ) : (
                 <>
@@ -249,10 +331,43 @@ const Login: React.FC = () => {
             </button>
           </form>
 
+          <div className="mt-6 flex flex-col items-center">
+            <div className="w-full border-t border-gray-300 my-4 position-relative">
+              <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  px-2 text-gray-500 text-sm">
+                Or continue with
+              </span>
+            </div>
+            <GoogleLogin
+              onSuccess={handleGoogleLoginSuccess}
+              onError={() => setError("Google Login Failed")}
+              useOneTap={false}
+              shape="pill"
+              theme="outline"
+              width={320}
+            />
+            <button
+          type="button"
+          onClick={handleFacebookClick}
+          disabled={loading}
+          className="flex items-center justify-center gap-3 w-full max-w-[320px] px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+        >
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" 
+            alt="Facebook Logo" 
+            className="w-6 h-6" 
+          />
+          <span>Continue with Facebook</span>
+        </button>
+          </div>
+
           <div className="mt-8 text-center">
             <p className="text-[#2D274B] font-bold">
-              Don't have an account? {' '}
-              <Link to="/register" className="font-bold hover:underline" style={{ color: '#426fab' }}>
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="font-bold hover:underline"
+                style={{ color: "#426fab" }}
+              >
                 Sign up here
               </Link>
             </p>
@@ -260,7 +375,7 @@ const Login: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

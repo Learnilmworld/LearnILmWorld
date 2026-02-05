@@ -130,7 +130,17 @@ const StudentDashboard: React.FC = () => {
         {/* Student Info */}
         <div className="flex items-center gap-3 mb-10">
           <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center">
-            <User className="text-white" />
+          {user?.profile?.imageUrl ? 
+          (
+            <div className="rounded-full ">
+              <img src={user?.profile?.imageUrl} className="rounded-full w-10 h-10" alt="" />
+            </div>
+          )
+        :
+        (
+          <User className="text-white " />
+        )
+        }
           </div>
           <div>
             <p className="font-semibold text-gray-700">

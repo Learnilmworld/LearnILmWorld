@@ -116,7 +116,6 @@ router.get('/trainers', async (req, res) => {
   }
 });
 
-
 // Get user profile
 router.get('/profile/:id', async (req, res) => {
   try {
@@ -130,9 +129,11 @@ router.get('/profile/:id', async (req, res) => {
   }
 });
 
+// update user
 router.put('/profile', authenticate, async (req, res) => {
   try {
     const updates = req.body;
+
 
     // forbidden fields
     delete updates.password;
@@ -142,17 +143,25 @@ router.put('/profile', authenticate, async (req, res) => {
     const existingUser = await User.findById(req.user._id);
     if (!existingUser) return res.status(404).json({ message: "User not found" });
 
-    if (updates.secondaryEmail) {
-      const emailInUse = await User.findOne({
-        secondaryEmail: updates.secondaryEmail,
-        _id: { $ne: existingUser._id }
-      });
-      if (emailInUse) {
-        return res.status(400).json({ message: 'This secondary email is already in use' });
-      }
-      existingUser.secondaryEmail = updates.secondaryEmail; // update it safely
-      delete updates.secondaryEmail; // remove from updates to avoid double-assign
-    }
+    // if (updates.hasOwnProperty('secondaryEmail')) {
+
+    //   if (updates.secondaryEmail === '') {
+    //     existingUser.secondaryEmail = undefined
+    //     delete updates.secondaryEmail;
+    //   }
+
+    //   else {
+    //     const emailInUse = await User.findOne({
+    //       secondaryEmail: updates.secondaryEmail,
+    //       _id: { $ne: existingUser._id }
+    //     });
+    //     if (emailInUse) {
+    //       return res.status(400).json({ message: 'This secondary email is already in use' });
+    //     }
+    //     existingUser.secondaryEmail = updates.secondaryEmail; // update it safely
+    //     delete updates.secondaryEmail; // remove from updates to avoid double-assign
+    //   }
+    // }
 
     // MERGE, DON'T REPLACE PROFILE
     if (updates.profile) {
@@ -169,6 +178,7 @@ router.put('/profile', authenticate, async (req, res) => {
     const savedUser = await existingUser.save();
     const userToSend = savedUser.toObject();
     delete userToSend.password;
+    // userToSend.secondaryEmail = savedUser.secondaryEmail || '';
 
     // console.log("SAFE UPDATED USER:", userToSend);
 
@@ -177,7 +187,6 @@ router.put('/profile', authenticate, async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
 
 // Get dashboard stats
 router.get('/stats', authenticate, async (req, res) => {

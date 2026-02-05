@@ -33,7 +33,8 @@ import arab_flag from '../assets/arab_flag.jpeg'
 
 // import heroImage1 from '../assets/Hero_image1.png'
 // import heroImage2 from '../assets/Hero_image2.jpg'
-// import heroImage3 from '../assets/Hero_image3.png'
+
+import heroImage3 from '../assets/together child1.png'
 
 import math from '../assets/Math.jpeg'
 import hist from '../assets/history.png'
@@ -44,7 +45,7 @@ import bio from '../assets/Biology.jpeg'
 import cs from '../assets/Computer Science.jpeg'
 import Footer from '../components/Footer'
 import TopTrainers from '../components/TopTrainers'
-import { LanguageCard } from '../components/LanguageCard'
+// import { LanguageCard } from '../components/LanguageCard'
 import Navbar from '../components/Navbar';
 // import CurrencySelector from '../components/CurrencySelector'
 // import MoreLanguages from '../components/MoreLanguages'
@@ -59,6 +60,13 @@ export default function LandingPageAlt() {
   const [mounted, setMounted] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   // const [showOffcanvas, setShowOffcanvas] = useState(false)
+
+  const [activeCategory, setActiveCategory] = useState<
+    "popular" | "asian" | "euro" | "africa" | "more"
+  >("popular");
+
+
+
   const [showMore, setShowMore] = useState(false);
   const [showMoreLanguages, setShowMoreLanguages] = useState(false);
   const [showMoreHobbies, setShowMoreHobbies] = useState(false);
@@ -377,23 +385,67 @@ export default function LandingPageAlt() {
     },
   ];
 
+  const pop_lang = [
+    { lang: "English", code: "gb" },
+    { lang: "French", code: "fr" },
+    { lang: "German", code: "de" },
+    { lang: "Spanish", code: "es" },
+    { lang: "Portuguese", code: "pt" },
+    { lang: "Korean", code: "kr" },
+    { lang: "Italian", code: "it" },
+    { lang: "Japanese", code: "jp" }
+  ];
+
+  const asian_lang = [
+    { lang: "Bengali", code: "bd" },
+    { lang: "Japanese", code: "jp" },
+    { lang: "Sanskrit", code: "in" },
+    { lang: "Mandarin", code: "cn" },
+    { lang: "Hindi", code: "in" },
+    { lang: "Korean", code: "kr" },
+    { lang: "Thai", code: "th" }
+  ];
+
+  const euro_usa_lang = [
+    { lang: "English", code: "gb" },
+    { lang: "German", code: "de" },
+    { lang: "French", code: "fr" },
+    { lang: "Russian", code: "ru" }
+  ];
+
+  const africa_mid_east_lang = [
+    { lang: "Arabic", code: "sa" },
+    { lang: "Swahili", code: "ke" }
+  ];
+
+  const languageGroups: Record<string, { lang: string; code: string }[]> = {
+    popular: pop_lang,
+    asian: asian_lang,
+    euro: euro_usa_lang,
+    africa: africa_mid_east_lang,
+  };
+
   const steps = [
     {
+      ind: "01",
       icon: Users,
       title: 'Find your trainer',
       desc: 'Smart filters: language, accent, price, availability and student ratings.'
     },
     {
+      ind: "02",
       icon: BookOpen,
       title: 'Book a session',
       desc: 'One-click booking, instant calendar sync and secure payments.'
     },
     {
+      ind: "03",
       icon: Play,
       title: 'Practice & improve',
       desc: 'Live lessons, role-plays, recordings and tailored homework.'
     },
     {
+      ind: "04",
       icon: Award,
       title: 'Track progress',
       desc: 'Personal dashboard, streaks, and certificates.'
@@ -466,220 +518,195 @@ export default function LandingPageAlt() {
 
 
   return (
-    <div className="min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-[#fef5e4] bg-fixed"
-
+    <div className="min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-[linear-gradient(145deg,#E6EEF9_0%,#FEF5E4_30%,#f7f1e6_70%,#E6EEF9_100%)]"
+    // #fef5e4
     >
 
       {/* 2D274B  text- #dc8d33*/}
       {/* bg-[#6B48AF]/95 backdrop-blur-sm border-b border-white/30 text-white */}
       <Navbar />
 
-      <main className="pt-12 pb-14 items-center text-center justify-center">
-        <div className="w-full mx-auto px-6 lg:px-8">
-          <div className="items-center text-center justify-center">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={mounted ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7 }}
-            >
-              <h1 className="text-5xl md:text-5xl font-serif leading-tight font-extrabold text-[#2D274B] text-center">
-                Helping learners grow,
-                {/* <br /> */}
-                {/* e0fa84 */}
-                <span className="text-[#5186cd]"> emotionally </span>
-                <span className="text-[#2D274B]">and </span>
-                {/* <br /> */}
-                <span className="text-[#5186cd]">intellectually</span>
-              </h1>
-              <div className='flex text-center justify-center items-center'>
+      <main className="pt-14">
+        {/* HERO SECTION */}
+        <div className="max-w-[1520px] mx-auto px-4">
+          <div className="relative rounded-[40px] bg-[#6f9bd3] px-8 lg:px-16 pt-12 overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={mounted ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8 }}
+                className="lg:col-span-7 flex flex-col space-y-6 pb-12 z-10 relative"
+              >
+                <h1 className="text-4xl md:text-5xl lg:text-6xl  font-extrabold text-white leading-tight">
+                  <span className="block lg:whitespace-nowrap">Helping learners grow,</span>
+                  <span className="text-[#2D274B]">
+                    emotionally <span className="text-white">& </span>
+                    <br /> intellectually
+                  </span>
+                </h1>
 
-                <p className="mt-6 text-3xl md:text-4xl text-[#2D274B] font-bold max-w-3xl">
-                  Clarity comes with the <span className="text-[#5186cd] ">Right Mentors</span>
+                <div className="mt-4">
+                  <div className="inline-block rounded-xl border-2 border-white px-4 py-2">
+                    <p className="text-xl lg:text-2xl font-semibold text-white">
+                      Clarity comes with the <span className="text-[#2D274B]">Right Mentors</span>
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-xl lg:text-2xl font-bold text-white">
+                  Learn from natives. <span className="text-[#2D274B]">Speak like natives</span>
                 </p>
-              </div>
-              <p className='mt-4 text-xl font-bold md:text-3xl text-[#5186cd]'>Learn from natives. Speak like natives</p>
 
-              <div className="mt-10">
-                <div className="flex flex-wrap justify-center items-center gap-4 mb-10">
+                <div className="flex flex-wrap gap-4 pt-2">
                   <Link
                     to="/courses"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#276dc9] text-white text-lg font-bold rounded-xl shadow-lg hover:scale-105 transition-transform"
+                    className="inline-flex items-center gap-3 px-8 py-3 bg-[#024AAC] text-white font-bold rounded-2xl border-2 border-white shadow-md hover:scale-105 transition-transform"
                   >
                     <BookOpen className="w-5 h-5" />
-                    <span>Browse Courses</span>
-                    <ArrowRight className="w-5 h-5 ml-1" />
+                    Browse Courses
                   </Link>
+
                   <Link
                     to="/demo"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-white border border-gray-200 text-gray-900 text-lg font-bold rounded-xl shadow-sm hover:bg-gray-50 transition-colors"
+                    className="inline-flex items-center gap-3 px-8 py-3 bg-white text-[#024AAC] font-bold rounded-2xl border-2 border-[#024AAC] shadow-md hover:bg-gray-50 transition-colors"
                   >
-                    <Play className="w-5 h-5 text-[#5186cd] fill-current" />
-                    <span>Book a FREE Demo</span>
+                    <Play className="w-5 h-5 fill-current" />
+                    Book a FREE Demo
                   </Link>
                 </div>
+              </motion.div>
 
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-4 lg:gap-x-8 justify-center ">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 bg-teal-50 rounded-full text-[#4f88f2] shrink-0">
-                      <Mic className="w-5 h-5" />
-                    </div>
-                    <div className="flex flex-col whitespace-nowrap">
-                      <span className="font-bold text-gray-900 text-xl leading-none">Native</span>
-                      <span className="text-gray-500 text-xs mt-1">mentors + real accent</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 bg-teal-50 rounded-full text-[#4f88f2] shrink-0">
-                      <Headphones className="w-5 h-5" />
-                    </div>
-                    <div className="flex flex-col whitespace-nowrap">
-                      <span className="font-bold text-gray-900 text-xl leading-none">Speaking</span>
-                      <span className="text-gray-500 text-xs mt-1">focused practice</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 bg-teal-50 rounded-full text-[#4f88f2] shrink-0">
-                      <Calendar className="w-5 h-5" />
-                    </div>
-                    <div className="flex flex-col whitespace-nowrap">
-                      <span className="font-bold text-gray-900 text-xl leading-none">Flexible</span>
-                      <span className="text-gray-500 text-xs mt-1">weekday/weekend batches</span>
-                    </div>
-                  </div>
+              {/* RIGHT */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={mounted ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.8 }}
+                className="lg:col-span-5 relative flex justify-end items-end h-full self-end z-0"
+              >
+                {/* Dark Blue Div Behind Image */}
+                <div className="absolute inset-0 flex justify-end items-end z-[-1]">
+                  <div className="bg-[#0A1172] w-full h-4/5 rounded-tl-[120px] lg:rounded-tl-[160px]  rounded-br-[40px] translate-x-8 lg:translate-x-0 translate-y-12 lg:translate-y-0"></div>
                 </div>
+                <img
+                  src={heroImage3}
+                  alt="Learners"
+                  className="w-full h-auto object-contain max-h-[450px] lg:scale-125 origin-bottom z-10 relative left-4 lg:left-0"
+                  style={{ marginBottom: '-2px' }}
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom features after grid*/}
+        <div className="py-10 mt-10">
+          <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-10">
+
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-white rounded-full text-[#4f88f2] shadow">
+                <Mic className="w-7 h-7" />
               </div>
+              <div>
+                <p className="font-bold text-3xl">Native</p>
+                <p className="text-base text-gray-500">Mentor + real accent</p>
+              </div>
+            </div>
 
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-white rounded-full text-[#4f88f2] shadow">
+                <Headphones className="w-7 h-7" />
+              </div>
+              <div>
+                <p className="font-bold text-3xl">Speaking</p>
+                <p className="text-base text-gray-500">Focused practice</p>
+              </div>
+            </div>
 
-              {/* chaned color to wite from [#7fe808],[#ef4444] and [#9787F3] */}
-              {/* <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
-                <motion.div initial={{ scale: 0.95 }} animate={mounted ? { scale: 1 } : {}} className="text-center">
-                  <div className="text-2xl font-bold text-white">400+</div>
-                  <div className="text-sm text-[#2D274B]">Trainers</div>
-                </motion.div>
-                <motion.div initial={{ scale: 0.95 }} animate={mounted ? { scale: 1.03 } : {}} className="text-center">
-                 
-                  <div className="text-2xl font-bold text-white">60+</div>
-                  <div className="text-sm text-[#2D274B]">Languages</div>
-                </motion.div>
-                <motion.div initial={{ scale: 0.95 }} animate={mounted ? { scale: 1.06 } : {}} className="text-center">
-                  <div className="text-2xl font-bold text-white">12K+</div>
-                  <div className="text-sm text-[#2D274B]">Students</div>
-                </motion.div>
-              </div> */}
-            </motion.div>
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-white rounded-full text-[#4f88f2] shadow">
+                <Calendar className="w-7 h-7" />
+              </div>
+              <div>
+                <p className="font-bold text-3xl">Flexible</p>
+                <p className="text-base text-gray-500">Weekday / weekend batches</p>
+              </div>
+            </div>
 
-            {/* <motion.div initial={{ opacity: 0 }} animate={mounted ? { opacity: 1 } : {}} transition={{ delay: 0.2 }} className="relative w-full max-w-2xl mx-auto rounded-2xl overflow-hidden  -translate-y-6 md:-translate-y-12">
-              <img loading="lazy" src={heroImage3} alt="students practicing a language together" className="w-full h-[420px] md:h-96 lg:h-[520px] object-contain" /> */}
-
-
-            {/* Left card - moved up */}
-            {/* <div className="absolute left-6 bottom-24 w-52 rounded-xl overflow-hidden shadow-lg border-2 border-white bg-white">
-                <img loading="lazy" src={cardImage1} alt="culture and conversation" className="w-full h-32 object-cover" />
-                <div className="p-3">
-                  <div className="text-sm font-semibold">Cultural conversations</div>
-                  <div className="text-xs text-slate-500">Contextual lessons you’ll actually use</div>
-                </div>
-              </div> */}
-
-            {/* Right top card - nudged slightly higher */}
-            {/* <div className="absolute right-6 top-2 w-44 rounded-xl overflow-hidden shadow-lg border-2 border-white bg-white">
-                <img loading="lazy" src={cardImage2} alt="tutor profile" className="w-full h-40 object-cover" />
-                <div className="p-3">
-                  <div className="text-sm font-semibold">Meet tutors</div>
-                  <div className="text-xs text-slate-500">See video intros & ratings</div>
-                </div>
-              </div> */}
-
-            {/* Lower-right card - lifted up and pulled inwards */}
-            {/* <div className="absolute -right-6 bottom-36 w-64 rounded-xl overflow-hidden shadow-lg border-2 border-white bg-white">
-                <div className="p-4">
-                  <div className="text-lg font-bold">Practice </div>
-                  <div className="text-xs text-slate-500 mt-2">Short tasks to try between lessons</div>
-                </div>
-                <img loading="lazy" src={cardImage3} alt="mini lesson" className="w-full h-20 object-cover" />
-              </div> */}
-
-            {/* </motion.div> */}
           </div>
         </div>
       </main>
+
       {/* Why learners love us section */}
       {/* bg-[#2D274B] */}
-      <section className="py-8 ">
+      <section className="py-20 ]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="gap-8 items-start">
-            {/* LEFT – Heading only */}
-            <div className='flex justify-center items-center text-center'>
-              <h3 className="text-4xl font-bold font-serif text-[#5186cd]">
-                Why learners love LearniLM🌍World
-              </h3>
-            </div>
 
-            {/* EMPTY right cell for row balance */}
-            <div />
+          {/* HEADING */}
+          <div className="text-center">
+            <h3 className="text-4xl lg:text-5xl  font-extrabold text-[#203989]">
+              Why learners love LearniLM🌍World
+            </h3>
 
-            {/* PARAGRAPH – spans both columns */}
-            <div className="lg:col-span-2 flex justify-center items-center text-center">
-              <p className="mt-4 text-lg font-bold max-w-4xl text-[#2D274B]">
+            {/* SUBTITLE BAR */}
+            <div className="mt-5 inline-block bg-[#5b8fd6] text-white px-6 py-3 rounded-md shadow-md max-w-3xl">
+              <p className="text-base lg:text-lg font-semibold">
                 Short lessons, lots of speaking time and tutors focused on practical
                 outcomes. Learn phrases you’ll use the very next day.
               </p>
             </div>
+          </div>
 
-            {/* LEFT – Feature cards */}
-            <div>
-              <div className="mt-8 grid sm:grid-cols-3 gap-4">
-                {features.map((f, idx) => (
-                  <div
-                    key={idx}
-                    className="p-4 bg-blue-50 rounded-xl shadow hover:bg-[#5186cd] hover:text-gray-200 hover:scale-[1.02] transition"
-                    role="group"
-                  >
-                    <f.icon className="w-9 h-9 text-[#276dc9]" aria-hidden />
-                    <div className="font-bold mt-3">{f.title}</div>
-                    <div className="text-base font-semibold text-[#4B437C] hover:text-gray-50 mt-1">
-                      {f.text}
-                    </div>
-                  </div>
-                ))}
+          {/* TOP FEATURE CARDS */}
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {features.map((f, idx) => (
+              <div
+                key={idx}
+                className="bg-[#203989] text-white rounded-2xl p-6 shadow-lg hover:scale-[1.02] transition-transform"
+              >
+                <f.icon className="w-8 h-8 mb-4 text-white" />
+                <h4 className="text-xl font-bold mb-2">{f.title}</h4>
+                <p className="text-sm font-semibold opacity-90">{f.text}</p>
               </div>
+            ))}
+          </div>
+
+          {/* REAL OUTCOMES CARD */}
+          <div className="mt-10">
+            <div className="border-2 border-[#203989] bg-white rounded-2xl p-6 shadow-md max-w-5xl mx-auto">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-lg bg-[#fde68a] flex items-center justify-center text-xl">
+                  ⭐
+                </div>
+                <div>
+                  <h4 className="text-xl font-extrabold text-black">
+                    Real outcomes
+                  </h4>
+                  <p className="text-sm font-bold text-[#4B437C]">
+                    Progress reports every 4 lessons
+                  </p>
+                </div>
+              </div>
+
+              <p className="mt-4 text-base font-semibold text-[#4B437C]">
+                From small talk to business calls — our curriculum is outcome-focused
+                so you can see measurable improvement.
+              </p>
             </div>
+          </div>
 
-            {/* RIGHT – Shifted down */}
-            <div className="space-y-4 mt-10">
-              <div className="bg-blue-50 p-6 rounded-2xl shadow">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-lg bg-[#fde68a] flex items-center justify-center">
-                    ⭐
-                  </div>
-                  <div>
-                    <div className="font-extrabold text-xl">Real outcomes</div>
-                    <div className="text-base font-semibold text-[#4B437C]">
-                      Progress reports every 4 lessons
-                    </div>
-                  </div>
-                </div>
-                <p className="text-[#4B437C] font-semibold text-lg">
-                  From small talk to business calls — our curriculum is outcome-focused
-                  so you can see measurable improvement.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded-xl shadow font-extrabold hover:bg-[#5186cd] hover:text-white">
-                  Quick lessons
-                </div>
-                <div className="bg-blue-50 p-4 rounded-xl shadow font-extrabold hover:text-white hover:bg-[#5186cd]">
-                  Excellent Material
-                </div>
-              </div>
+          {/* BOTTOM TAGS */}
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="bg-[#5b8fd6] text-white text-center border-white border-2 py-4 rounded-xl font-extrabold shadow-md">
+              Quick lessons
+            </div>
+            <div className="bg-[#5b8fd6] border-white border-2 text-white text-center py-4 rounded-xl font-extrabold shadow-md">
+              Excellent Material
             </div>
           </div>
 
         </div>
       </section>
+
       <TopTrainers />
 
       {/* Language Levels Explanation */}
@@ -696,7 +723,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-5xl font-extrabold font-serif text-[#5186cd] tracking-tight"
+            className="text-5xl md:text-5xl font-extrabold  text-[#5186cd] tracking-tight"
           >
             Languages That Open Doors
             <span className="block text-[#5186cd] mt-1">
@@ -723,40 +750,77 @@ export default function LandingPageAlt() {
             </div>
           </div>
 
-          {/* Responsive Grid with Flags */}
-          <div className="mt-16 grid gap-6  justify-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {languages.map((lang, idx) => (
-              <LanguageCard
-                key={idx}
-                data={lang}
-                onConfirm={handleLanguageClick}
-              />
-            ))}
-
-            {/* More card separate */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-
-              whileHover={{ scale: 1.08, y: -8 }}
-              whileTap={{ scale: 0.96 }}
-
-              className="
-              group relative h-[230px] flex items-center justify-center cursor-pointer transition-all duration-500 ease-out "
-              onClick={() => setShowMoreLanguages(true)}
-            >
-              <div
-                className=" 
-                w-40 h-40 rounded-full bg-[#276dc9] text-white font-bold flex flex-col items-center justify-center shadow-[0_20px_30px_5px_rgba(0,0,0,0.3)] transition-all duration-500 ease-out group-hover:shadow-[0_40px_50px_10px_rgba(0,0,0,0.4)]"
+          {/* CATEGORY OPTIONS */}
+          <div className="mt-12 flex flex-wrap justify-center gap-4">
+            {[
+              { key: "popular", label: "Popular" },
+              { key: "asian", label: "Asian Languages" },
+              { key: "euro", label: "Europe & USA" },
+              { key: "africa", label: "Africa & Middle East" },
+              { key: "more", label: "More" },
+            ].map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => setActiveCategory(cat.key as any)}
+                className={`
+        px-6 py-2 rounded-full font-bold transition
+        ${activeCategory === cat.key
+                    ? "bg-[#5186cd] text-white shadow-md"
+                    : "bg-white text-[#2D274B] border hover:bg-[#eef4ff]"
+                  }
+      `}
               >
-                <span className="text-3xl leading-none">+</span>
-                <span className="text-sm mt-1">More</span>
-              </div>
-            </motion.div>
-
+                {cat.label}
+              </button>
+            ))}
           </div>
+
+
+          {/* Responsive Grid with Flags */}
+          {/* LANGUAGE GRID (REPLACED CONTENT) */}
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-center">
+            {(activeCategory === "more"
+              ? [
+                { lang: "Thai", code: "th" },
+                { lang: "Bengali", code: "bd" },
+                { lang: "Russian", code: "ru" },
+                { lang: "Mandarin", code: "cn" },
+                { lang: "Swahili", code: "ke" },
+                { lang: "Italian", code: "it" },
+                { lang: "Portuguese", code: "pt" },
+                { lang: "Korean", code: "kr" },
+              ]
+              : languageGroups[activeCategory]
+            )?.map((lang, idx) => (
+              <div
+                key={idx}
+                onClick={() => handleLanguageClick(lang.lang)}
+                className="
+    cursor-pointer
+    flex items-center gap-3
+    px-5 py-3
+    rounded-full
+    bg-white
+    shadow-[0_4px_10px_rgba(0,0,0,0.12)]
+    hover:shadow-[0_8px_18px_rgba(0,0,0,0.18)]
+    hover:-translate-y-0.5
+    transition-all duration-300
+  "
+              >
+                <img
+                  src={`https://flagcdn.com/w40/${lang.code}.png`}
+                  alt={lang.lang}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+
+                <span className="font-semibold text-[#2f6fd3] text-base">
+                  {lang.lang}
+                </span>
+              </div>
+
+            ))}
+          </div>
+
         </div>
         {/* Modal for More Languages */}
         {showMoreLanguages && (
@@ -843,7 +907,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-5xl font-serif tracking-tight font-extrabold text-[#5186cd]"
+            className="text-5xl md:text-5xl  tracking-tight font-extrabold text-[#5186cd]"
           >
             Subjects You Can Explore
           </motion.h2>
@@ -1048,7 +1112,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-5xl font-serif tracking-tight font-extrabold text-[#5186cd]"
+            className="text-5xl md:text-5xl  tracking-tight font-extrabold text-[#5186cd]"
           >
             Beyond Academics, Your Passion Awaits
           </motion.h2>
@@ -1243,7 +1307,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif text-[#5186cd] tracking-tight text-center"
+            className="text-4xl md:text-5xl  text-[#5186cd] tracking-tight text-center"
           >
             Highlights of LearniLM 🌎 World
           </motion.h2>
@@ -1337,74 +1401,83 @@ export default function LandingPageAlt() {
       </section>
 
       {/* How it works section */}
-      <section className="py-16" aria-labelledby="how-it-works">
+      <section className="py-1" aria-labelledby="how-it-works">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 id="how-it-works" className="text-4xl font-bold md:text-4xl font-serif text-[#5186cd]">How it works — in 4 simple steps</h2>
+            <h2 id="how-it-works" className="text-4xl font-bold md:text-4xl  text-[#5186cd]">How it works — in 4 simple steps</h2>
             <p className="mt-3 text-[#2D274B] text-lg font-bold max-w-2xl mx-auto">Designed to get you speaking fast: pick, book, practice and track.</p>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid px-3 lg:grid-cols-4 md:grid-cols-2 gap-6">
             {steps.map((s, i) => (
-              <motion.div key={i} whileHover={{ y: -6 }} className="bg-gradient-to-b from-[#f0fdf4] to-white rounded-2xl p-6 shadow hover:shadow-xl transition" role="article">
-                <div className="w-14 h-14 rounded-lg bg-white shadow flex items-center justify-center mb-4">
-                  <s.icon className="text-[#5186cd]" aria-hidden />
+              <motion.div key={i} whileHover={{ y: -6 }} className="bg-gradient-to-b from-[#f0fdf4] to-white rounded-3xl px-6 relative py-12 border-2 border-sky-800 shadow hover:shadow-xl transition overflow-hidden" role="article">
+                <div className='absolute  w-28 h-28 -top-9 -left-9 '>
+
+                  <div className=' w-28  h-28 rounded-full bg-[#5186cd] text-white text-4xl flex items-center justify-center font-bold   border-black border-2 '>
+                    <span className='translate-x-3 translate-y-3'>
+
+                      {s.ind}
+                    </span>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-lg">{s.title}</h3>
-                <p className="text-sm text-[#4B437C] mt-2">{s.desc}</p>
+                <div className="w-14 h-14 mx-auto rounded-lg  flex items-center justify-center mb-4 text-center">
+                  <s.icon className="text-[#5186cd] size-12" aria-hidden />
+                </div>
+                <h3 className="font-semibold text-lg flex justify-center items-center text-center">{s.title}</h3>
+                <p className="text-sm text-[#4B437C] mt-2 flex justify-center items-center text-center">{s.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-
-      {/* Reviews */}
-      {/* <section className="py-16" aria-labelledby="reviews">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h3 id="reviews" className="text-4xl font-serif font-bold text-[#F64EBB]">What learners say</h3>
-            <p className="mt-2 text-[#2D274B] font-bold text-lg">Real reviews from students and professionals who used LearniLM🌍World.</p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {reviews.map((r, i) => (
-              <article key={i} className="bg-white rounded-xl shadow p-6 hover:shadow-2xl transition " aria-label={`Review by ${r.name}`}>
-                <div className="flex items-center gap-3 mb-3 ">
-                  <div className="w-12 h-12 rounded-full bg-[#fde68a] flex items-center justify-center font-semibold">{r.name.split(' ')[0][0]}</div>
-                  <div>
-                    <div className="font-semibold">{r.name}</div>
-                    
-                  </div>
-                </div>
-                <p className="text-[#4B437C]">“{r.text}”</p>
-                
-                <div className="mt-4 text-sm text-[#4B437C]">{Array.from({ length: r.rating }).map((_) => '★').join('')}</div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
+      {/* Removed Reviews section */}
 
       {/* FAQ */}
       <section className="py-16" aria-labelledby="faq-heading">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
-          <h3 id="faq-heading" className="text-4xl font-serif text-center font-extrabold">Frequently Asked Questions</h3>
-          <div className="mt-8 space-y-3">
+          <h3 id="faq-heading" className="text-4xl  text-center font-extrabold"><span>Frequently Asked
+          </span><span className='text-[#5186cd]'> Questions
+            </span> </h3>
+          <h1 className='mt-4 translate-y-1 flex text-center items-center justify-center'>Getting ready to apply? Check out the Admission FAQ for answers to your </h1>
+          <h1 className='mt-1 flex text-center items-center justify-center'>questions on application requirement.</h1>
+          <div className="mt-8 space-y-4">
             {faqs.map((f, i) => (
-              <div key={i} className="bg-white rounded-xl shadow p-4">
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between" aria-expanded={openFaq === i} aria-controls={`faq-${i}`}>
-                  <div className="text-left">
-                    <div className="font-bold text-lg">{f.q}</div>
-                    {openFaq === i && <div id={`faq-${i}`} className="text-base font-bold text-[#4B437C] mt-2">{f.a}</div>}
-                  </div>
-                  <div className="ml-4">
-                    <motion.div animate={{ rotate: openFaq === i ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                      <ChevronDown />
-                    </motion.div>
-                  </div>
+              <div
+                key={i}
+                className="bg-white rounded-xl shadow-md border border-gray-100"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full flex items-center justify-between p-4 text-left"
+                  aria-expanded={openFaq === i}
+                  aria-controls={`faq-${i}`}
+                >
+                  <span className="font-semibold text-lg text-gray-800">
+                    {f.q}
+                  </span>
+                  <motion.div
+                    animate={{ rotate: openFaq === i ? 180 : 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="ml-4 bg-blue-200 w-8 h-8 items-center justify-center flex rounded-full"
+                  >
+                    <ChevronDown />
+                  </motion.div>
                 </button>
+                <motion.div
+                  id={`faq-${i}`}
+                  initial={false}
+                  animate={{
+                    height: openFaq === i ? "auto" : 0,
+                    opacity: openFaq === i ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.25 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-4 py-3 bg-blue-200 pb-4 text-md  leading-relaxed">
+                    {f.a}
+                  </div>
+                </motion.div>
               </div>
             ))}
           </div>
@@ -1413,17 +1486,17 @@ export default function LandingPageAlt() {
       {/* text-[#e0fa84] text-[#2D274B] */}
 
       {/* CTA  bg-gradient-to-r from-[#9787F3]/10 to-[#f97316]/8*/}
-      <section className="py-12 ">
+      {/* <section className="py-12 ">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h4 className="text-4xl font-extrabold text-[#5186cd] ">Master Your Skills, Confidently</h4>
           {/* <p className="text-[#2D274B] text-xl font-bold mt-2">Sign up to Claim Your Free Trial Session. Get a Personalized 7-Day Learning Path After Your First Session.</p>
-          2D274B */}
+          2D274B */} {/*
           <div className="mt-6 flex justify-center gap-4">
             <Link to="/main" className="inline-flex items-center gap-3 px-6 py-3 rounded-lg bg-[#276dc9] text-[white] hover:bg-[#205eb0]">Browse trainers <ChevronRight /></Link>
             <Link to="/become-trainer" className="inline-flex items-center gap-3 px-6 py-3 rounded-lg border bg-[#276dc9] border-[#CBE56A] text-[white] hover:bg-[#205eb0]">Become a trainer</Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer - expanded */}
       <Footer />

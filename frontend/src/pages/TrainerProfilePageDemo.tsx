@@ -12,8 +12,10 @@ const TrainerProfilePageDemo = () => {
   const [videoUrl, setVideoUrl] = useState(null); 
   const [error, setError] = useState('');
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
-    axios.get(`/api/users/profile/${id}`).then(res => setTrainer(res.data));
+    axios.get(`${API_BASE_URL}/api/users/profile/${id}`).then(res => setTrainer(res.data));
   }, [id]);
 
   const handleUnlockDemo = async () => {
@@ -26,7 +28,7 @@ const TrainerProfilePageDemo = () => {
         return; 
       }
       
-      const res = await axios.post('/api/bookings/free-demo-access', {
+      const res = await axios.post(`${API_BASE_URL}/api/bookings/free-demo-access`, {
         trainerId: id,
       }, {
          headers: { Authorization: `Bearer ${token}` } 
@@ -76,7 +78,7 @@ const TrainerProfilePageDemo = () => {
           </div>
           
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-bold text-purple-900 font-serif mb-3">
+            <h1 className="text-4xl md:text-5xl font-bold text-purple-900  mb-3">
               {trainer.name}
             </h1>
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -88,7 +90,7 @@ const TrainerProfilePageDemo = () => {
         {/* Demo Section */}
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
           <div className="bg-purple-50 p-6 border-b border-purple-100">
-            <h2 className="text-2xl font-bold text-purple-900 font-serif">
+            <h2 className="text-2xl font-bold text-purple-900 ">
               ✨ Free Demo Session
             </h2>
           </div>
@@ -153,7 +155,7 @@ const TrainerProfilePageDemo = () => {
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 text-purple-600 text-xl">
                 🔓
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2 font-serif">Unlock Free Demo</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2 ">Unlock Free Demo</h3>
               
               <p className="text-gray-500 mb-6">
                 You are about to unlock the free demo class for <span className="font-semibold text-purple-700">{trainer?.name}</span>.

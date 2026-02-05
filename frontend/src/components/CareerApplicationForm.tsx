@@ -9,6 +9,7 @@ const API_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function CareerApplicationForm({ onClose }: Props) {
     const [loading, setLoading] = useState(false);
+    const [customRole, setCustomRole] = useState("");
     const [status, setStatus] = useState<"success" | "error" | null>(null);
 
     // 🔹 FORM STATES
@@ -43,10 +44,13 @@ export default function CareerApplicationForm({ onClose }: Props) {
 
             const resumeBase64 = await fileToBase64(resumeFile);
 
+            const finalRole = role === "Other" ? customRole : role;
+
+
             const payload = {
                 name,
                 education,
-                role,
+                role: finalRole,
                 email,
                 phone,
                 resumeBase64,
@@ -108,23 +112,48 @@ export default function CareerApplicationForm({ onClose }: Props) {
 
                     <select
                         value={role}
-                        onChange={(e) => setRole(e.target.value)}
+                        onChange={(e) => {
+                            setRole(e.target.value);
+                            if (e.target.value !== "Other") {
+                                setCustomRole("");
+                            }
+                        }}
                         required
                         className="w-full px-4 py-3 rounded-xl bg-white border border-[#5186cd]/30 focus:outline-none focus:ring-2 focus:ring-[#5186cd]"
                     >
                         <option value="">Select Role</option>
+
+                        {/* Core Internship Roles */}
+                        <option value="Full Stack Developer Intern">Full Stack Developer Intern</option>
+                        <option value="UI/UX Design Intern">UI/UX Design Intern</option>
+                        <option value="Q/A Intern">Q/A Intern</option>
+                        <option value="Digital Marketing Intern">Digital Marketing Intern</option>
+                        <option value="Content Creator Intern">Content Creator Intern</option>
+
+                        {/* Sales Roles */}
                         <option value="Sales Intern - India">Sales Intern – India</option>
-                        <option value="Digital Marketing Intern - India">Digital Marketing Intern – India</option>
-                        <option value="UX/UI Designer Intern - India">UX/UI Designer Intern – India</option>
-                        <option value="Q/A Intern - India">Q/A – India</option>
-                        <option value="HR Intern - India">HR Intern – India</option>
                         <option value="Sales Intern - Bahrain">Sales Intern – Bahrain</option>
                         <option value="Sales Intern - Kuwait">Sales Intern – Kuwait</option>
                         <option value="Sales Intern - Oman">Sales Intern – Oman</option>
                         <option value="Sales Intern - Jordan">Sales Intern – Jordan</option>
                         <option value="Sales Intern - Azerbaijan">Sales Intern – Azerbaijan</option>
                         <option value="Sales Intern - Belarus">Sales Intern – Belarus</option>
+
+                        {/* Other */}
+                        <option value="Other">Other (Specify)</option>
                     </select>
+
+                    {role === "Other" && (
+                        <input
+                            value={customRole}
+                            onChange={(e) => setCustomRole(e.target.value)}
+                            placeholder="Enter the role you are applying for"
+                            required
+                            className="w-full px-4 py-3 rounded-xl bg-white border border-[#5186cd]/30 focus:outline-none focus:ring-2 focus:ring-[#5186cd]"
+                        />
+                    )}
+
+
 
                     <input
                         type="email"

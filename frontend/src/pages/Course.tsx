@@ -291,7 +291,7 @@ const Courses = () => {
             className="text-center mb-16"
           >
             <span className="text-[#5186cd] font-semibold tracking-wider text-sm uppercase block mb-2">Why Choose Us</span>
-            <h2 className="text-4xl font-bold text-[#111827] mb-4 font-serif">The Premium Learning Experience</h2>
+            <h2 className="text-4xl font-bold text-[#111827] mb-4 ">The Premium Learning Experience</h2>
             <p className="text-gray-500 max-w-2xl mx-auto">We've designed our courses to deliver real results through proven methodologies and practical application.</p>
           </motion.div>
 
@@ -309,7 +309,7 @@ const Courses = () => {
                 <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-6">
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-bold text-[#111827] mb-3 font-serif">{item.title}</h3>
+                <h3 className="text-xl font-bold text-[#111827] mb-3 ">{item.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
@@ -327,7 +327,7 @@ const Courses = () => {
             className="text-center mb-12"
           >
             <span className="text-[#5186cd] font-semibold tracking-wider text-sm uppercase block mb-2">FAQ</span>
-            <h2 className="text-4xl font-bold text-[#111827] mb-4 font-serif">Frequently Asked Questions</h2>
+            <h2 className="text-4xl font-bold text-[#111827] mb-4 ">Frequently Asked Questions</h2>
             <p className="text-gray-500">Have questions? We've got answers.</p>
           </motion.div>
 
@@ -364,7 +364,7 @@ const Courses = () => {
           className="max-w-4xl mx-auto bg-[#5186cd] rounded-[2.5rem] py-10 px-6 md:px-16 text-center text-white shadow-2xl relative overflow-hidden"
         >
           <div className="relative z-10">
-            <h2 className="text-2xl md:text-4xl font-serif font-bold mb-6 text-white leading-tight">Ready to Transform Your Career?</h2>
+            <h2 className="text-2xl md:text-4xl  font-bold mb-6 text-white leading-tight">Ready to Transform Your Career?</h2>
             <p className="text-gray-300 text-base mb-10 max-w-2xl mx-auto">Join thousands of professionals who have mastered the art of ethical office politics. Start your journey to career success today.</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="px-4 py-4  text-[#276dc9] bg-white rounded-lg font-bold  transition flex items-center justify-center shadow-lg">
