@@ -782,7 +782,7 @@ export default function LandingPageAlt() {
             {(activeCategory === "more"
               ? [
                 { lang: "Thai", code: "th" },
-                { lang: "Bengali", code: "bd" },
+                { lang: "Bengali", code: "in" },
                 { lang: "Russian", code: "ru" },
                 { lang: "Mandarin", code: "cn" },
                 { lang: "Swahili", code: "ke" },
