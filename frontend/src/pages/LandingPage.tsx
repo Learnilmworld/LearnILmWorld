@@ -397,7 +397,7 @@ export default function LandingPageAlt() {
   ];
 
   const asian_lang = [
-    { lang: "Bengali", code: "bd" },
+    { lang: "Bengali", code: "in" },
     { lang: "Japanese", code: "jp" },
     { lang: "Sanskrit", code: "in" },
     { lang: "Mandarin", code: "cn" },

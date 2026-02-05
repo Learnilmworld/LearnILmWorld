@@ -5,6 +5,11 @@ import User from '../models/User.js';
 import { authenticate } from '../middleware/auth.js';
 import axios from "axios";
 import { OAuth2Client } from 'google-auth-library';
+import bcrypt from "bcryptjs";
+
+function generateOtp() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 const isValidLink = async (url) => {
   try {
@@ -19,6 +24,159 @@ const isValidLink = async (url) => {
 const router = express.Router();
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+router.post("/send-email-otp", async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email required" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.role !== "student") {
+      return res.status(403).json({
+        message: "OTP verification is only required for students"
+      });
+    }
+
+    if (user.emailVerification?.isVerified) {
+      return res.json({ message: "Email already verified" });
+    }
+
+    // generate otp
+    const otp = generateOtp();
+    const otpHash = await bcrypt.hash(otp, 10);
+
+    user.emailVerification = {
+      isVerified: false,
+      otpHash,
+      otpExpires: new Date(Date.now() + 10 * 60 * 1000),
+      otpAttempts: 0
+    };
+
+    await user.save();
+
+    // email html
+    const html = `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto">
+        <h2 style="color:#4f46e5">Verify Your Email</h2>
+        <p>Hello ${user.name},</p>
+        <p>Your verification code is:</p>
+
+        <div style="
+          font-size:32px;
+          letter-spacing:6px;
+          font-weight:bold;
+          background:#f3f4f6;
+          padding:20px;
+          text-align:center;
+          border-radius:8px;
+          margin:20px 0;
+        ">
+          ${otp}
+        </div>
+
+        <p>This OTP is valid for <b>10 minutes</b>.</p>
+
+        <p>If you did not request this, please ignore this email.</p>
+
+        <hr>
+        <p style="font-size:12px;color:#666">
+          This is an automated message. Please do not reply.
+        </p>
+      </div>
+    `;
+
+    await sendEmail({
+      to: email,
+      subject: "Email Verification OTP",
+      html
+    });
+
+    res.json({
+      message: "OTP sent successfully"
+    });
+
+  } catch (err) {
+    console.error("SEND OTP ERROR:", err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/verify-email-otp", async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user || !user.emailVerification?.otpHash) {
+      return res.status(400).json({ message: "Invalid request" });
+    }
+
+    if (user.emailVerification.otpExpires < new Date()) {
+      return res.status(400).json({ message: "OTP expired" });
+    }
+
+    const valid = await bcrypt.compare(
+      otp,
+      user.emailVerification.otpHash
+    );
+
+    if (!valid) {
+      user.emailVerification.otpAttempts += 1;
+      await user.save();
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    // success
+    user.emailVerification.isVerified = true;
+    user.emailVerification.otpHash = null;
+    user.emailVerification.otpExpires = null;
+    user.emailVerification.otpAttempts = 0;
+
+    await user.save();
+
+    return res.json({
+      message: "Email verified successfully"
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/resend-email-otp", async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(400).json({ message: "User not found" });
+
+  if (user.emailVerification.isVerified) {
+    return res.json({ message: "Already verified" });
+  }
+
+  const otp = generateOtp();
+  const otpHash = await bcrypt.hash(otp, 10);
+
+  user.emailVerification.otpHash = otpHash;
+  user.emailVerification.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+
+  await user.save();
+
+  await sendEmail({
+    to: email,
+    subject: "New OTP",
+    html: `<h3>Your new OTP: ${otp}</h3>`
+  });
+
+  res.json({ message: "OTP resent" });
+});
 
 // Register
 router.post('/register', async (req, res) => {
@@ -523,6 +681,18 @@ router.post('/login', async (req, res) => {
       }
     }
 
+    if (
+      user.role === "student" &&
+      !user.emailVerification?.isVerified
+    ) {
+      return res.status(403).json({
+        code: "EMAIL_NOT_VERIFIED",
+        message: "Please verify your email using the OTP sent to your inbox.",
+        requiresEmailVerification: true,
+        email: user.email
+      });
+    }
+
 
     const token = jwt.sign(
       { userId: user._id },
@@ -751,8 +921,8 @@ router.post('/google-login', async (req, res) => {
       }
     }
     const token = jwt.sign(
-      { userId: user._id, role: user.role }, 
-      process.env.JWT_SECRET, 
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
     res.json({
@@ -804,8 +974,8 @@ router.post('/facebook-login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id, role: user.role }, 
-      process.env.JWT_SECRET, 
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -822,7 +992,7 @@ router.post('/facebook-login', async (req, res) => {
 
   } catch (error) {
     if (error.response) {
-        console.error("Facebook Error Detail:", error.response.data);
+      console.error("Facebook Error Detail:", error.response.data);
     }
   }
 });

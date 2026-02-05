@@ -20,7 +20,7 @@ const BecomeTrainer: React.FC = () => {
   // const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   return (
-    <div className="bg-fixed min-h-screen overflow-x-hidden text-[#e0fa84] bg-[#fef5e4]"
+    <div className="min-h-screen font-inter bg-[#fef5e4] text-black scroll-smooth"
     >
       {/* text-[#e0fa84] text-[#2D274B] */}
       <Navbar />

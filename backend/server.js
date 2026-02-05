@@ -49,6 +49,13 @@ app.use(cors({
   credentials: true
 }));
 
+//  Allow Google OAuth popups / iframes
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  next();
+});
+
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 

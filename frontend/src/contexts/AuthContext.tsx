@@ -183,7 +183,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('Facebook Logic Error:', error)
       return {
         success: false,
-        error: error.response?.data?.message || 'Facebook Login failed'
+        error: error.response?.data?.message || 'We are Still Working, Sit Tight!'
       }
     }
   }

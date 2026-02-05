@@ -92,7 +92,7 @@ const Navbar = () => {
                 )}
               </>
             ) : (
-              // 👇 Skeleton / placeholder
+              // Skeleton / placeholder
               <div className="flex gap-6 animate-pulse">
                 <div className="h-5 w-20 bg-white/40 rounded" />
                 <div className="h-5 w-20 bg-white/40 rounded" />
@@ -105,7 +105,7 @@ const Navbar = () => {
           <div className="lg:hidden text-white ml-auto flex items-center">
             <Button
               variant="link"
-              className="text-white text-4xl p-0 no-underline"
+              className="text-[#203989] text-4xl p-0 no-underline"
               onClick={() => setShowOffcanvas(true)}
             >
               ☰
