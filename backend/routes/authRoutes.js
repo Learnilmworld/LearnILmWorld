@@ -683,7 +683,7 @@ router.post('/login', async (req, res) => {
 
     if (
       user.role === "student" &&
-      !user.emailVerification?.isVerified
+      !user.profile.emailVerification?.isVerified
     ) {
       return res.status(403).json({
         code: "EMAIL_NOT_VERIFIED",
