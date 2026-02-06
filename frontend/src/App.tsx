@@ -44,7 +44,7 @@ function App() {
 
               <ScrollToTop />
 
-              <div className="min-h-screen bg-gradient-to-br from-cream-50 to-green-50 font-montreal">
+              <div className="min-h-screen bg-gradient-to-br from-cream-50 to-green-50 font-Limerick">
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/main" element={<MainPage />} />

@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { Award, BookOpen, Briefcase, CheckCircle, ChevronDown, ChevronRight, Clock, DollarSign, Globe, GraduationCap, Lightbulb, Megaphone, Users } from "lucide-react";
 // import { Container, Nav, Offcanvas, Button } from "react-bootstrap";
 // import logo from '../assets/LearnilmworldLogo.jpg'
-import image1 from '../assets/become-trainer2.4.png'
-import image2 from '../assets/become-trainer2.2.jpeg'
-import image3 from '../assets/become-trainer2.3.jpeg'
+import image1 from "../assets/become-trainer2.4.jpg";
+import image2 from "../assets/become-trainer2.2.jpeg";
+import image3 from "../assets/become-trainer2.3.jpeg";
+import image4 from "../assets/become-trainer-img.png";
 // import bg_img from '../assets/purple_gradient.jpg'
 // import bg_img from '../assets/header_bg.jpg'
 // import bg_main from '../assets/bg_trainer.jpeg'
@@ -18,75 +19,152 @@ const BecomeTrainer: React.FC = () => {
   const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   // const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+  const categories = [
+    {
+      id: 1,
+      title: "Working Professionals",
+      icon: <Briefcase className="w-8 h-8 text-blue-600" />,
+      description: "Active professionals ready to guide others with real-world experience."
+    },
+    {
+      id: 2,
+      title: "Industry Experts",
+      icon: <Lightbulb className="w-8 h-8 text-yellow-500" />,
+      description: "Specialists with deep knowledge in niche domains and technologies."
+    },
+    {
+      id: 3,
+      title: "Founders & Leaders",
+      icon: <Users className="w-8 h-8 text-indigo-600" />,
+      description: "Visionaries willing to share their entrepreneurial journey and insights."
+    },
+    {
+      id: 4,
+      title: "Educators & Coaches",
+      icon: <BookOpen className="w-8 h-8 text-emerald-600" />,
+      description: "Passionate teachers dedicated to structuring and delivering knowledge."
+    }
+  ];
+
+  const benefits = [
+    {
+      id: 1,
+      title: "Earn Income",
+      icon: <DollarSign className="w-8 h-8 text-green-600" />,
+      description: "Generate revenue by sharing your expertise with motivated learners worldwide."
+    },
+    {
+      id: 2,
+      title: "Build Your Brand",
+      icon: <Award className="w-8 h-8 text-purple-600" />,
+      description: "Establish yourself as a thought leader and grow your professional reputation."
+    },
+    {
+      id: 3,
+      title: "Global Audience",
+      icon: <Globe className="w-8 h-8 text-blue-500" />,
+      description: "Reach learners across the world and make a lasting impact on their careers."
+    },
+    {
+      id: 4,
+      title: "Flexible Creation",
+      icon: <Clock className="w-8 h-8 text-orange-500" />,
+      description: "Create content at your own pace with full control over your teaching schedule."
+    },
+    {
+      id: 5,
+      title: "We Handle Marketing",
+      icon: <Megaphone className="w-8 h-8 text-red-500" />,
+      description: "Focus on teaching while we take care of marketing, distribution, and support."
+    }
+  ];
 
   return (
-    <div className="min-h-screen font-inter bg-[#fef5e4] text-black scroll-smooth"
-    >
+    <div className="min-h-screen overflow-x-hidden text-[#e0fa84] bg-[linear-gradient(185deg,#E6EEF9_0%,#FEF5E4_30%,#f7f1e6_70%,#e9f1fb_100%)]">
       {/* text-[#e0fa84] text-[#2D274B] */}
       <Navbar />
 
       {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="pt-16 px-6 md:px-16">
+        <div className="max-w-[1420px] mx-auto px-4">
+          <div className="relative rounded-[40px] bg-[#6f9bd3] px-8 lg:px-16 pt-12 overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={mounted ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8 }}
+                className="lg:col-span-7 flex flex-col space-y-6 pb-12 z-10 relative"
+              >
+                <h1 className="text-4xl md:text-5xl lg:text-6xl  font-extrabold text-white leading-tight">
+                  <span className="block lg:whitespace-nowrap">
+                    🌟Empower Learners,{" "}
+                  </span>
+                  <span className="text-[#2D274B]">Inspire Growth</span>
+                </h1>
 
-          {/* LEFT CONTENT */}
-          <div className="text-center lg:text-left">
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#5186cd] mb-6 leading-tight"
-            >
-              Empower Learners, <br />
-              Inspire Growth 🌟
-            </motion.h1>
+                <div className="mt-4 flex flex-col pt-5 pb-5">
+                  <p className="text-xl lg:text-3xl font-bold text-white leading-relaxed">
+                    Join
+                    <span className="inline-flex items-baseline  text-[#024aac] tracking-tight mx-2">
+                      <span>LearniLMWorl</span>
+                      <span className="relative inline-block">
+                        <span>d</span>
+                        <GraduationCap
+                          className="absolute -top-2 -right-3 text-black rotate-12"
+                          size={23}
+                          strokeWidth={2}
+                          fill="black"
+                        />
+                      </span>
+                    </span>
+                    as a Trainer and help students achieve their goals while
+                    growing your career in a flexible, rewarding environment.
+                  </p>
+                </div>
 
-            <motion.p
-              className="max-w-xl mx-auto lg:mx-0 font-semibold text-lg sm:text-xl text-[#2D274B] mb-10"
-            >
-              Join LearniLM🌍World as a Trainer and help students achieve their goals while
-              growing your career in a flexible, rewarding environment.
-            </motion.p>
+                <motion.button
+                  onClick={() => navigate("/register?role=trainer")}
+                  className="py-4 px-5 bg-[#276dc9] text-white font-semibold text-lg rounded-full w-fit shadow-lg hover:bg-[#205eb0]"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  Become a Trainer Today
+                </motion.button>
+              </motion.div>
 
-            <motion.button
-              onClick={() => navigate("/register?role=trainer")}
-              className="px-10 py-4 bg-[#276dc9] text-white font-semibold text-lg rounded-full shadow-lg hover:bg-[#205eb0]"
-              whileHover={{ scale: 1.05 }}
-            >
-              Become a Trainer Today
-            </motion.button>
+              {/* RIGHT */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={mounted ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.8 }}
+                className="lg:col-span-5 relative flex justify-end items-end h-full self-end z-0"
+              >
+                {/* Dark Blue Div Behind Image */}
+                <div className="absolute inset-0 flex justify-end items-end z-[-1]">
+                  <div className="bg-[#0A1172] w-4/5 h-5/6 mr-10 rounded-tl-[120px] lg:rounded-tl-[160px]  rounded-br-[40px] translate-x-8 lg:translate-x-0 translate-y-12 lg:translate-y-0"></div>
+                </div>
+                <img
+                  src={image4}
+                  alt="Learners"
+                  className="w-full h-auto object-contain max-h-[450px] lg:scale-125 origin-bottom z-10 relative left-4 lg:left-0"
+                  style={{ marginBottom: "-2px" }}
+                />
+              </motion.div>
+            </div>
           </div>
-
-          {/* RIGHT IMAGE */}
-          <motion.div
-            className="flex justify-center lg:justify-end"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-          >
-            <img
-              src={image2}
-              alt="Trainer Collaboration"
-              className="
-          w-full
-          max-w-xl
-          lg:max-w-2xl
-          rounded-3xl
-          shadow-xl
-          object-cover
-        "
-            />
-          </motion.div>
-
         </div>
+
       </section>
 
-      {/*  Text Section + 1 Big Image */}
-      <section className="py-10 px-6 md:px-16 flex flex-column  md:flex-row items-center gap-10 max-w-6xl mx-auto">
-        {/* text + list ul */}
+      <section className="pt-16 px-6 md:px-16  flex flex-column  md:flex-row items-center gap-10 max-w-6xl mx-auto">
         <motion.div
           className="flex-1 space-y-6"
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
         >
-
           <div>
             <h2 className="text-5xl md:text-5xl font-bold text-[#5186cd] mx-auto">
               Teach, Inspire, and Make a Difference
@@ -94,11 +172,11 @@ const BecomeTrainer: React.FC = () => {
           </div>
 
           <div>
-
             <p className="text-xl font-bold text-[#2D274B] leading-relaxed">
-              At LearniLM World, we believe in empowering individuals through knowledge.
-              As a trainer, you’ll help learners from diverse backgrounds gain confidence,
-              improve communication, and unlock new opportunities in their lives.
+              At LearniLM World, we believe in empowering individuals through
+              knowledge. As a trainer, you’ll help learners from diverse
+              backgrounds gain confidence, improve communication, and unlock new
+              opportunities in their lives.
             </p>
             <div className="flex flex-row gap-20">
               <div>
@@ -118,10 +196,7 @@ const BecomeTrainer: React.FC = () => {
                 </button>
               </div> */}
             </div>
-
           </div>
-
-
         </motion.div>
 
         {/* stretched image */}
@@ -150,36 +225,40 @@ const BecomeTrainer: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <ul className="gap-4 text-lg text-[#2D274B] font-bold grid grid-cols-1 md:grid-cols-2">
-              <li className="flex items-start border-gray-400 rounded-full px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
+            <ul className="gap-4 text-lg text-[#2D274B] font-bold grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <li className="flex items-start border-2 rounded-2xl border-blue-300 px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
                 <span className="text-[#5186cd] text-xl">✔</span>
-                Continuous Flow of Learners —<br /> Reach motivated students from around the world.
+                Continuous Flow of Learners —<br /> Reach motivated students
+                from around the world.
               </li>
-              <li className="flex items-start border-gray-400 rounded-full px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
+              <li className="flex items-start border-2 rounded-2xl border-blue-300 px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
                 <span className="text-[#5186cd] text-xl">✔</span>
-                Smart Scheduling Tools —<br /> Manage your sessions effortlessly with our intuitive calendar.
+                Smart Scheduling Tools —<br /> Manage your sessions effortlessly
+                with our intuitive calendar.
               </li>
-              <li className="flex items-start border-gray-400 rounded-full px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
+              <li className="flex items-start border-2 rounded-2xl border-blue-300 px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
                 <span className="text-[#5186cd] text-xl">✔</span>
-                Interactive Virtual Classrooms —<br /> Engage your students with real-time learning tools.
+                Interactive Virtual Classrooms —<br /> Engage your students with
+                real-time learning tools.
               </li>
-              <li className="flex items-start border-gray-400 rounded-full px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
+              <li className="flex items-start border-2 rounded-2xl border-blue-300 px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
                 <span className="text-[#5186cd] text-xl">✔</span>
-                Secure & Flexible Payments —<br /> Get paid easily, wherever you are.
+                Secure & Flexible Payments —<br /> Get paid easily, wherever you
+                are.
               </li>
-              <li className="flex items-start border-gray-400 rounded-full px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
+              <li className="flex items-start border-2 rounded-2xl border-blue-300 px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
                 <span className="text-[#5186cd] text-xl">✔</span>
-                Growth-Focused Training —<br /> Access exclusive webinars and teaching resources.
+                Growth-Focused Training —<br /> Access exclusive webinars and
+                teaching resources.
               </li>
-              <li className="flex items-start border-gray-400 rounded-full px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
+              <li className="flex items-start border-2 rounded-2xl border-blue-300 px-8 py-4 shadow-sm text-start bg-white/80 gap-3">
                 <span className="text-[#5186cd] text-xl">✔</span>
-                Thriving Educator Community — <br /> Connect, share, and collaborate with fellow mentors.
+                Thriving Educator Community — <br /> Connect, share, and
+                collaborate with fellow mentors.
               </li>
             </ul>
-
           </motion.div>
         </div>
-
       </section>
 
       {/* Global Teaching Section */}
@@ -203,7 +282,54 @@ const BecomeTrainer: React.FC = () => {
 
       {/* Benefits Section */}
       {/* e0fa84 bg-[#2D274B] */}
-      <section className=" pt-16 px-6 md:px-16">
+      <section className="pt-16 px-6 md:px-16 ">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#5186cd] mb-4">
+              Why Become a Trainer at {" "}
+              <span className="inline-flex items-baseline  tracking-tight mx-2">
+                <span>LearniLMWorl</span>
+                <span className="relative inline-block">
+                  <span>d</span>
+                  <GraduationCap
+                    className="absolute -top-2 -right-3 text-black rotate-12"
+                    size={23}
+                    strokeWidth={2}
+                    fill="black"
+                  />
+                </span>
+              </span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Join a platform designed to help experts like you succeed.
+            </p>
+          </div>
+
+          {/* Benefits Cards - Flex Wrap for 3-2 Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {benefits.map((benefit) => (
+              <div
+                key={benefit.id}
+                className="bg-white rounded-xl p-8 shadow-sm border-2 border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-start text-left group"
+              >
+                <div className="p-3 bg-gray-50 rounded-full mb-6 group-hover:bg-blue-50 transition-colors">
+                  {benefit.icon}
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {benefit.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+      {/* <section className=" pt-16 px-6 md:px-16">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-[#5186cd] mb-12">
           Why Teach with LearniLM🌍World?
         </h2>
@@ -231,17 +357,60 @@ const BecomeTrainer: React.FC = () => {
               whileHover={{ scale: 1.03 }}
             >
               <div className="text-5xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-bold text-[#8CA0E5] mb-2">{item.title}</h3>
+              <h3 className="text-xl font-bold text-[#8CA0E5] mb-2">
+                {item.title}
+              </h3>
               <p className="text-[#2D274B] font-semibold">{item.desc}</p>
             </motion.div>
           ))}
         </div>
+      </section> */}
 
+      {/* Who can apply section */}
+      <section className="pt-16 px-6 md:px-16 ">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Header Section */}
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#5186cd] mb-4">
+              Who Can Apply?
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We welcome passionate experts ready to share their knowledge and shape the future of learners.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6 mb-12">
+            {categories.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white rounded-xl p-6 shadow-sm  border-2 border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group"
+              >
+                <div className="p-4 bg-gray-50 rounded-full mb-4 group-hover:bg-blue-50 transition-colors">
+                  {item.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-gray-500">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-blue-100 border border-blue-200 rounded-lg p-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-center sm:text-left">
+              <CheckCircle className="w-6 h-6 text-blue-600 flex-shrink-0" />
+              <p className="text-blue-900 font-medium">
+                <span className="font-bold">Minimum requirement:</span> 2+ years of relevant experience in your field is mandatory.
+              </p>
+            </div>
+          </div>
+
+        </div>
       </section>
-
       {/* Testimonials Section - trainer review */}
       {/* bg-[#2D274B]  e0fa84*/}
-      <section className=" py-12 px-6 ">
+      {/* <section className=" py-12 px-6 ">
         <h2 className="text-5xl md:text-4xl sm:text-3xl font-bold text-center mb-12 text-[#5186cd]">
           Straight from the Heart ❤️
         </h2>
@@ -277,13 +446,10 @@ const BecomeTrainer: React.FC = () => {
             </motion.div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/*Image on Top + Then Trainer FAQs Section */}
-      <section
-        className="py-8 "
-        aria-labelledby="trainer-faq"
-      >
+      <section className="py-8 " aria-labelledby="trainer-faq">
         <motion.div
           className="w-full px-4 pb-5"
           initial={{ opacity: 0, x: 40 }}
@@ -308,8 +474,8 @@ const BecomeTrainer: React.FC = () => {
               Frequently Asked Questions
             </h2>
             <p className="mt-3 text-[#2D274B] text-lg font-bold max-w-2xl mx-auto">
-              Everything you need to know before starting your teaching journey with
-              LEARNiLM🌎WORLD.
+              Everything you need to know before starting your teaching journey
+              with LEARNiLM🌎WORLD.
             </p>
           </div>
 
@@ -347,34 +513,43 @@ const BecomeTrainer: React.FC = () => {
                 q: "Is there any joining cost?",
                 a: "It’s completely free to create your profile and start teaching. Learn🌎Sphere only takes a small commission per lesson to maintain platform quality and marketing reach.",
               },
-            ].map((faq, idx) => (
+            ].map((f, i) => (
               <div
-                key={idx}
-                className="border border-slate-200 rounded-lg bg-white shadow-sm font-bold hover:shadow-md transition"
+                key={i}
+                className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden"
               >
                 <button
-                  onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full flex justify-between items-center p-4 text-left text-[#2D274B] font-bold text-base focus:outline-none"
-                  aria-expanded={openFaq === idx}
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full flex items-center justify-between p-4 text-left focus:outline-none"
+                  aria-expanded={openFaq === i}
+                  aria-controls={`faq-${i}`}
                 >
-                  <span>{faq.q}</span>
-                  {openFaq === idx ? (
-                    <ChevronDown className="w-4 h-4 text-[#0ea5a3]" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-slate-500" />
-                  )}
+                  <span className="font-semibold text-lg text-gray-800">
+                    {f.q}
+                  </span>
+                  <motion.div
+                    animate={{ rotate: openFaq === i ? 180 : 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="ml-4 bg-blue-100 text-blue-600 w-8 h-8 items-center justify-center flex rounded-full flex-shrink-0"
+                  >
+                    <ChevronDown className="w-5 h-5" />
+                  </motion.div>
                 </button>
 
-                {openFaq === idx && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: 0.3 }}
-                    className="px-5 pb-4 text-slate-600 text-sm leading- font-bold"
-                  >
-                    {faq.a}
-                  </motion.div>
-                )}
+                <motion.div
+                  id={`faq-${i}`}
+                  initial={false}
+                  animate={{
+                    height: openFaq === i ? "auto" : 0,
+                    opacity: openFaq === i ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.25 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-4 py-3 bg-blue-50 pb-5 text-md leading-relaxed text-gray-700 border-t border-blue-100">
+                    {f.a}
+                  </div>
+                </motion.div>
               </div>
             ))}
           </div>

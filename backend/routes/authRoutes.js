@@ -45,7 +45,8 @@ router.post("/send-email-otp", async (req, res) => {
       });
     }
 
-    if (user.emailVerification?.isVerified) {
+    if (user.profile?.emailVerification?.isVerified) {
+      console.log("Email already verified")
       return res.json({ message: "Email already verified" });
     }
 
@@ -53,7 +54,7 @@ router.post("/send-email-otp", async (req, res) => {
     const otp = generateOtp();
     const otpHash = await bcrypt.hash(otp, 10);
 
-    user.emailVerification = {
+    user.profile.emailVerification = {
       isVerified: false,
       otpHash,
       otpExpires: new Date(Date.now() + 10 * 60 * 1000),
@@ -113,32 +114,31 @@ router.post("/verify-email-otp", async (req, res) => {
   try {
     const { email, otp } = req.body;
 
-    const user = await User.findOne({ email });
 
-    if (!user || !user.emailVerification?.otpHash) {
+    const user = await User.findOne({ email });
+    const ev = user.profile.emailVerification;
+
+    if (!ev || !ev.otpHash) {
       return res.status(400).json({ message: "Invalid request" });
     }
 
-    if (user.emailVerification.otpExpires < new Date()) {
+    if (ev.otpExpires < new Date()) {
       return res.status(400).json({ message: "OTP expired" });
     }
 
-    const valid = await bcrypt.compare(
-      otp,
-      user.emailVerification.otpHash
-    );
+    const valid = await bcrypt.compare(otp.trim(), ev.otpHash);
 
     if (!valid) {
-      user.emailVerification.otpAttempts += 1;
+      ev.otpAttempts += 1;
       await user.save();
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
     // success
-    user.emailVerification.isVerified = true;
-    user.emailVerification.otpHash = null;
-    user.emailVerification.otpExpires = null;
-    user.emailVerification.otpAttempts = 0;
+    ev.isVerified = true;
+    ev.otpHash = null;
+    ev.otpExpires = null;
+    ev.otpAttempts = 0;
 
     await user.save();
 
@@ -157,15 +157,15 @@ router.post("/resend-email-otp", async (req, res) => {
   const user = await User.findOne({ email });
   if (!user) return res.status(400).json({ message: "User not found" });
 
-  if (user.emailVerification.isVerified) {
+  if (user.profile.emailVerification.isVerified) {
     return res.json({ message: "Already verified" });
   }
 
   const otp = generateOtp();
   const otpHash = await bcrypt.hash(otp, 10);
 
-  user.emailVerification.otpHash = otpHash;
-  user.emailVerification.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
+  user.profile.emailVerification.otpHash = otpHash;
+  user.profile.emailVerification.otpExpires = new Date(Date.now() + 10 * 60 * 1000);
 
   await user.save();
 

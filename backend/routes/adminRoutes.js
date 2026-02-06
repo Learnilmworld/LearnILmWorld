@@ -99,10 +99,10 @@ router.post('/users', async (req, res) => {
     }
 });
 
-// update as well as accept or reject trainer
+// update users as well as accept or reject trainer
 router.put('/users/:id', async (req, res) => {
     try {
-        const { name, email, role, profile, password, verificationStatus } = req.body;
+        const { name, email, role, profile, password, verificationStatus, emailVerified, } = req.body;
 
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found.' });
@@ -118,6 +118,18 @@ router.put('/users/:id', async (req, res) => {
                 user.profile.verificationStatus = verificationStatus;
                 if (verificationStatus === 'rejected') user.profile.rejectionDate = new Date();
                 if (verificationStatus === 'verified') user.profile.rejectionDate = null;
+            }
+        }
+
+        //  EMAIL VERIFICATION (ADMIN OVERRIDE) 
+        if (typeof emailVerified === 'boolean') {
+            user.profile.emailVerification.isVerified = emailVerified;
+
+            // Cleanup OTP data if verified
+            if (emailVerified) {
+                user.profile.emailVerification.otpHash = null;
+                user.profile.emailVerification.otpExpires = null;
+                user.profile.emailVerification.otpAttempts = 0;
             }
         }
 

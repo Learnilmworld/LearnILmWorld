@@ -454,8 +454,8 @@ export default function LandingPageAlt() {
 
   const features = [
     { icon: Clock, title: 'Flexible Hours', text: 'Lessons at any time — morning, night or weekends.' },
-    { icon: Star, title: 'Expert Trainers', text: 'Certified tutors with real teaching experience.' },
-    { icon: MessageSquare, title: 'Immersive Tools', text: 'Live transcripts, quizzes and pronunciation scoring.' }
+    { icon: MessageSquare, title: 'Expert Trainers', text: 'Certified tutors with real teaching experience.' },
+    { icon: Star, title: 'Real outcomes', text: 'Our curriculum is outcome-focused so you can see measurable improvement' }
   ]
 
   const faqs = [
@@ -635,79 +635,6 @@ export default function LandingPageAlt() {
           </div>
         </div>
       </main>
-
-      {/* Why learners love us section */}
-      {/* bg-[#2D274B] */}
-      <section className="py-20 ]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-          {/* HEADING */}
-          <div className="text-center">
-            <h3 className="text-4xl lg:text-5xl  font-extrabold text-[#203989]">
-              Why learners love LearniLM🌍World
-            </h3>
-
-            {/* SUBTITLE BAR */}
-            <div className="mt-5 inline-block bg-[#5b8fd6] text-white px-6 py-3 rounded-md shadow-md max-w-3xl">
-              <p className="text-base lg:text-lg font-semibold">
-                Short lessons, lots of speaking time and tutors focused on practical
-                outcomes. Learn phrases you’ll use the very next day.
-              </p>
-            </div>
-          </div>
-
-          {/* TOP FEATURE CARDS */}
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((f, idx) => (
-              <div
-                key={idx}
-                className="bg-[#203989] text-white rounded-2xl p-6 shadow-lg hover:scale-[1.02] transition-transform"
-              >
-                <f.icon className="w-8 h-8 mb-4 text-white" />
-                <h4 className="text-xl font-bold mb-2">{f.title}</h4>
-                <p className="text-sm font-semibold opacity-90">{f.text}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* REAL OUTCOMES CARD */}
-          <div className="mt-10">
-            <div className="border-2 border-[#203989] bg-white rounded-2xl p-6 shadow-md max-w-5xl mx-auto">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-[#fde68a] flex items-center justify-center text-xl">
-                  ⭐
-                </div>
-                <div>
-                  <h4 className="text-xl font-extrabold text-black">
-                    Real outcomes
-                  </h4>
-                  <p className="text-sm font-bold text-[#4B437C]">
-                    Progress reports every 4 lessons
-                  </p>
-                </div>
-              </div>
-
-              <p className="mt-4 text-base font-semibold text-[#4B437C]">
-                From small talk to business calls — our curriculum is outcome-focused
-                so you can see measurable improvement.
-              </p>
-            </div>
-          </div>
-
-          {/* BOTTOM TAGS */}
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="bg-[#5b8fd6] text-white text-center border-white border-2 py-4 rounded-xl font-extrabold shadow-md">
-              Quick lessons
-            </div>
-            <div className="bg-[#5b8fd6] border-white border-2 text-white text-center py-4 rounded-xl font-extrabold shadow-md">
-              Excellent Material
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <TopTrainers />
 
       {/* Language Levels Explanation */}
       {/*  bg-[#2D274B] */}
@@ -1292,6 +1219,60 @@ export default function LandingPageAlt() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* top trainer section */}
+      <TopTrainers />
+
+
+      {/* Why learners love us section */}
+      {/* bg-[#2D274B] */}
+      <section className="py-20 ]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+          {/* HEADING */}
+          <div className="text-center">
+            <h3 className="text-4xl lg:text-5xl  font-extrabold text-[#203989]">
+              Why learners love LearniLM🌍World
+            </h3>
+
+            {/* SUBTITLE BAR */}
+            <div className="mt-5 inline-block bg-[#5b8fd6] text-white px-6 py-3 rounded-md shadow-md max-w-3xl">
+              <p className="text-base lg:text-lg font-semibold">
+                Short lessons, lots of speaking time and tutors focused on practical
+                outcomes. Learn phrases you’ll use the very next day.
+              </p>
+            </div>
+          </div>
+
+          {/* TOP FEATURE CARDS */}
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {features.map((f, idx) => (
+              <div
+                key={idx}
+                className="bg-[#203989] text-white rounded-2xl p-6 shadow-lg hover:scale-[1.02] transition-transform"
+              >
+                <f.icon className="w-8 h-8 mb-4 text-white" />
+                <h4 className="text-xl font-bold mb-2">{f.title}</h4>
+                <p className="text-sm font-semibold opacity-90">{f.text}</p>
+              </div>
+            ))}
+
+          </div>
+
+          {/* REAL OUTCOMES CARD */}
+
+          {/* BOTTOM TAGS */}
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="bg-[#5b8fd6] text-white text-center border-white border-2 py-4 rounded-xl font-extrabold shadow-md">
+              Quick lessons
+            </div>
+            <div className="bg-[#5b8fd6] border-white border-2 text-white text-center py-4 rounded-xl font-extrabold shadow-md">
+              Excellent Material
+            </div>
+          </div>
+
+        </div>
       </section>
 
       {/* Highlights Section */}

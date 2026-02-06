@@ -15,6 +15,10 @@ interface Certification {
     certificateLink: string
 }
 
+interface EmailVerification {
+    isVerified: boolean
+}
+
 interface UserProfile {
     education?: string
     experience?: string
@@ -23,7 +27,10 @@ interface UserProfile {
     phone?: string
     bio?: string
     location?: string
+
+    emailVerification?: EmailVerification
 }
+
 
 interface UserForm {
     name: string
@@ -42,8 +49,15 @@ const AdminUsers: React.FC = () => {
         email: '',
         role: 'student',
         password: '',
-        profile: { certifications: [], verificationStatus: 'pending' }
+        profile: {
+            certifications: [],
+            verificationStatus: 'pending',
+            emailVerification: {
+                isVerified: false,
+            },
+        },
     })
+
     const [editingUserId, setEditingUserId] = useState<string | null>(null)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
@@ -59,6 +73,7 @@ const AdminUsers: React.FC = () => {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setUsers(Array.isArray(res.data) ? res.data : [])
+            console.log("Fetched users");
         } catch (err: any) {
             console.error(err)
             if (err.response?.status === 401) {
@@ -191,6 +206,7 @@ const AdminUsers: React.FC = () => {
             if (editingUserId) {
                 await axios.put(`${API_BASE_URL}/api/admin/users/${editingUserId}`, formData)
                 setSuccess('User updated successfully.')
+                console.log("After edit success", formData);
             } else {
                 await axios.post(`${API_BASE_URL}/api/admin/users`, formData)
                 setSuccess('User created successfully.')
@@ -201,10 +217,18 @@ const AdminUsers: React.FC = () => {
                 email: '',
                 role: 'student',
                 password: '',
-                profile: { certifications: [], verificationStatus: 'pending' }
+                profile: {
+                    certifications: [], verificationStatus: 'pending', emailVerification: {
+                        isVerified: false,
+                    },
+                },
+
             })
+
+            console.log("In handlecreate")
             setEditingUserId(null)
             fetchUsers()
+            console.log("after fetch users in handlecreate ")
         } catch (err: any) {
             setError(err?.response?.data?.message || 'Operation failed.')
         }
@@ -218,12 +242,20 @@ const AdminUsers: React.FC = () => {
             role: user.role,
             password: '',
             profile: {
-                ...user.profile,
                 certifications: user.profile?.certifications || [],
-                verificationStatus: user.profile?.verificationStatus || 'pending'
-            }
+                verificationStatus: user.profile?.verificationStatus || 'pending',
+                emailVerification: {
+                    isVerified: user.profile?.emailVerification?.isVerified ?? false,
+                },
+                education: user.profile?.education || '',
+                experience: user.profile?.experience || '',
+                phone: user.profile?.phone || '',
+                bio: user.profile?.bio || '',
+                location: user.profile?.location || '',
+            },
         })
     }
+
 
     const handleDelete = async (id: string) => {
         if (!confirm('Are you sure you want to delete this user?')) return
@@ -259,8 +291,44 @@ const AdminUsers: React.FC = () => {
 
                 <form onSubmit={handleCreateOrUpdate} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                     <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} className="p-3 border rounded-md w-full" required />
+
                     <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="p-3 border rounded-md w-full" required />
+
                     <input type="password" name="password" placeholder={editingUserId ? 'New Password (optional)' : 'Password'} value={formData.password} onChange={handleChange} className="p-3 border rounded-md w-full" />
+
+                    {/*Email Verification (Admin Override) */}
+                    {editingUserId && (
+                        <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50">
+                            <span className="text-sm font-medium text-gray-700">
+                                Email Verified
+                            </span>
+
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        profile: {
+                                            ...prev.profile,
+                                            emailVerification: {
+                                                isVerified: !prev.profile.emailVerification?.isVerified,
+                                            },
+                                        },
+                                    }))
+                                }
+                                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition
+        ${formData.profile.emailVerification?.isVerified
+                                        ? 'bg-green-100 text-green-700'
+                                        : 'bg-red-100 text-red-700'
+                                    }`}
+                            >
+                                {formData.profile.emailVerification?.isVerified
+                                    ? 'Verified'
+                                    : 'Not Verified'}
+                            </button>
+                        </div>
+                    )}
+
 
                     {/* Verification Status (always visible for trainer) */}
                     {formData.role === 'trainer' && (

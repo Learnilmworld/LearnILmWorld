@@ -273,7 +273,7 @@ export default function TopTrainers(): JSX.Element {
             to="/main"
             className="
       inline-flex items-center justify-center
-      px-8 py-3
+      px-12 py-3
       bg-[#276dc9]
       text-white
       font-semibold

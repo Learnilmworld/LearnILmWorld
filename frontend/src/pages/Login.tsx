@@ -171,8 +171,6 @@ const Login: React.FC = () => {
 
 
 
-
-
   return (
     <div className="min-h-screen flex items-center justify-center py-12 bg-[#5186cd]">
       {/* Home Icon Button */}
@@ -360,7 +358,7 @@ const Login: React.FC = () => {
               theme="outline"
               width={320}
             />
-            <button
+            {/* <button
               type="button"
               onClick={handleFacebookClick}
               disabled={loading}
@@ -372,7 +370,7 @@ const Login: React.FC = () => {
                 className="w-6 h-6"
               />
               <span>Continue with Facebook</span>
-            </button>
+            </button> */}
           </div>
 
           <div className="mt-8 text-center">
