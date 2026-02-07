@@ -88,8 +88,8 @@ const BecomeTrainer: React.FC = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-16 px-6 md:px-16">
-        <div className="max-w-[1420px] mx-auto px-4">
+      <section className="pt-14">
+        <div className="max-w-[1520px] mx-auto px-4">
           <div className="relative rounded-[40px] bg-[#6f9bd3] px-8 lg:px-16 pt-12 overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
               <motion.div
@@ -105,7 +105,7 @@ const BecomeTrainer: React.FC = () => {
                   <span className="text-[#2D274B]">Inspire Growth</span>
                 </h1>
 
-                <div className="mt-4 flex flex-col pt-5 pb-5">
+                <div className="flex flex-col py-3">
                   <p className="text-xl lg:text-3xl font-bold text-white leading-relaxed">
                     Join
                     <span className="inline-flex items-baseline  text-[#024aac] tracking-tight mx-2">
@@ -134,7 +134,7 @@ const BecomeTrainer: React.FC = () => {
                 </motion.button>
               </motion.div>
 
-              {/* RIGHT */}
+              {/* RIGHT Img */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={mounted ? { opacity: 1, scale: 1 } : {}}
@@ -143,12 +143,12 @@ const BecomeTrainer: React.FC = () => {
               >
                 {/* Dark Blue Div Behind Image */}
                 <div className="absolute inset-0 flex justify-end items-end z-[-1]">
-                  <div className="bg-[#0A1172] w-4/5 h-5/6 mr-10 rounded-tl-[120px] lg:rounded-tl-[160px]  rounded-br-[40px] translate-x-8 lg:translate-x-0 translate-y-12 lg:translate-y-0"></div>
+                  <div className="bg-[#0A1172] w-full h-4/5 rounded-tl-[120px] lg:rounded-tl-[160px]  rounded-br-[40px] translate-x-8 lg:translate-x-0 translate-y-12 lg:translate-y-0"></div>
                 </div>
                 <img
                   src={image4}
                   alt="Learners"
-                  className="w-full h-auto object-contain max-h-[450px] lg:scale-125 origin-bottom z-10 relative left-4 lg:left-0"
+                  className="w-full h-auto object-contain md:max-h-[400px] sm:max-h-[450px] lg:scale-125 origin-bottom z-10 relative left-4 lg:left-0"
                   style={{ marginBottom: "-2px" }}
                 />
               </motion.div>
@@ -261,25 +261,6 @@ const BecomeTrainer: React.FC = () => {
         </div>
       </section>
 
-      {/* Global Teaching Section */}
-      {/* <section className="py-20 px-6 md:px-16  flex flex-col-reverse md:flex-row items-center gap-10 max-w-6xl mx-auto rounded-2xl shadow-sm">
-
-       
-        <motion.div
-          className="flex-1 flex justify-center"
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <img
-            src={image2}
-            alt="Global teaching"
-            className="rounded-2xl shadow-lg w-full max-w-lg object-cover"
-          />
-        </motion.div>
-
-      </section> */}
-
       {/* Benefits Section */}
       {/* e0fa84 bg-[#2D274B] */}
       <section className="pt-16 px-6 md:px-16 ">
@@ -329,42 +310,6 @@ const BecomeTrainer: React.FC = () => {
 
         </div>
       </section>
-      {/* <section className=" pt-16 px-6 md:px-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-[#5186cd] mb-12">
-          Why Teach with LearniLM🌍World?
-        </h2>
-        <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto ">
-          {[
-            {
-              title: "Flexible Schedule",
-              desc: "Teach at your convenience from anywhere. Your time, your rules.",
-              icon: "⏰",
-            },
-            {
-              title: "Global Reach",
-              desc: "Connect with students worldwide and make an impact beyond boundaries.",
-              icon: "🌍",
-            },
-            {
-              title: "Rewarding Experience",
-              desc: "Earn while helping learners achieve their dreams — a win for everyone.",
-              icon: "💼",
-            },
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              className="bg-blue-50 rounded-2xl p-8 text-center shadow-md hover:shadow-xl transition-all hover:bg-[#e5f2b4] font-semibold"
-              whileHover={{ scale: 1.03 }}
-            >
-              <div className="text-5xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-bold text-[#8CA0E5] mb-2">
-                {item.title}
-              </h3>
-              <p className="text-[#2D274B] font-semibold">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section> */}
 
       {/* Who can apply section */}
       <section className="pt-16 px-6 md:px-16 ">

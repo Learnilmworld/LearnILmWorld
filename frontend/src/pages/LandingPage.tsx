@@ -460,11 +460,11 @@ export default function LandingPageAlt() {
 
   const faqs = [
     { q: 'How do I choose a trainer?', a: 'Use filters (experience, rating, price) and send a short message to get a feel. Look for video intros and student reviews.' },
-    { q: 'What languages are available?', a: '50+ languages including Spanish, French, German, Chinese, Japanese, Arabic and many dialects.' },
+    { q: 'What languages are available?', a: '20+ languages including Spanish, French, German, Chinese, Japanese, Arabic and many dialects.' },
     // { q: 'Can I try before I pay?', a: 'Yes — we offer a free trial credit for first-time students. Trial availability depends on the trainer.' },
     { q: 'How do payments work?', a: 'We use Stripe for secure checkout. Cards and Apple/Google Pay are accepted where available.' },
     { q: 'Can I reschedule or cancel?', a: 'Reschedule up to 24 hours before a session. Some trainers may have different policies — check their profile.' },
-    { q: 'Do trainers provide materials?', a: 'Many trainers include PDFs, flashcards or audio. You can also upload your own material before a lesson.' },
+    { q: 'Do trainers provide materials?', a: 'Many trainers include PDFs, flashcards or audio.' },
     { q: 'Is there a mobile app?', a: 'Coming soon — our PWA works great on mobile and can be installed to your home screen.' },
     {
       q: "What is the procedure to become a tutor at LearniLM🌍World?",
@@ -472,7 +472,7 @@ export default function LandingPageAlt() {
     },
     {
       q: "Step 1: How do I submit my application?",
-      a: "Begin by submitting your application through our official LearnOsphere website. Make sure your details are accurate and complete.",
+      a: "Begin by submitting your application through our official LearniLM🌍World website. Make sure your details are accurate and complete.",
     },
     {
       q: "Step 2: What happens after I apply?",
@@ -488,7 +488,7 @@ export default function LandingPageAlt() {
     },
     {
       q: "Step 5: How does onboarding work?",
-      a: "Once you complete the required steps and training, you officially join EnglishYaari as a tutor — ready to empower learners with improved spoken English skills.",
+      a: "Once you complete the required steps and training, you officially join LearniLM🌍World as a tutor — ready to empower learners with improved spoken English skills.",
     },
   ]
 
