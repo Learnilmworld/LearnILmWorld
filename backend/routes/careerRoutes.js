@@ -45,6 +45,10 @@ router.post("/apply", async (req, res) => {
 
         const resumeBuffer = Buffer.from(base64Data, "base64");
 
+        const ccEmails = process.env.CAREER_CC_EMAILS
+            ? process.env.CAREER_CC_EMAILS.split(",").map(e => e.trim())
+            : [];
+
         // ---------- Email body ----------
         const htmlBody = `
       <h2>New Career Application</h2>
@@ -57,7 +61,8 @@ router.post("/apply", async (req, res) => {
 
         // ---------- Send Email ----------
         await sendEmail({
-            to: process.env.ADMIN_VERIFICATION_EMAIL, // ✅ CORRECT
+            to: process.env.ADMIN_VERIFICATION_EMAIL,
+            cc: ccEmails,
             subject: `Career Application – ${role}`,
             html: htmlBody,
             attachments: [
@@ -68,7 +73,7 @@ router.post("/apply", async (req, res) => {
             ],
         });
 
-        // ✅ SUCCESS LOG
+        // SUCCESS LOG
         console.log(
             `📧 Career email sent successfully | ${email} → ${process.env.ADMIN_VERIFICATION_EMAIL}`
         );

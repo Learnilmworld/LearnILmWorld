@@ -37,12 +37,12 @@ import arab_flag from '../assets/arab_flag.jpeg'
 import heroImage3 from '../assets/together child1.png'
 
 import math from '../assets/Math.jpeg'
-import hist from '../assets/history.png'
+import hist from '../assets/history3.png'
 import geo from '../assets/Geography.jpeg'
 import phy from '../assets/Physics.jpeg'
 import chem from '../assets/chemistry.jpeg'
 import bio from '../assets/Biology.jpeg'
-import cs from '../assets/Computer Science.jpeg'
+import cs from '../assets/ComputerScience.png'
 import Footer from '../components/Footer'
 import TopTrainers from '../components/TopTrainers'
 // import { LanguageCard } from '../components/LanguageCard'
@@ -92,7 +92,7 @@ export default function LandingPageAlt() {
 
     const trainerId = trainerMap[language];
 
-    if (!trainerId) return alert("Trainer not found!");
+    if (!trainerId) return alert("We are currently finalizing a top-tier expert for this Language. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
 
     if (!user) {
       // Save the clicked language temporarily for redirect after login
@@ -121,7 +121,7 @@ export default function LandingPageAlt() {
     const trainerId = languageTrainerMap[languageName];
 
     if (!trainerId) {
-      alert("Trainer for this language not found yet!");
+      alert("Trainer not found !");
       setShowMoreLanguages(false);
       return;
     }
@@ -154,7 +154,7 @@ export default function LandingPageAlt() {
 
     const trainerId = hobbyTrainerMap[hobby.name];
 
-    if (!trainerId) return alert("Trainer not found yet!");
+    if (!trainerId) return alert("We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.");
 
     if (!user) {
       localStorage.setItem(
@@ -178,7 +178,7 @@ export default function LandingPageAlt() {
     const trainerId = trainerMap[hobbyName];
 
     if (!trainerId) {
-      alert("Trainer not available yet!");
+      alert("We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.");
       setShowMoreHobbies(false);
       return;
     }
@@ -222,7 +222,7 @@ export default function LandingPageAlt() {
     const trainerId = subjectTrainerMap[subject.name];
 
     if (!trainerId) {
-      alert("Trainer for this subject not found yet!");
+      alert("We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
       return;
     }
 
@@ -249,7 +249,7 @@ export default function LandingPageAlt() {
     const trainerId = subjectTrainerMap[subjectName];
 
     if (!trainerId) {
-      alert("Trainer for this subject not found yet!");
+      alert("We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
       setShowMore(false);
       return;
     }
@@ -884,8 +884,8 @@ export default function LandingPageAlt() {
                   img: chem,
                 },
                 {
-                  name: "Biology",
-                  img: bio,
+                  name: "Computer Science",
+                  img: cs,
                 },
                 {
                   name: "History",
@@ -896,9 +896,10 @@ export default function LandingPageAlt() {
                   img: geo,
                 },
                 {
-                  name: "Computer Science",
-                  img: cs,
+                  name: "Biology",
+                  img: bio,
                 },
+                
                 {
                   name: "More",
                   img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",

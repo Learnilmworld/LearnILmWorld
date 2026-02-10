@@ -58,7 +58,7 @@ const Footer = () => (
         <ul className="mt-3 space-y-2 text-xl text-slate-300">
           <li><Link to="/about#help" className="hover:underline text-xl">Help Center</Link></li>
           <li><Link to="/about#terms" className="hover:underline text-xl">Terms</Link></li>
-          <li><Link to="/about#privacy" className="hover:underline text-xl">Policy & Refund</Link></li>
+          <li><Link to="/about#policy-refund" className="hover:underline text-xl">Policy & Refund</Link></li>
         </ul>
       </div>
 

@@ -119,7 +119,7 @@ const FeaturedSection = () => {
 
                 <div className="flex gap-3">
                   <button
-                    onClick={() => navigate(`/trainer/profile/${trainer._id}`)}
+                    onClick={() => navigate(`/trainer-profile/${trainer._id}`)}
                     className="flex-1 bg-gray-100 text-gray-800 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-colors"
                   >
                     View Profile

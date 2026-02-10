@@ -123,28 +123,30 @@ export default function TopTrainers(): JSX.Element {
   }, []);
 
   return (
-    // bg-[#6b48af] E0FA84
-    <section className="py-24 ">
+    <section className="py-28 ">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+        {/* Heading */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl  font-extrabold text-[#5186cd] text-center"
+          className="text-4xl md:text-5xl font-extrabold text-[#276dc9] text-center"
         >
           Meet Our Top Trainers
         </motion.h2>
 
-        <p className="text-center text-xl text-[#2D274B] mt-3 font-medium">
-          Highly rated & verified mentors — languages & subjects.
+        <p className="text-center text-lg md:text-xl text-[#2D274B] mt-4 max-w-2xl mx-auto">
+          Highly rated & verified mentors across languages and subjects.
         </p>
 
-        {/* Trainer Cards Row */}
-        <div className="group flex flex-wrap lg:flex-nowrap justify-center gap-8 px-2 mt-12">
+        {/* Trainer Cards */}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {trainers.map((trainer, idx) => {
             const id = trainer._id;
             const role = id ? pickRoleMap[id] ?? "other" : "other";
+
             const showLangs =
               role === "language" && trainer.profile?.languages?.length;
             const showSubs =
@@ -162,161 +164,120 @@ export default function TopTrainers(): JSX.Element {
             return (
               <div
                 key={id ?? idx}
-                className="group [perspective:1000px]"
+                className="group [perspective:1200px]"
                 onMouseEnter={() => setHoveredTrainerId(id)}
                 onMouseLeave={() => setHoveredTrainerId(null)}
-                onClick={() => {
-                  setActiveTrainer(trainer);
-                }}
+                onClick={() => setActiveTrainer(trainer)}
               >
                 <div
                   className={`
-                    relative h-[320px] w-[270px]
-                    transition-transform duration-700
-                    [transform-style:preserve-3d]
-                    ${hoveredTrainerId === id ? "[transform:rotateY(180deg)]" : ""}
-  `}
+                  relative h-[420px]
+                  transition-transform duration-700
+                  [transform-style:preserve-3d]
+                  ${hoveredTrainerId === id
+                      ? "[transform:rotateY(180deg)]"
+                      : ""
+                    }
+                `}
                 >
+                  {/* FRONT */}
+                  <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-xl [backface-visibility:hidden]">
+                    <img
+                      src={trainer.profile?.imageUrl || trainer_profile}
+                      alt={trainer.name}
+                      className="h-full w-full object-cover"
+                    />
 
-                  <div
-                    className="  
-                    absolute inset-0
-                    bg-[#5186cd] text-white rounded-[32px] shadow-xl p-4
-                    hover:scale-105 transition cursor-pointer
-                    flex flex-col
-                    [backface-visibility:hidden]
-                      "
-                  >
-                    <div className="flex-grow">
-                      {/* Top row */}
-                      <div className="flex items-start justify-between">
-                        <div className="w-24 h-24 ml-3 rounded-full overflow-hidden border-3 border-[#2D274B] shrink-0">
-                          <img
-                            src={trainer.profile?.imageUrl || trainer_profile}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
 
-                        <div className="w-[150px] text-right">
-                          <span
-                            className={`text-[12px] px-2 py-1 rounded-full font-semibold inline-block mb-1 ${role === "language"
-                              ? "bg-[#5186cd] text-white"
-                              : role === "subject"
-                                ? "bg-[#CBE56A] text-[#2D274B]"
-                                : "bg-white text-[#2D274B]"
-                              }`}
-                          >
-                            {role === "language"
-                              ? "Language"
-                              : role === "subject"
-                                ? "Subject"
-                                : "Trainer"}
-                          </span>
+                    {/* Info Card */}
+                    <div className="absolute bottom-5 left-5 right-5">
+                      <div
+                        className="
+      rounded-2xl
+      bg-white/55
+      backdrop-blur-lg
+      p-4
+      shadow-sm
+      transition-all duration-300
+      group-hover:bg-white/75
+      group-hover:shadow-md
+    "
+                      >
+                        <h3 className="text-base font-semibold text-[#1e293b] truncate">
+                          {trainer.name}
+                        </h3>
 
-                          <p className="text-base font-bold text-[#CBE56A] leading-tight mt-2">
-                            {displayList.slice(0, 2).join(", ")}
-                          </p>
-                        </div>
-                      </div>
+                        <p className="text-xs font-medium text-[#276dc9] mt-0.5 line-clamp-1">
+                          {displayList.slice(0, 2).join(", ")}
+                        </p>
 
-                      <h3 className="text-xl font-bold text-center mt-2">
-                        {trainer.name}
-                      </h3>
-
-                      <div className="flex-1 flex flex-col justify-center text-center mt-2">
-                        <p className="text-base">
-                          <span className="text-[#CBE56A] font-semibold">
+                        <p className="mt-1 text-xs text-gray-700">
+                          <span className="font-semibold">
                             {trainer.profile?.experience ?? 0} yrs+
                           </span>{" "}
                           experience
                         </p>
 
-                        {trainer.profile?.education && (
-                          <p className="text-[16px] text-[#ECFDF5] mt-1 leading-snug">
-                            🎓 {trainer.profile.education}
-                          </p>
-                        )}
+                        <Link
+                          to={`/trainer-profile/${trainer._id}`}
+                          className="
+        mt-3 block text-center
+        bg-[#276dc9]/90
+        text-white
+        py-1.5
+        rounded-md
+        text-sm
+        font-semibold
+        hover:bg-[#205eb0]
+        transition
+      "
+                        >
+                          View Profile
+                        </Link>
                       </div>
                     </div>
 
-                    <Link
-                      to={`/trainer-profile/${trainer._id}`}
-                      className="mt-3 w-full text-center bg-white text-[#276dc9] py-2 rounded-lg font-semibold hover:bg-[#4674b0] hover:text-white transition"
-                    >
-                      View Profile
-                    </Link>
                   </div>
 
-
-                  {/* BACK FACE (inside flip) */}
-                  <div
-                    className=" absolute inset-0 [transform:rotateY(180deg)]  [backface-visibility:hidden]"
-                  >
+                  {/* BACK */}
+                  <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]">
                     <TrainerBackCard
                       trainer={trainer}
                       displayList={displayList}
                       className="h-full"
                     />
                   </div>
-
                 </div>
               </div>
-
             );
           })}
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mt-10">
-          {/* More Trainers bg-[#CBE56A] text-[#2D274B]*/}
+        {/* CTA */}
+        <div className="flex flex-wrap justify-center gap-6 mt-14">
           <Link
             to="/main"
-            className="
-      inline-flex items-center justify-center
-      px-12 py-3
-      bg-[#276dc9]
-      text-white
-      font-semibold
-      rounded-xl
-      shadow-md
-      hover:bg-[#4879b8]
-      transition
-      text-lg
-    "
+            className="px-16 py-3 bg-[#276dc9] text-white font-semibold rounded-xl shadow-md hover:bg-[#205eb0] transition text-lg"
           >
             More Trainers
           </Link>
 
-          {/* Become a Trainer */}
           <Link
             to="/become-trainer"
-            className="
-      inline-flex items-center justify-center
-      px-8 py-3
-      bg-[#276dc9]
-      text-white
-      font-semibold
-      rounded-xl
-      shadow-md
-      hover:bg-[#4879b8]
-      transition
-      text-lg
-    "
+            className="px-12 py-3 bg-[#276dc9] text-[white] font-semibold rounded-xl shadow-md border border-[white] hover:bg-[#205eb0] transition text-lg"
           >
             Become a Trainer
           </Link>
         </div>
-
       </div>
 
-      {/* Overlay wrapper */}
+      {/* MODAL */}
       {activeTrainer && (
         <div
-          className=" fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md"
-          onClick={() => {
-            setActiveTrainer(null);
-            // setIsFlipped(false);
-          }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md"
+          onClick={() => setActiveTrainer(null)}
         >
           <div onClick={(e) => e.stopPropagation()}>
             <motion.div
@@ -324,7 +285,6 @@ export default function TopTrainers(): JSX.Element {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.4 }}
-              className="flex justify-center"
             >
               <TrainerBackCard
                 trainer={activeTrainer}
@@ -339,8 +299,7 @@ export default function TopTrainers(): JSX.Element {
           </div>
         </div>
       )}
-
-
     </section>
   );
+
 }

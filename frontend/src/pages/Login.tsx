@@ -142,7 +142,6 @@ const Login: React.FC = () => {
 
   const handleFacebookClick = async () => {
     setError('');
-
     try {
       const fbResponse: any = await loginWithFacebook();
       setLoading(true);

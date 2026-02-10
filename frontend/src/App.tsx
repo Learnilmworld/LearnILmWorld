@@ -30,6 +30,7 @@ import TrainerProfilePageDemo from './pages/TrainerProfilePageDemo'
 import GermanBlog from './pages/blogs/GermanBlog';
 import BengaliBlog from './pages/blogs/BengaliBlog';
 import VerifyEmail from './pages/VerifyEmail';
+import ScrollRestoration from './components/ScrollRestoration';
 
 function App() {
   return (
@@ -42,7 +43,9 @@ function App() {
 
               <Chatbot />
 
+              <ScrollRestoration/>
               <ScrollToTop />
+
 
               <div className="min-h-screen bg-gradient-to-br from-cream-50 to-green-50 font-Limerick">
                 <Routes>

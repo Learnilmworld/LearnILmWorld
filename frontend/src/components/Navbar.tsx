@@ -2,7 +2,7 @@ import { useState } from "react";
 import logo from "../assets/logo.png";
 import { Button, Nav, Offcanvas } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CurrencySelector from "../components/CurrencySelector";
 
 type NavbarProps = {
@@ -13,6 +13,7 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
   const navigate = useNavigate();
   const { user, logout, loading } = useAuth();
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const location = useLocation(); 
 
   const dashboardLink = user
     ? user.role === "trainer"
@@ -23,6 +24,19 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
     : "/login";
 
   if (loading) return null;
+
+  const isAuthResolved = !loading;
+
+  const handleScroll = (id: string) => {
+    // Check if we are currently on the about page
+    if (location.pathname === "/about") {
+      const element = document.getElementById(id);
+      if (element) {
+        // Slight delay or immediate scroll
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <header className="sticky top-0 z-40">
@@ -45,13 +59,14 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
           {/* DESKTOP NAV */}
           <nav className="hidden lg:flex items-center gap-8">
 
-            {/* ✅ Currency selector ONLY for main variant */}
+            {/* Currency selector ONLY for main variant */}
             {variant === "main" && (
               <CurrencySelector variant="header" />
             )}
 
             <Link
               to="/about#about"
+              onClick={() => handleScroll("about")} 
               className="text-lg font-medium text-[#203989] hover:text-black transition no-underline"
             >
               About
@@ -59,6 +74,7 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
 
             <Link
               to="/about#careers"
+              onClick={() => handleScroll("careers")}
               className="text-lg font-medium text-[#203989] hover:text-black transition no-underline"
             >
               Careers
@@ -124,7 +140,7 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
               <Offcanvas.Body>
                 <Nav className="flex-column gap-4">
 
-                  {/* ✅ Currency selector in mobile (main variant only) */}
+                  {/*  Currency selector in mobile (main variant only) */}
                   {variant === "main" && (
                     <CurrencySelector
                       variant="header"
@@ -135,7 +151,10 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
                   <Nav.Link
                     as={Link}
                     to="/about#about"
-                    onClick={() => setShowOffcanvas(false)}
+                    onClick={() => {
+                      handleScroll("about");
+                      setShowOffcanvas(false);
+                    }}
                   >
                     About
                   </Nav.Link>
@@ -143,7 +162,10 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
                   <Nav.Link
                     as={Link}
                     to="/about#careers"
-                    onClick={() => setShowOffcanvas(false)}
+                    onClick={() => {
+                      handleScroll("careers");
+                      setShowOffcanvas(false);
+                    }}
                   >
                     Careers
                   </Nav.Link>

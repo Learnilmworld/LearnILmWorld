@@ -90,7 +90,7 @@ const BecomeTrainer: React.FC = () => {
       {/* Hero Section */}
       <section className="pt-14">
         <div className="max-w-[1520px] mx-auto px-4">
-          <div className="relative rounded-[40px] bg-[#6f9bd3] px-8 lg:px-16 pt-12 overflow-hidden">
+          <div className="relative rounded-[40px] bg-[#6f9bd3] px-8 lg:px-16 pt-12 overflow-hidden pb-7">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -127,7 +127,7 @@ const BecomeTrainer: React.FC = () => {
 
                 <motion.button
                   onClick={() => navigate("/register?role=trainer")}
-                  className="py-4 px-5 bg-[#276dc9] text-white font-semibold text-lg rounded-full w-fit shadow-lg hover:bg-[#205eb0]"
+                  className="py-4 px-5 bg-[#276dc9] text-white font-semibold text-lg rounded-full w-fit translate-y-8 shadow-lg hover:bg-[#205eb0]"
                   whileHover={{ scale: 1.05 }}
                 >
                   Become a Trainer Today
@@ -143,12 +143,12 @@ const BecomeTrainer: React.FC = () => {
               >
                 {/* Dark Blue Div Behind Image */}
                 <div className="absolute inset-0 flex justify-end items-end z-[-1]">
-                  <div className="bg-[#0A1172] w-full h-4/5 rounded-tl-[120px] lg:rounded-tl-[160px]  rounded-br-[40px] translate-x-8 lg:translate-x-0 translate-y-12 lg:translate-y-0"></div>
+                  <div className="bg-[#0A1172] w-full h-4/5 rounded-tl-[120px] lg:rounded-tl-[160px]  rounded-br-[40px] translate-x-8 lg:translate-x-0 translate-y-12 lg:translate-y-7 "></div>
                 </div>
                 <img
                   src={image4}
                   alt="Learners"
-                  className="w-full h-auto object-contain md:max-h-[400px] sm:max-h-[450px] lg:scale-125 origin-bottom z-10 relative left-4 lg:left-0"
+                  className="w-full h-auto object-contain md:max-h-[400px] sm:max-h-[450px] lg:scale-125 origin-bottom z-10 relative left-4 lg:left-0 translate-y-7"
                   style={{ marginBottom: "-2px" }}
                 />
               </motion.div>
@@ -456,7 +456,7 @@ const BecomeTrainer: React.FC = () => {
               },
               {
                 q: "Is there any joining cost?",
-                a: "It’s completely free to create your profile and start teaching. Learn🌎Sphere only takes a small commission per lesson to maintain platform quality and marketing reach.",
+                a: "It’s completely free to create your profile and start teaching. LearniLMWorld only takes a small commission per lesson to maintain platform quality and marketing reach.",
               },
             ].map((f, i) => (
               <div

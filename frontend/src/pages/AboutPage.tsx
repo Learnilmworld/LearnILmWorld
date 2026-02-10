@@ -276,17 +276,22 @@ export default function AboutPage() {
   const hasMounted = React.useRef(false);
 
   useEffect(() => {
-    if (!location.hash) return;
-
-    // Skip first render i.e. server restart (refresh / initial load)
-    if (!hasMounted.current) {
-      hasMounted.current = true;
-      return;
+    // If there is no hash, do nothing (or scroll to top if you prefer)
+    if (!location.hash) {
+        window.scrollTo(0, 0);
+        return;
     }
 
+    // Attempt to find the element
     const el = document.querySelector(location.hash);
-    el?.scrollIntoView({ behavior: "smooth" });
-  }, [location.hash]);
+    
+    if (el) {
+        // slight delay ensures the DOM is fully ready
+        setTimeout(() => {
+            el.scrollIntoView({ behavior: "smooth" });
+        }, 100); 
+    }
+  }, [location.hash]); // location.hash changes when URL hash changes
 
 
   const handleFeedbackSubmit = async (e: React.FormEvent) => {
