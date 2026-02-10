@@ -50,6 +50,14 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['student', 'trainer', 'admin'], required: true },
   profile: {
 
+    // for OTP
+    emailVerification: {
+      isVerified: { type: Boolean, default: false },
+      otpHash: { type: String, default: null },
+      otpExpires: { type: Date, default: null },
+      otpAttempts: { type: Number, default: 0 }
+    },
+
     bio: { type: String, trim: true, default: '' },
 
     dob: { type: Date, default: null },

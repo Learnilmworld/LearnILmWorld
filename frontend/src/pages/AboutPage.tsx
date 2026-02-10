@@ -64,7 +64,7 @@ export default function AboutPage() {
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
 
   const jobs = [
-    /* ================= ENGINEERING ================= */
+    /*  ENGINEERING  */
 
     {
       id: 1,
@@ -87,7 +87,7 @@ export default function AboutPage() {
       isNew: true,
     },
 
-    /* ================= CONTENT ================= */
+    /*  CONTENT  */
 
     {
       id: 3,
@@ -110,7 +110,7 @@ export default function AboutPage() {
       isNew: false,
     },
 
-    /* ================= SALES / MARKETING ================= */
+    /*  SALES / MARKETING  */
 
     {
       id: 5,
@@ -123,7 +123,7 @@ export default function AboutPage() {
       isNew: false,
     },
 
-    /* ================= REGIONAL SALES ================= */
+    /*  REGIONAL SALES  */
 
     {
       id: 6,
@@ -276,17 +276,22 @@ export default function AboutPage() {
   const hasMounted = React.useRef(false);
 
   useEffect(() => {
-    if (!location.hash) return;
-
-    // Skip first render i.e. server restart (refresh / initial load)
-    if (!hasMounted.current) {
-      hasMounted.current = true;
-      return;
+    // If there is no hash, do nothing (or scroll to top if you prefer)
+    if (!location.hash) {
+        window.scrollTo(0, 0);
+        return;
     }
 
+    // Attempt to find the element
     const el = document.querySelector(location.hash);
-    el?.scrollIntoView({ behavior: "smooth" });
-  }, [location.hash]);
+    
+    if (el) {
+        // slight delay ensures the DOM is fully ready
+        setTimeout(() => {
+            el.scrollIntoView({ behavior: "smooth" });
+        }, 100); 
+    }
+  }, [location.hash]); // location.hash changes when URL hash changes
 
 
   const handleFeedbackSubmit = async (e: React.FormEvent) => {
@@ -316,15 +321,6 @@ export default function AboutPage() {
     }
   };
 
-  // style={{
-  //   backgroundImage:
-  //     `url(${bg_img})`,
-  //   position: "relative",
-  //   backgroundSize: "cover",
-  //   backgroundPosition: "center",
-  //   backgroundRepeat: "no-repeat",
-  //   width: "100%",
-  // }}
 
   return (
     <div className="min-h-screen font-inter bg-[#fef5e4] text-black ">
@@ -339,16 +335,24 @@ export default function AboutPage() {
         >
           <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
 
-            <div className="flex flex-row justify-center items-center gap-4 mb-6">
+            <span className="flex flex-row justify-center items-center gap-4 mb-6">
               <h1 className="text-3xl md:text-[54px] mt-2 font-black text-[#273240]/93  -z-10 ">
-                About
+                About{" "}
+                <span className="inline-flex items-baseline  text-[#024aac] tracking-tight mx-2">
+                  <span>LearniLMWorl</span>
+                  <span className="relative inline-block">
+                    <span>d</span>
+                    <GraduationCap
+                      className="absolute -top-4 -right-2 text-black rotate-12"
+                      size={26}
+                      strokeWidth={2}
+                      fill="black"
+                    />
+                  </span>
+                </span>
               </h1>
-              <img
-                className="w-48 md:w-96 h-auto object-cover"
-                src={image1}
-                alt="LearniLM World"
-              />
-            </div>
+
+            </span>
 
             <div className="inline-flex items-center gap-2 px-6 py-2 mb-8
           rounded-full bg-white text-[#5186cd] font-semibold 
@@ -487,14 +491,26 @@ export default function AboutPage() {
               >
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-8">
                   <h2 className="text-3xl mt-2 md:text-5xl font-black text-[#1f2937] leading-tight">
-                    How
+                    How {" "}
+                    <span className="inline-flex items-baseline  text-[#024aac] tracking-tight mx-2">
+                      <span>LearniLMWorl</span>
+                      <span className="relative inline-block">
+                        <span>d</span>
+                        <GraduationCap
+                          className="absolute -top-2 -right-3 text-black rotate-12"
+                          size={23}
+                          strokeWidth={2}
+                          fill="black"
+                        />
+                      </span>
+                    </span>
                   </h2>
 
-                  <img
+                  {/* <img
                     src={image1}
                     alt="LearniLM"
                     className="h-12 md:h-16 w-auto object-contain"
-                  />
+                  /> */}
 
                   <h2 className="text-4xl mt-2 md:text-5xl font-black text-[#1f2937] leading-tight">
                     Began
@@ -598,14 +614,26 @@ export default function AboutPage() {
           </h2> */}
             <div className="flex flex-wrap text-center justify-center items-center gap-x-4 gap-y-2 mb-8">
               <h2 className="text-4xl mt-2 md:text-5xl font-black text-[#1f2937] leading-tight">
-                Careers at
+                Careers at {" "}
+                <span className="inline-flex items-baseline  text-[#024aac] tracking-tight mx-2">
+                  <span>LearniLMWorl</span>
+                  <span className="relative inline-block">
+                    <span>d</span>
+                    <GraduationCap
+                      className="absolute -top-2 -right-3 text-black rotate-12"
+                      size={23}
+                      strokeWidth={2}
+                      fill="black"
+                    />
+                  </span>
+                </span>
               </h2>
 
-              <img
+              {/* <img
                 src={image1}
                 alt="LearniLM"
                 className="h-12 md:h-16 w-auto object-contain"
-              />
+              /> */}
             </div>
             {/* <p className="mt-4 text-lg max-w-3xl mx-auto text-[#2D274B]">
             Join a mission-driven team transforming education. Your ideas

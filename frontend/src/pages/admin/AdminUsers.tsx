@@ -1,0 +1,416 @@
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react"
+import axios from "axios"
+import { Trash2, Edit3 } from "lucide-react"
+import * as XLSX from "xlsx"
+import { saveAs } from "file-saver"
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
+type AnyObj = Record<string, any>
+
+interface Certification {
+    name: string
+    certificateImage: string
+    year: string
+    certificateLink: string
+}
+
+interface EmailVerification {
+    isVerified: boolean
+}
+
+interface UserProfile {
+    education?: string
+    experience?: string
+    certifications?: Certification[]
+    verificationStatus?: "pending" | "verified" | "rejected"
+    phone?: string
+    bio?: string
+    location?: string
+
+    emailVerification?: EmailVerification
+}
+
+
+interface UserForm {
+    name: string
+    email: string
+    role: "student" | "trainer"
+    password: string
+    profile: UserProfile
+}
+
+/* -------------------------- Admin Users -------------------------- */
+const AdminUsers: React.FC = () => {
+    const [users, setUsers] = useState<AnyObj[]>([])
+    const [loading, setLoading] = useState(true)
+    const [formData, setFormData] = useState<UserForm>({
+        name: '',
+        email: '',
+        role: 'student',
+        password: '',
+        profile: {
+            certifications: [],
+            verificationStatus: 'pending',
+            emailVerification: {
+                isVerified: false,
+            },
+        },
+    })
+
+    const [editingUserId, setEditingUserId] = useState<string | null>(null)
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
+
+    useEffect(() => {
+        fetchUsers()
+    }, [])
+
+    const fetchUsers = async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const res = await axios.get(`${API_BASE_URL}/api/admin/users`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            setUsers(Array.isArray(res.data) ? res.data : [])
+            console.log("Fetched users");
+        } catch (err: any) {
+            console.error(err)
+            if (err.response?.status === 401) {
+                alert('Unauthorized. Please log in again.')
+                localStorage.removeItem('token')
+                window.location.href = '/login'
+            }
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const downloadExcel = (data: any[], filename: string) => {
+        if (!data.length) {
+            alert("No data to export.")
+            return
+        }
+
+        const truncate = (text: any) => {
+            if (typeof text !== "string") return text
+            return text.length > 32000 ? text.slice(0, 32000) + "..." : text
+        }
+
+        const flattened = data.map(user => {
+            const verifiedOn = user.profile?.verifiedAt || user.updatedAt
+            const daysAfterJoining =
+                user.role === "trainer" && user.profile?.verificationStatus === "verified"
+                    ? Math.floor((Date.now() - new Date(verifiedOn).getTime()) / (1000 * 60 * 60 * 24))
+                    : ""
+
+            return {
+                "Full Name": truncate(user.name),
+                "Email Address": truncate(user.email),
+                "Role": user.role.charAt(0).toUpperCase() + user.role.slice(1),
+                "Status": user.isActive ? "Online" : "Offline",
+                "Joined On": new Date(user.createdAt).toLocaleDateString(),
+                "Last Updated": new Date(user.updatedAt).toLocaleDateString(),
+                ...(user.role === "trainer" && { "Days After Joining": daysAfterJoining }),
+
+                "Education": truncate(user.profile?.education),
+                "Experience": truncate(user.profile?.experience),
+                "Phone": truncate(user.profile?.phone),
+                "Location": truncate(user.profile?.location),
+                "Verification Status": user.profile?.verificationStatus,
+                "Certifications": truncate(
+                    user.profile?.certifications
+                        ?.map((c: any) => `${c.name} (${c.year || ""})`)
+                        .join("; ")
+                ),
+
+                "Total Sessions": user.stats?.totalSessions,
+                "Completed Sessions": user.stats?.completedSessions,
+                "Total Earnings ($)": user.stats?.totalEarnings,
+                "Average Rating": user.stats?.rating || user.stats?.averageRating,
+            }
+        })
+
+        const worksheet = XLSX.utils.json_to_sheet(flattened)
+        const workbook = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Users")
+
+        const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" })
+        const blob = new Blob([excelBuffer], { type: "application/octet-stream" })
+        saveAs(blob, `${filename}_${new Date().toISOString().slice(0, 10)}.xlsx`)
+    }
+
+
+
+    const handleDownloadAll = () => downloadExcel(users, "All_Users")
+
+    const handleDownloadStudents = () =>
+        downloadExcel(users.filter(u => u.role === 'student'), "Students_Data")
+
+    const handleDownloadTrainers = () =>
+        downloadExcel(users.filter(u => u.role === 'trainer'), "Trainers_Data")
+
+
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+        if (name.startsWith('profile.')) {
+            const key = name.split('.')[1]
+            setFormData(prev => ({ ...prev, profile: { ...prev.profile, [key]: value } }))
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }))
+        }
+    }
+
+    // Handle certification change
+    const handleCertChange = (index: number, field: string, value: string) => {
+        setFormData(prev => {
+            const updatedCerts = [...(prev.profile.certifications || [])]
+            updatedCerts[index] = { ...updatedCerts[index], [field]: value }
+            return { ...prev, profile: { ...prev.profile, certifications: updatedCerts } }
+        })
+    }
+
+    const addCertification = () => {
+        setFormData(prev => ({
+            ...prev,
+            profile: {
+                ...prev.profile,
+                certifications: [
+                    ...(prev.profile.certifications || []),
+                    { name: '', certificateImage: '', year: '', certificateLink: '' }
+                ]
+            }
+        }))
+    }
+
+    const removeCertification = (index: number) => {
+        setFormData(prev => {
+            const updatedCerts = [...(prev.profile.certifications || [])]
+            updatedCerts.splice(index, 1)
+            return { ...prev, profile: { ...prev.profile, certifications: updatedCerts } }
+        })
+    }
+
+    const handleCreateOrUpdate = async (e: FormEvent) => {
+        e.preventDefault()
+        setError('')
+        setSuccess('')
+
+        if (!formData.name || !formData.email || (editingUserId === null && !formData.password)) {
+            setError('Name, email, and password (for new users) are required.')
+            return
+        }
+
+        try {
+            if (editingUserId) {
+                await axios.put(`${API_BASE_URL}/api/admin/users/${editingUserId}`, formData)
+                setSuccess('User updated successfully.')
+                console.log("After edit success", formData);
+            } else {
+                await axios.post(`${API_BASE_URL}/api/admin/users`, formData)
+                setSuccess('User created successfully.')
+            }
+
+            setFormData({
+                name: '',
+                email: '',
+                role: 'student',
+                password: '',
+                profile: {
+                    certifications: [], verificationStatus: 'pending', emailVerification: {
+                        isVerified: false,
+                    },
+                },
+
+            })
+
+            console.log("In handlecreate")
+            setEditingUserId(null)
+            fetchUsers()
+            console.log("after fetch users in handlecreate ")
+        } catch (err: any) {
+            setError(err?.response?.data?.message || 'Operation failed.')
+        }
+    }
+
+    const handleEdit = (user: AnyObj) => {
+        setEditingUserId(user._id)
+        setFormData({
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            password: '',
+            profile: {
+                certifications: user.profile?.certifications || [],
+                verificationStatus: user.profile?.verificationStatus || 'pending',
+                emailVerification: {
+                    isVerified: user.profile?.emailVerification?.isVerified ?? false,
+                },
+                education: user.profile?.education || '',
+                experience: user.profile?.experience || '',
+                phone: user.profile?.phone || '',
+                bio: user.profile?.bio || '',
+                location: user.profile?.location || '',
+            },
+        })
+    }
+
+
+    const handleDelete = async (id: string) => {
+        if (!confirm('Are you sure you want to delete this user?')) return
+        try {
+            await axios.delete(`${API_BASE_URL}/api/admin/users/${id}`)
+            fetchUsers()
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    if (loading) return <div className="flex justify-center items-center h-64">Loading...</div>
+
+    return (
+        <div className="space-y-6 max-w-[1200px] mx-auto w-full">
+            <div className="glass-effect rounded-2xl p-4 sm:p-6 shadow-xl">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">{editingUserId ? 'Edit User / Trainer' : 'Create User / Trainer'}</h2>
+
+                {error && <div className="text-red-700 mb-3 bg-red-50 p-2 rounded">{error}</div>}
+                {success && <div className="text-green-700 mb-3 bg-green-50 p-2 rounded">{success}</div>}
+
+                {/* === Role Selection === */}
+                <div className="flex flex-wrap gap-6 mb-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="role" value="student" checked={formData.role === 'student'} onChange={handleChange} className="w-4 h-4 text-[#0ea5a3]" />
+                        Student
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="role" value="trainer" checked={formData.role === 'trainer'} onChange={handleChange} className="w-4 h-4 text-[#0ea5a3]" />
+                        Trainer
+                    </label>
+                </div>
+
+                <form onSubmit={handleCreateOrUpdate} className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} className="p-3 border rounded-md w-full" required />
+
+                    <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="p-3 border rounded-md w-full" required />
+
+                    <input type="password" name="password" placeholder={editingUserId ? 'New Password (optional)' : 'Password'} value={formData.password} onChange={handleChange} className="p-3 border rounded-md w-full" />
+
+                    {/*Email Verification (Admin Override) */}
+                    {editingUserId && (
+                        <div className="flex items-center justify-between p-3 border rounded-md bg-gray-50">
+                            <span className="text-sm font-medium text-gray-700">
+                                Email Verified
+                            </span>
+
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setFormData(prev => ({
+                                        ...prev,
+                                        profile: {
+                                            ...prev.profile,
+                                            emailVerification: {
+                                                isVerified: !prev.profile.emailVerification?.isVerified,
+                                            },
+                                        },
+                                    }))
+                                }
+                                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition
+        ${formData.profile.emailVerification?.isVerified
+                                        ? 'bg-green-100 text-green-700'
+                                        : 'bg-red-100 text-red-700'
+                                    }`}
+                            >
+                                {formData.profile.emailVerification?.isVerified
+                                    ? 'Verified'
+                                    : 'Not Verified'}
+                            </button>
+                        </div>
+                    )}
+
+
+                    {/* Verification Status (always visible for trainer) */}
+                    {formData.role === 'trainer' && (
+                        <select name="profile.verificationStatus" value={formData.profile.verificationStatus || 'pending'} onChange={handleChange} className="p-3 border rounded-md w-full">
+                            <option value="pending">Pending</option>
+                            <option value="verified">Verified</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    )}
+
+                    {formData.role === 'trainer' && (
+                        <>
+                            <input type="text" name="profile.education" placeholder="Degree / Education" value={formData.profile.education || ''} onChange={handleChange} className="p-3 border rounded-md" />
+                            <input type="text" name="profile.experience" placeholder="Experience (years)" value={formData.profile.experience || ''} onChange={handleChange} className="p-3 border rounded-md" />
+
+
+                            {/* Certifications Section */}
+                            <div className="col-span-1 md:col-span-4 mt-2">
+                                <h4 className="font-semibold mb-2">Certifications</h4>
+                                {(formData.profile.certifications || []).map((cert, index) => (
+                                    <div key={index} className="grid grid-cols-1  md:grid-cols-4 gap-3 mb-2 p-3 border rounded-md">
+                                        <input type="text" placeholder="Certificate Name" value={cert.name} onChange={(e) => handleCertChange(index, 'name', e.target.value)} className="p-2 border rounded-md w-full" />
+                                        <input type="text" placeholder="Certificate Image URL" value={cert.certificateImage} onChange={(e) => handleCertChange(index, 'certificateImage', e.target.value)} className="p-2 border rounded-md w-full" />
+                                        <input type="number" placeholder="Issued Year" value={cert.year || ''} onChange={(e) => handleCertChange(index, 'year', e.target.value)} className="p-2 border rounded-md w-full" />
+                                        <input type="text" placeholder="Certificate Link" value={cert.certificateLink} onChange={(e) => handleCertChange(index, 'certificateLink', e.target.value)} className="p-2 border rounded-md w-full" />
+                                        <button type="button" onClick={() => removeCertification(index)} className="col-span-4 bg-red-100 text-red-700 rounded-md py-1 hover:bg-red-200">Remove</button>
+                                    </div>
+                                ))}
+                                <button type="button" onClick={addCertification} className="mt-2 w-full sm:w-auto bg-blue-100 text-blue-700 rounded-md py-2 px-4 hover:bg-blue-200">
+                                    Add Certification
+                                </button>
+                            </div>
+                        </>
+                    )}
+
+                    <button type="submit" className="col-span-1 md:col-span-1 bg-[#0ea5a3] text-white p-3 rounded-md hover:shadow-lg transition">
+                        {editingUserId ? 'Update User' : 'Create User'}
+                    </button>
+                </form>
+
+
+                {/* === Users List === */}
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">All Users</h3>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-4">
+                    <button
+                        onClick={handleDownloadAll}
+                        className="bg-[#0ea5a3] text-white px-4 py-2 rounded-xl shadow hover:bg-[#0d8b8a] text-sm w-full sm:w-auto"
+                    >
+                        Download All Users
+                    </button>
+
+                    <button
+                        onClick={handleDownloadStudents}
+                        className="bg-[#38bdf8] text-white px-4 py-2 rounded-xl shadow hover:bg-[#209ac9] text-sm w-full sm:w-auto"
+                    >
+                        Download Students
+                    </button>
+
+                    <button
+                        onClick={handleDownloadTrainers}
+                        className="bg-[#6ee7b7] text-gray-900 px-4 py-2 rounded-xl shadow hover:bg-[#34d399] text-sm w-full sm:w-auto"
+                    >
+                        Download Trainers
+                    </button>
+                </div>
+
+                <div className="space-y-2">
+                    {users.map(user => (
+                        <div key={user._id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 bg-white/50 rounded-xl shadow gap-3">
+                            <div className="break-all">
+                                <span className="font-semibold">{user.name}</span> <span className="text-sm text-gray-600">({user.role})</span> - <span className="text-sm">{user.email}</span>
+                            </div>
+                            <div className="flex gap-2 w-full sm:w-auto justify-end">
+                                <button onClick={() => handleEdit(user)} className="p-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 flex-1 sm:flex-none justify-center flex"><Edit3 className="h-4 w-4" /></button>
+                                <button onClick={() => handleDelete(user._id)} className="p-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 flex-1 sm:flex-none justify-center flex"><Trash2 className="h-4 w-4" /></button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default AdminUsers

@@ -37,12 +37,12 @@ import arab_flag from '../assets/arab_flag.jpeg'
 import heroImage3 from '../assets/together child1.png'
 
 import math from '../assets/Math.jpeg'
-import hist from '../assets/history.png'
+import hist from '../assets/history3.png'
 import geo from '../assets/Geography.jpeg'
 import phy from '../assets/Physics.jpeg'
 import chem from '../assets/chemistry.jpeg'
 import bio from '../assets/Biology.jpeg'
-import cs from '../assets/Computer Science.jpeg'
+import cs from '../assets/ComputerScience.png'
 import Footer from '../components/Footer'
 import TopTrainers from '../components/TopTrainers'
 // import { LanguageCard } from '../components/LanguageCard'
@@ -92,7 +92,7 @@ export default function LandingPageAlt() {
 
     const trainerId = trainerMap[language];
 
-    if (!trainerId) return alert("Trainer not found!");
+    if (!trainerId) return alert("We are currently finalizing a top-tier expert for this Language. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
 
     if (!user) {
       // Save the clicked language temporarily for redirect after login
@@ -121,7 +121,7 @@ export default function LandingPageAlt() {
     const trainerId = languageTrainerMap[languageName];
 
     if (!trainerId) {
-      alert("Trainer for this language not found yet!");
+      alert("Trainer not found !");
       setShowMoreLanguages(false);
       return;
     }
@@ -154,7 +154,7 @@ export default function LandingPageAlt() {
 
     const trainerId = hobbyTrainerMap[hobby.name];
 
-    if (!trainerId) return alert("Trainer not found yet!");
+    if (!trainerId) return alert("We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.");
 
     if (!user) {
       localStorage.setItem(
@@ -178,7 +178,7 @@ export default function LandingPageAlt() {
     const trainerId = trainerMap[hobbyName];
 
     if (!trainerId) {
-      alert("Trainer not available yet!");
+      alert("We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.");
       setShowMoreHobbies(false);
       return;
     }
@@ -222,7 +222,7 @@ export default function LandingPageAlt() {
     const trainerId = subjectTrainerMap[subject.name];
 
     if (!trainerId) {
-      alert("Trainer for this subject not found yet!");
+      alert("We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
       return;
     }
 
@@ -249,7 +249,7 @@ export default function LandingPageAlt() {
     const trainerId = subjectTrainerMap[subjectName];
 
     if (!trainerId) {
-      alert("Trainer for this subject not found yet!");
+      alert("We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
       setShowMore(false);
       return;
     }
@@ -397,7 +397,7 @@ export default function LandingPageAlt() {
   ];
 
   const asian_lang = [
-    { lang: "Bengali", code: "bd" },
+    { lang: "Bengali", code: "in" },
     { lang: "Japanese", code: "jp" },
     { lang: "Sanskrit", code: "in" },
     { lang: "Mandarin", code: "cn" },
@@ -454,17 +454,17 @@ export default function LandingPageAlt() {
 
   const features = [
     { icon: Clock, title: 'Flexible Hours', text: 'Lessons at any time — morning, night or weekends.' },
-    { icon: Star, title: 'Expert Trainers', text: 'Certified tutors with real teaching experience.' },
-    { icon: MessageSquare, title: 'Immersive Tools', text: 'Live transcripts, quizzes and pronunciation scoring.' }
+    { icon: MessageSquare, title: 'Expert Trainers', text: 'Certified tutors with real teaching experience.' },
+    { icon: Star, title: 'Real outcomes', text: 'Our curriculum is outcome-focused so you can see measurable improvement' }
   ]
 
   const faqs = [
     { q: 'How do I choose a trainer?', a: 'Use filters (experience, rating, price) and send a short message to get a feel. Look for video intros and student reviews.' },
-    { q: 'What languages are available?', a: '50+ languages including Spanish, French, German, Chinese, Japanese, Arabic and many dialects.' },
+    { q: 'What languages are available?', a: '20+ languages including Spanish, French, German, Chinese, Japanese, Arabic and many dialects.' },
     // { q: 'Can I try before I pay?', a: 'Yes — we offer a free trial credit for first-time students. Trial availability depends on the trainer.' },
     { q: 'How do payments work?', a: 'We use Stripe for secure checkout. Cards and Apple/Google Pay are accepted where available.' },
     { q: 'Can I reschedule or cancel?', a: 'Reschedule up to 24 hours before a session. Some trainers may have different policies — check their profile.' },
-    { q: 'Do trainers provide materials?', a: 'Many trainers include PDFs, flashcards or audio. You can also upload your own material before a lesson.' },
+    { q: 'Do trainers provide materials?', a: 'Many trainers include PDFs, flashcards or audio.' },
     { q: 'Is there a mobile app?', a: 'Coming soon — our PWA works great on mobile and can be installed to your home screen.' },
     {
       q: "What is the procedure to become a tutor at LearniLM🌍World?",
@@ -472,7 +472,7 @@ export default function LandingPageAlt() {
     },
     {
       q: "Step 1: How do I submit my application?",
-      a: "Begin by submitting your application through our official LearnOsphere website. Make sure your details are accurate and complete.",
+      a: "Begin by submitting your application through our official LearniLM🌍World website. Make sure your details are accurate and complete.",
     },
     {
       q: "Step 2: What happens after I apply?",
@@ -488,7 +488,7 @@ export default function LandingPageAlt() {
     },
     {
       q: "Step 5: How does onboarding work?",
-      a: "Once you complete the required steps and training, you officially join EnglishYaari as a tutor — ready to empower learners with improved spoken English skills.",
+      a: "Once you complete the required steps and training, you officially join LearniLM🌍World as a tutor — ready to empower learners with improved spoken English skills.",
     },
   ]
 
@@ -636,79 +636,6 @@ export default function LandingPageAlt() {
         </div>
       </main>
 
-      {/* Why learners love us section */}
-      {/* bg-[#2D274B] */}
-      <section className="py-20 ]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-          {/* HEADING */}
-          <div className="text-center">
-            <h3 className="text-4xl lg:text-5xl  font-extrabold text-[#203989]">
-              Why learners love LearniLM🌍World
-            </h3>
-
-            {/* SUBTITLE BAR */}
-            <div className="mt-5 inline-block bg-[#5b8fd6] text-white px-6 py-3 rounded-md shadow-md max-w-3xl">
-              <p className="text-base lg:text-lg font-semibold">
-                Short lessons, lots of speaking time and tutors focused on practical
-                outcomes. Learn phrases you’ll use the very next day.
-              </p>
-            </div>
-          </div>
-
-          {/* TOP FEATURE CARDS */}
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((f, idx) => (
-              <div
-                key={idx}
-                className="bg-[#203989] text-white rounded-2xl p-6 shadow-lg hover:scale-[1.02] transition-transform"
-              >
-                <f.icon className="w-8 h-8 mb-4 text-white" />
-                <h4 className="text-xl font-bold mb-2">{f.title}</h4>
-                <p className="text-sm font-semibold opacity-90">{f.text}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* REAL OUTCOMES CARD */}
-          <div className="mt-10">
-            <div className="border-2 border-[#203989] bg-white rounded-2xl p-6 shadow-md max-w-5xl mx-auto">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-[#fde68a] flex items-center justify-center text-xl">
-                  ⭐
-                </div>
-                <div>
-                  <h4 className="text-xl font-extrabold text-black">
-                    Real outcomes
-                  </h4>
-                  <p className="text-sm font-bold text-[#4B437C]">
-                    Progress reports every 4 lessons
-                  </p>
-                </div>
-              </div>
-
-              <p className="mt-4 text-base font-semibold text-[#4B437C]">
-                From small talk to business calls — our curriculum is outcome-focused
-                so you can see measurable improvement.
-              </p>
-            </div>
-          </div>
-
-          {/* BOTTOM TAGS */}
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="bg-[#5b8fd6] text-white text-center border-white border-2 py-4 rounded-xl font-extrabold shadow-md">
-              Quick lessons
-            </div>
-            <div className="bg-[#5b8fd6] border-white border-2 text-white text-center py-4 rounded-xl font-extrabold shadow-md">
-              Excellent Material
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <TopTrainers />
-
       {/* Language Levels Explanation */}
       {/*  bg-[#2D274B] */}
       <section
@@ -782,7 +709,7 @@ export default function LandingPageAlt() {
             {(activeCategory === "more"
               ? [
                 { lang: "Thai", code: "th" },
-                { lang: "Bengali", code: "bd" },
+                { lang: "Bengali", code: "in" },
                 { lang: "Russian", code: "ru" },
                 { lang: "Mandarin", code: "cn" },
                 { lang: "Swahili", code: "ke" },
@@ -957,8 +884,8 @@ export default function LandingPageAlt() {
                   img: chem,
                 },
                 {
-                  name: "Biology",
-                  img: bio,
+                  name: "Computer Science",
+                  img: cs,
                 },
                 {
                   name: "History",
@@ -969,9 +896,10 @@ export default function LandingPageAlt() {
                   img: geo,
                 },
                 {
-                  name: "Computer Science",
-                  img: cs,
+                  name: "Biology",
+                  img: bio,
                 },
+                
                 {
                   name: "More",
                   img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",
@@ -1292,6 +1220,60 @@ export default function LandingPageAlt() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* top trainer section */}
+      <TopTrainers />
+
+
+      {/* Why learners love us section */}
+      {/* bg-[#2D274B] */}
+      <section className="py-20 ]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+          {/* HEADING */}
+          <div className="text-center">
+            <h3 className="text-4xl lg:text-5xl  font-extrabold text-[#203989]">
+              Why learners love LearniLM🌍World
+            </h3>
+
+            {/* SUBTITLE BAR */}
+            <div className="mt-5 inline-block bg-[#5b8fd6] text-white px-6 py-3 rounded-md shadow-md max-w-3xl">
+              <p className="text-base lg:text-lg font-semibold">
+                Short lessons, lots of speaking time and tutors focused on practical
+                outcomes. Learn phrases you’ll use the very next day.
+              </p>
+            </div>
+          </div>
+
+          {/* TOP FEATURE CARDS */}
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {features.map((f, idx) => (
+              <div
+                key={idx}
+                className="bg-[#203989] text-white rounded-2xl p-6 shadow-lg hover:scale-[1.02] transition-transform"
+              >
+                <f.icon className="w-8 h-8 mb-4 text-white" />
+                <h4 className="text-xl font-bold mb-2">{f.title}</h4>
+                <p className="text-sm font-semibold opacity-90">{f.text}</p>
+              </div>
+            ))}
+
+          </div>
+
+          {/* REAL OUTCOMES CARD */}
+
+          {/* BOTTOM TAGS */}
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="bg-[#5b8fd6] text-white text-center border-white border-2 py-4 rounded-xl font-extrabold shadow-md">
+              Quick lessons
+            </div>
+            <div className="bg-[#5b8fd6] border-white border-2 text-white text-center py-4 rounded-xl font-extrabold shadow-md">
+              Excellent Material
+            </div>
+          </div>
+
+        </div>
       </section>
 
       {/* Highlights Section */}

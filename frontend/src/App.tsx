@@ -14,7 +14,6 @@ import EducatorDashboard from './pages/trainer/EducatorDashboard'
 import BookingPage from './pages/BookingPage'
 import SessionRoom from './pages/SessionRoom'
 import TrainerProfile from './pages/TrainerProfile'
-import Trainers from './pages/Trainers'
 import ForgotPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ResetPassword';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -30,6 +29,8 @@ import FeaturedTrainersPage from './pages/FeaturedTrainersPage'
 import TrainerProfilePageDemo from './pages/TrainerProfilePageDemo'
 import GermanBlog from './pages/blogs/GermanBlog';
 import BengaliBlog from './pages/blogs/BengaliBlog';
+import VerifyEmail from './pages/VerifyEmail';
+import ScrollRestoration from './components/ScrollRestoration';
 
 function App() {
   return (
@@ -42,9 +43,11 @@ function App() {
 
               <Chatbot />
 
+              <ScrollRestoration/>
               <ScrollToTop />
 
-              <div className="min-h-screen bg-gradient-to-br from-cream-50 to-green-50 font-montreal">
+
+              <div className="min-h-screen bg-gradient-to-br from-cream-50 to-green-50 font-Limerick">
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/main" element={<MainPage />} />
@@ -54,6 +57,7 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/reset-password/:token" element={<ResetPassword />} />
                   <Route path="/forget-password" element={<ForgotPassword />} />
+                  <Route path="/verify-email" element={<VerifyEmail />} />
 
                   <Route path="/trainer-profile/:trainerId" element={<TrainerProfile />} />
                   <Route path="/book/:trainerId" element={<BookingPage />} />

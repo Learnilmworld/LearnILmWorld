@@ -12,6 +12,7 @@ import TrainersGrid from '../components/TrainersGrid'
 import { useAuth } from '../contexts/AuthContext'
 import CurrencySelector from '../components/CurrencySelector'
 import { Button, Offcanvas, Nav } from 'react-bootstrap'
+import Navbar from '../components/Navbar'
 
 
 const MainPage: React.FC = () => {
@@ -88,103 +89,7 @@ const MainPage: React.FC = () => {
         </div>
 
         {/* Header */}
-        <header className="sticky top-0 z-40">
-          <div className="flex w-full h-[75px] md:h-[85px] bg-[#fef5e4]">
-
-            {/* LEFT: LOGO SIDE (unchanged) */}
-            <div className="w-fit flex items-center pl-2 md:pl-10 pr-0 mr-[-1px]">
-              <Link to="/" className="h-full flex items-center">
-                <img
-                  src={logo}
-                  alt="LearnILM World"
-                  className="h-[100%] w-auto object-fill block"
-                />
-              </Link>
-            </div>
-
-            {/* RIGHT SIDE */}
-            <div className="flex-1 bg-[#5186cd] flex items-center justify-end pr-4 md:pr-10">
-
-              {/* DESKTOP NAV */}
-              <nav className="hidden lg:flex items-center gap-8">
-
-                {/* Pricing */}
-                <CurrencySelector variant="header" />
-
-                {/* Auth based buttons */}
-                {user ? (
-                  <Link
-                    to={getDashboardPath()}
-                    className="px-6 py-2 rounded-full bg-white text-[#5186cd] text-sm font-bold shadow hover:bg-gray-100 hover:scale-105 transition no-underline"
-                  >
-                    Dashboard
-                  </Link>
-                ) : (
-                  <Link
-                    to="/login"
-                    className="px-6 py-2 rounded-full bg-white text-[#5186cd] text-sm font-bold shadow hover:scale-105 transition no-underline"
-                  >
-                    Sign In
-                  </Link>
-                )}
-              </nav>
-
-              {/* MOBILE MENU TOGGLE */}
-              <div className="lg:hidden text-white ml-auto flex items-center">
-                <Button
-                  variant="link"
-                  className="text-white text-4xl p-0 no-underline"
-                  onClick={() => setShowOffcanvas(true)}
-                >
-                  ☰
-                </Button>
-
-                <Offcanvas
-                  show={showOffcanvas}
-                  onHide={() => setShowOffcanvas(false)}
-                  placement="end"
-                >
-                  <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Menu</Offcanvas.Title>
-                  </Offcanvas.Header>
-
-                  <Offcanvas.Body>
-                    <Nav className="flex-column gap-4">
-
-                      {/* Pricing */}
-                      <CurrencySelector
-                        variant="header"
-                        onSelect={() => setShowOffcanvas(false)}
-                      />
-
-
-                      {/* Auth based */}
-                      {user ? (
-                        <Nav.Link
-                          as={Link}
-                          to={getDashboardPath()}
-                          onClick={() => setShowOffcanvas(false)}
-                        >
-                          Dashboard
-                        </Nav.Link>
-                      ) : (
-                        <Nav.Link
-                          as={Link}
-                          to="/login"
-                          onClick={() => setShowOffcanvas(false)}
-                        >
-                          Sign In
-                        </Nav.Link>
-                      )}
-
-                    </Nav>
-                  </Offcanvas.Body>
-                </Offcanvas>
-              </div>
-
-            </div>
-          </div>
-        </header>
+        <Navbar variant="main" />
 
         {/* Main content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

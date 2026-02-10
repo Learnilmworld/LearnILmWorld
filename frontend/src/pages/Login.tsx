@@ -5,7 +5,6 @@ import { useAuth } from "../contexts/AuthContext";
 // , User - removed from above
 import "../theme.css"; // ensure theme is imported (or import once in index.tsx)
 import { GoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 import { useFacebook } from "../hooks/useFacebook";
 
 // interface LoginResult {
@@ -70,6 +69,12 @@ const Login: React.FC = () => {
       console.log("Login result:", result);
 
       if (!result.success) {
+
+        // special case → email not verified
+        if ((result as any)?.code === "EMAIL_NOT_VERIFIED") {
+          setError("Email not verified. Please verify your email.");
+          return;
+        }
         // show the exact message from backend
         setError(result.error || "Login failed. Please check credentials.");
         return;
@@ -137,7 +142,6 @@ const Login: React.FC = () => {
 
   const handleFacebookClick = async () => {
     setError('');
-    
     try {
       const fbResponse: any = await loginWithFacebook();
       setLoading(true);
@@ -158,11 +162,13 @@ const Login: React.FC = () => {
       if (typeof err === 'string' && err.includes('cancel')) {
         return;
       }
-      setError('Facebook login failed. Please try again.');
+      setError('We are Still Working, Sit Tight! Try again Later.');
     } finally {
       setLoading(false);
     }
   };
+
+
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 bg-[#5186cd]">
@@ -227,17 +233,23 @@ const Login: React.FC = () => {
         <div className="glass-effect rounded-2xl p-8 shadow-2xl bg-white/80 backdrop-blur">
           {error && (
             <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6">
-              <div className="flex items-center gap-2">
-                ⚠️ <span>{error}</span>
+              <div className="flex flex-col gap-2">
+                <span>⚠️ {error}</span>
+
+                {error.toLowerCase().includes("verify") && (
+                  <button
+                    onClick={() => navigate("/verify-email")}
+                    className="text-sm font-semibold underline text-blue-700 hover:text-blue-900 text-left"
+                  >
+                    Verify Email →
+                  </button>
+                )}
               </div>
             </div>
           )}
 
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-            aria-live="polite"
-          >
+
+          <form onSubmit={handleSubmit} className="space-y-6" aria-live="polite">
             {/* Email */}
             <div>
               <label
@@ -345,19 +357,19 @@ const Login: React.FC = () => {
               theme="outline"
               width={320}
             />
-            <button
-          type="button"
-          onClick={handleFacebookClick}
-          disabled={loading}
-          className="flex items-center justify-center gap-3 w-full max-w-[320px] px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-        >
-          <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" 
-            alt="Facebook Logo" 
-            className="w-6 h-6" 
-          />
-          <span>Continue with Facebook</span>
-        </button>
+            {/* <button
+              type="button"
+              onClick={handleFacebookClick}
+              disabled={loading}
+              className="flex items-center justify-center gap-3 w-full max-w-[320px] px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg"
+                alt="Facebook Logo"
+                className="w-6 h-6"
+              />
+              <span>Continue with Facebook</span>
+            </button> */}
           </div>
 
           <div className="mt-8 text-center">

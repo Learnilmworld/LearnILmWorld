@@ -243,7 +243,7 @@
 
 @font-face {
   font-family: 'Montreal Serial';
-  src: url('.\assets\fonts\Montreal Serial.ttf') format('truetype'); 
+  src: url('..\public\fonts\Limerick-Serial Regular.ttf') format('truetype'); 
   font-weight: normal;
   font-style: normal;
 }
