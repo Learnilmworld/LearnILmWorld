@@ -17,6 +17,16 @@ export default {
       },
       fontFamily: {
         Limerick: ['"Limerick-Serial Regular"', 'sans-serif']
+      },
+
+      animation: {
+        'pulse-subtle': 'pulse-subtle 3s ease-in-out infinite',
+      },
+      keyframes: {
+        'pulse-subtle': {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.85', transform: 'scale(1.01)' },
+        }
       }
     }
   },

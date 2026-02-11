@@ -80,6 +80,14 @@ const renderFlag = (code?: string) => {
 const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nationalities, clearFilters }) => {
     // const uniqueNationalities = nationalities;
 
+    const closeAllDropdowns = () => {
+        if (filters.openDropdown) {
+            setFilters((p: any) => ({
+                ...p,
+                openDropdown: null
+            }))
+        }
+    }
 
     return (
         <div className="bg-[#e9f1fb] rounded-[36px] p-6 border border-[#5186cd]/20 shadow-sm">
@@ -110,7 +118,13 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                 {learningType === 'language' && (
                     <div className="relative p-4 rounded-2xl bg-white border border-[#5186cd]/20 shadow-sm">
                         <label className="text-sm font-bold text-[#5186cd]">All Languages</label>
-                        <button onClick={() => setFilters((p: any) => ({ ...p, _toggleLanguageDropdown: !p._toggleLanguageDropdown }))} className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold flex justify-between items-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                        <button onClick={() =>
+                            setFilters((p: any) => ({
+                                ...p,
+                                openDropdown: p.openDropdown === "language" ? null : "language"
+                            }))
+                        }
+                            className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold flex justify-between items-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                         >
                             <span>{filters.language || 'Language'}</span>
                             <ChevronDown className={`h-4 w-4`} />
@@ -118,11 +132,13 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
 
 
                         {/* Dropdown local UI (simple: toggling stored on filters._toggleLanguageDropdown) */}
-                        {filters._toggleLanguageDropdown && (
+                        {filters.openDropdown === "language" && (
                             <div className="absolute bg-white border border-[#5186cd]/20 shadow-xl rounded-2xl p-3 mt-3 w-44 z-30 max-h-52 overflow-y-auto">
                                 <input type="text" placeholder="Search..." value={filters.language} onChange={(e) => setFilters((p: any) => ({ ...p, language: e.target.value }))} className="w-full px-2 py-1 border border-gray-300 rounded mb-2 text-sm" />
                                 {LANGUAGES.filter(l => l.name.toLowerCase().includes((filters.language || '').toLowerCase())).map(lang => (
-                                    <div key={lang.code} onClick={() => setFilters((p: any) => ({ ...p, language: lang.name, _toggleLanguageDropdown: false }))} className="cursor-pointer px-3 py-2 hover:bg-[#e9f1fb] rounded-lg text-sm font-medium"
+                                    <div key={lang.code} onClick={() => setFilters((p: any) => ({
+                                        ...p, language: lang.name, openDropdown: null
+                                    }))} className="cursor-pointer px-3 py-2 hover:bg-[#e9f1fb] rounded-lg text-sm font-medium"
                                     >{lang.flag}<span>{lang.name}</span></div>
                                 ))}
                             </div>
@@ -138,18 +154,17 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                             onClick={() =>
                                 setFilters((p: any) => ({
                                     ...p,
-                                    _toggleSubjectDropdown: !p._toggleSubjectDropdown
+                                    openDropdown: p.openDropdown === "subject" ? null : "subject"
+
                                 }))
                             }
-                            className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold flex justify-between items-center
-      shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
-      active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                            className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold flex justify-between items-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                         >
                             <span>{filters.specialization || 'Subject'}</span>
                             <ChevronDown className="h-4 w-4" />
                         </button>
 
-                        {filters._toggleSubjectDropdown && (
+                        {filters.openDropdown === "subject" && (
                             <div className="absolute bg-white border border-[#5186cd]/20 shadow-xl rounded-2xl p-3 mt-3 w-48 z-30 max-h-52 overflow-y-auto">
                                 {SUBJECTS.map(subj => (
                                     <div
@@ -158,7 +173,7 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                                             setFilters((p: any) => ({
                                                 ...p,
                                                 specialization: subj,
-                                                _toggleSubjectDropdown: false
+                                                openDropdown: null
                                             }))
                                         }
                                         className="cursor-pointer px-3 py-2 hover:bg-[#e9f1fb] rounded-lg text-sm font-medium"
@@ -179,7 +194,7 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                             onClick={() =>
                                 setFilters((p: any) => ({
                                     ...p,
-                                    _toggleHobbyDropdown: !p._toggleHobbyDropdown
+                                    openDropdown: p.openDropdown === "hobby" ? null : "hobby"
                                 }))
                             }
                             className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold flex justify-between items-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
@@ -188,7 +203,7 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                             <ChevronDown className="h-4 w-4" />
                         </button>
 
-                        {filters._toggleHobbyDropdown && (
+                        {filters.openDropdown === "hobby" && (
                             <div className="absolute bg-white border border-[#5186cd]/20 shadow-xl rounded-2xl p-3 mt-3 w-48 z-30 max-h-52 overflow-y-auto">
                                 {HOBBIES.map(h => (
                                     <div
@@ -197,7 +212,7 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                                             setFilters((p: any) => ({
                                                 ...p,
                                                 hobby: h,
-                                                _toggleHobbyDropdown: false
+                                                openDropdown: null
                                             }))
                                         }
                                         className="cursor-pointer px-3 py-2 hover:bg-[#e9f1fb] rounded-lg text-sm font-medium"
@@ -211,9 +226,23 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                 )}
 
                 {/* Experience */}
-                <div className="p-4 rounded-2xl bg-white border border-[#5186cd]/20 shadow-sm">
+                <div onMouseDown={closeAllDropdowns} className="p-4 rounded-2xl bg-white border border-[#5186cd]/20 shadow-sm">
                     <label className="text-base font-semibold text-slate-700">Experience (yrs)</label>
-                    <select value={filters.experience} onChange={e => setFilters((p: any) => ({ ...p, experience: e.target.value }))} className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                    <select
+                        value={filters.experience}
+                        onFocus={() =>
+                            setFilters((p: any) => ({
+                                ...p,
+                                openDropdown: null
+                            }))
+                        }
+                        onChange={e =>
+                            setFilters((p: any) => ({
+                                ...p,
+                                experience: e.target.value
+                            }))
+                        }
+                        className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                         <option value="0">0</option>
                         <option value="2">2</option>
                         <option value="5">5+</option>
@@ -233,9 +262,9 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
             </div> */}
 
                 {/* Sort By */}
-                <div className="p-4 rounded-2xl bg-white border border-[#5186cd]/20 shadow-sm">
+                <div onMouseDown={closeAllDropdowns} className="p-4 rounded-2xl bg-white border border-[#5186cd]/20 shadow-sm">
                     <label className="text-base font-bold text-slate-700">Sort By</label>
-                    <select value={filters.sortBy} onChange={e => setFilters((p: any) => ({ ...p, sortBy: e.target.value }))} className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+                    <select value={filters.sortBy} onChange={e => setFilters((p: any) => ({ ...p, sortBy: e.target.value, openDropdown: null }))} className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                         <option value="rating">Highest Rated</option>
                         <option value="price_low">Price: Low → High</option>
                         <option value="price_high">Price: High → Low</option>
@@ -244,12 +273,12 @@ const FiltersPanel: React.FC<Props> = ({ learningType, filters, setFilters, nati
                 </div>
 
                 {/* Removed min, only Max Price */}
-                <div className="p-4 rounded-2xl bg-white border border-[#5186cd]/20 shadow-sm">
+                <div onMouseDown={closeAllDropdowns} className="p-4 rounded-2xl bg-white border border-[#5186cd]/20 shadow-sm">
                     <label className="text-base font-bold text-slate-700">Sort Price ($/hr)</label>
                     <div className="flex items-center gap-2 mt-1 ">
                         {/* <input type="number" value={filters.minRate} onChange={e => setFilters((p: any) => ({ ...p, minRate: e.target.value }))} className="w-1/2 px-2 py-2 border border-gray-300 bg-[#CBE56A] rounded-lg text-sm text-[#2D274B] font-semibold" placeholder="Min" /> */}
                         {/* removed 2D274B */}
-                        <input type="number" value={filters.maxRate} onChange={e => setFilters((p: any) => ({ ...p, maxRate: e.target.value }))} className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]" placeholder="Max" />
+                        <input type="number" value={filters.maxRate} onChange={e => setFilters((p: any) => ({ ...p, maxRate: e.target.value, openDropdown: null }))} className="w-full mt-2 px-4 py-2 border-2 border-black rounded-full bg-white text-sm font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]" placeholder="Max" />
                     </div>
                 </div>
 

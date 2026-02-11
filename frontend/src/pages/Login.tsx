@@ -142,20 +142,25 @@ const Login: React.FC = () => {
 
   const handleFacebookClick = async () => {
     setError('');
+    console.log("before try in login.tsx")
     try {
       const fbResponse: any = await loginWithFacebook();
       setLoading(true);
       const result = await facebookLogin(fbResponse.accessToken, fbResponse.userID);
+      console.log("Inside try in login.tsx", result)
 
       if (!result.success) {
         setError(result.error || 'Facebook Login Failed');
         return;
       }
+      console.log("inside try After result check in login.tsx")
       const role = result.user?.role;
+      console.log("navigate to role", role);
       if (role === 'student') navigate('/student', { replace: true });
       else if (role === 'trainer') navigate('/trainer', { replace: true });
       else if (role === 'admin') navigate('/admin', { replace: true });
       else navigate('/main', { replace: true });
+
 
     } catch (err: any) {
       console.error("Facebook Error:", err);

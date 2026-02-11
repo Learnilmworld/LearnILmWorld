@@ -1,17 +1,17 @@
 // FILE: src/pages/MainPage.tsx
 import React, { useState, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+// import { Link } from 'react-router-dom'
+// import { motion } from 'framer-motion'
 import Footer from '../components/Footer'
 // import bg_img from '../assets/bg_main.jpeg'
-import logo from '../assets/header_logo.jpeg'
+// import logo from '../assets/header_logo.jpeg'
 import SearchBar from '../components/SearchBar'
 import LearningTypeSelector from '../components/LearningTypeSelector'
 import FiltersPanel from '../components/FiltersPanel'
 import TrainersGrid from '../components/TrainersGrid'
 import { useAuth } from '../contexts/AuthContext'
-import CurrencySelector from '../components/CurrencySelector'
-import { Button, Offcanvas, Nav } from 'react-bootstrap'
+// import CurrencySelector from '../components/CurrencySelector'
+// import { Button, Offcanvas, Nav } from 'react-bootstrap'
 import Navbar from '../components/Navbar'
 
 
@@ -20,7 +20,7 @@ const MainPage: React.FC = () => {
   const [learningType, setLearningType] = useState<'language' | 'subject' | 'hobby'>('language')
   const [languageMode, setLanguageMode] = useState<string>('subject')
 
-  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  // const [showOffcanvas, setShowOffcanvas] = useState(false);
 
 
   const { user, loading } = useAuth();
@@ -49,7 +49,8 @@ const MainPage: React.FC = () => {
     experience: '',
     rating: '',
     sortBy: 'rating',
-    nationality: ''
+    nationality: '',
+    openDropdown: null
   })
 
 
@@ -63,7 +64,8 @@ const MainPage: React.FC = () => {
       experience: '',
       rating: '',
       sortBy: 'rating',
-      nationality: ''
+      nationality: '',
+      openDropdown: null
     })
     setSearchTerm('')
   }, [])
@@ -73,14 +75,6 @@ const MainPage: React.FC = () => {
     <>
       <div className="min-h-screen bg-fixed bg-[#fef5e4] text-[#2D274B]">
 
-        {/* style={{
-        backgroundImage: `url(${bg_img})`,
-        position: 'relative',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        width: '100%'
-      }} */}
 
         {/* Floating decorative orbs */}
         <div className="fixed inset-0 pointer-events-none">

@@ -403,7 +403,8 @@ export default function LandingPageAlt() {
     { lang: "Mandarin", code: "cn" },
     { lang: "Hindi", code: "in" },
     { lang: "Korean", code: "kr" },
-    { lang: "Thai", code: "th" }
+    { lang: "Thai", code: "th" },
+    { lang: "Marathi", code: "in" }
   ];
 
   const euro_usa_lang = [
@@ -415,7 +416,7 @@ export default function LandingPageAlt() {
 
   const africa_mid_east_lang = [
     { lang: "Arabic", code: "sa" },
-    { lang: "Swahili", code: "ke" }
+    // { lang: "Swahili", code: "ke" }
   ];
 
   const languageGroups: Record<string, { lang: string; code: string }[]> = {
@@ -683,7 +684,7 @@ export default function LandingPageAlt() {
               { key: "popular", label: "Popular" },
               { key: "asian", label: "Asian Languages" },
               { key: "euro", label: "Europe & USA" },
-              { key: "africa", label: "Africa & Middle East" },
+              { key: "africa", label: "Middle East" },
               { key: "more", label: "More" },
             ].map((cat) => (
               <button
@@ -712,7 +713,7 @@ export default function LandingPageAlt() {
                 { lang: "Bengali", code: "in" },
                 { lang: "Russian", code: "ru" },
                 { lang: "Mandarin", code: "cn" },
-                { lang: "Swahili", code: "ke" },
+                // { lang: "Swahili", code: "ke" },
                 { lang: "Italian", code: "it" },
                 { lang: "Portuguese", code: "pt" },
                 { lang: "Korean", code: "kr" },
@@ -822,11 +823,8 @@ export default function LandingPageAlt() {
 
       {/* Explore subjects section */}
       {/* bg-[#dc8d33] */}
-      <section
-        className="relative py-24 "
-        aria-labelledby="sdil-subjects"
-      >
-        <div className="max-w-6xl  mx-auto px-6 lg:px-8 text-center">
+      <section className="relative py-12" aria-labelledby="sdil-subjects">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
           {/* Heading */}
           <motion.h2
             id="sdil-subjects"
@@ -834,7 +832,7 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-5xl  tracking-tight font-extrabold text-[#5186cd]"
+            className="text-5xl md:text-5xl tracking-tight font-extrabold text-[#5186cd]"
           >
             Subjects You Can Explore
           </motion.h2>
@@ -845,121 +843,91 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-5 text-xl text-[#2D274B] font-bold max-w-2xl mx-auto"
+            className="mt-5 text-2xl text-[#2D274B] font-semibold max-w-2xl mx-auto"
           >
-            Comprehensive courses across academic and professional subjects for holistic learning.
+            Comprehensive courses across academic and <br /> professional
+            subjects for holistic learning.
           </motion.p>
 
           {/* Grid Subjects */}
-          <div className='flex justify-center'>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: { staggerChildren: 0.3, delayChildren: 0.3 },
+              },
+            }}
+            className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          >
+            {[
+              { name: "Maths", img: math },
+              { name: "Physics", img: phy },
+              { name: "Chemistry", img: chem },
+              { name: "Computer Science", img: cs },
+              { name: "History", img: hist },
+              { name: "Geography", img: geo },
+              { name: "Biology", img: bio },
+              {
+                name: "More",
+                img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",
+                isMore: true,
+              },
+            ].map((subject, idx) => (
+              <motion.div
+                key={idx}
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                // Updated styling to match Hobbies: h-56, rounded-xl, overflow-hidden
+                className="group relative h-56 rounded-xl overflow-hidden shadow-sm border border-slate-200 hover:shadow-xl transition-all duration-300 cursor-pointer"
+                style={{
+                  backgroundImage: `url(${subject.img})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                onClick={() => handleSubjectClick(subject)}
+              >
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
 
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.3,
-                    delayChildren: 0.3,   // slight initial delay for smoother entrance
-                  },
-                },
-              }}
-              className="mt-16 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 box "
-            >
-              {[
-                {
-                  name: "Maths",
-                  img: math,
-                },
-                {
-                  name: "Physics",
-                  img: phy,
-                },
-                {
-                  name: "Chemistry",
-                  img: chem,
-                },
-                {
-                  name: "Computer Science",
-                  img: cs,
-                },
-                {
-                  name: "History",
-                  img: hist,
-                },
-                {
-                  name: "Geography",
-                  img: geo,
-                },
-                {
-                  name: "Biology",
-                  img: bio,
-                },
-                
-                {
-                  name: "More",
-                  img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=100",
-                  isMore: true,
-                },
-              ].map((subject, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={{
-                    hidden: { opacity: 0, y: 40 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="group relative h-60 w-60 rounded-[24px] bg-white shadow-[0_20px_30px_5px_rgba(0,0,0,0.3)] transition-all duration-500 ease-out hover:-translate-y-4 hover:shadow-[0_40px_50px_10px_rgba(0,0,0,0.4)] cursor-pointer"
-                  style={{
-                    backgroundImage: `url(${subject.img})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-
-                  }}
-                  onClick={() => handleSubjectClick(subject)}
+                {/* Subject Name */}
+                <div
+                  className={`absolute top-3 left-3 ${subject.isMore
+                    ? "bg-[#5186cd] text-white"
+                    : "bg-white/90 text-[#2D274B]"
+                    } px-3 py-1 rounded-md font-bold text-lg shadow`}
                 >
-                  {/* Overlay */}
-                  <div className=" rounded-[24px] absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300"></div>
+                  {subject.name}
+                </div>
 
-                  {/* Subject Name */}
-                  <div
-                    className={`absolute top-3 left-3 ${subject.isMore
-                      ? "bg-[#5186cd] text-[white]"
-                      : "bg-white/90 text-[#2D274B]"
-                      } px-3 py-1 rounded-md font-bold text-lg shadow`}
-                  >
-                    {subject.name}
-                  </div>
-
-                  {/* “More” Hover Text */}
-                  {/* {subject.isMore && (
+                {/* More Overlay (Consistent with Hobbies) */}
+                {subject.isMore && (
                   <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xl bg-black/40 opacity-0 group-hover:opacity-100 transition">
                     Explore More →
                   </div>
-                )} */}
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
 
         {/* Modal for More Subjects */}
         {showMore && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50" onClick={() => setShowMore(false)}>
-
-            <div className="
-              rounded-3xl p-10 max-w-4xl w-[90%] relative 
-              shadow-2xl
-              bg-gradient-to-br from-[#ffffff] via-[#f8f1ff] to-[#e9d8ff]
-              border border-white/40
-            ">
-
-              {/* Close Button */}
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+            onClick={() => setShowMore(false)}
+          >
+            <div
+              className="rounded-3xl p-10 max-w-4xl w-[90%] relative shadow-2xl bg-gradient-to-br from-[#ffffff] via-[#f8f1ff] to-[#e9d8ff] border border-white/40"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
+            >
               <button
                 onClick={() => setShowMore(false)}
                 className="absolute top-4 right-4 text-[#2D274B] hover:text-black text-2xl"
@@ -967,12 +935,10 @@ export default function LandingPageAlt() {
                 ✕
               </button>
 
-              {/* Title */}
               <h3 className="text-3xl font-bold text-[#2D274B] mb-6">
                 Explore More Subjects
               </h3>
 
-              {/* Subjects Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
                 {[
                   { name: "Economics", icon: "📊" },
@@ -986,36 +952,12 @@ export default function LandingPageAlt() {
                   <div
                     key={i}
                     onClick={() => handleMoreSubjectClick(subj.name)}
-                    className="
-                      group cursor-pointer 
-                      h-36 rounded-2xl 
-                      bg-white 
-                      shadow-md hover:shadow-xl 
-                      border border-slate-200
-                      transition-all duration-300 
-                      flex flex-col items-center justify-center
-                      hover:-translate-y-1 hover:scale-[1.05]
-                    "
+                    className="group cursor-pointer h-36 rounded-2xl bg-white shadow-md hover:shadow-xl border border-slate-200 transition-all duration-300 flex flex-col items-center justify-center hover:-translate-y-1 hover:scale-[1.05]"
                   >
-                    {/* Icon */}
-                    <div
-                      className="
-                        text-4xl mb-2 
-                        group-hover:scale-125 
-                        transition-transform duration-300
-                      "
-                    >
+                    <div className="text-4xl mb-2 group-hover:scale-125 transition-transform duration-300">
                       {subj.icon}
                     </div>
-
-                    {/* Label */}
-                    <div
-                      className="
-                        text-[#593C9F] text-lg font-semibold 
-                        text-center group-hover:text-[#2D1B69]
-                        transition-colors
-                      "
-                    >
+                    <div className="text-[#593C9F] text-lg font-semibold text-center group-hover:text-[#2D1B69] transition-colors">
                       {subj.name}
                     </div>
                   </div>
@@ -1228,7 +1170,7 @@ export default function LandingPageAlt() {
 
       {/* Why learners love us section */}
       {/* bg-[#2D274B] */}
-      <section className="py-20 ]">
+      <section className="py-14 ]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
           {/* HEADING */}
@@ -1278,7 +1220,7 @@ export default function LandingPageAlt() {
 
       {/* Highlights Section */}
       <section
-        className="relative py-24  text-white"
+        className="relative py-18  text-white"
         aria-labelledby="sdil-highlights"
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8">

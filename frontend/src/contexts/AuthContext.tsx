@@ -166,11 +166,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const facebookLogin = async (accessToken: string, userID: string) => {
     try {
+      console.log("inside authcontext try block");
+
       const response = await axios.post(`${API_BASE_URL}/api/auth/facebook-login`, {
         accessToken,
         userID
       })
+
+      console.log("response in context try", response);
+
       const { token: jwtToken, user: userFromServer } = response.data
+
+      console.log("token after response in context", token)
       if (jwtToken) {
         localStorage.setItem('token', jwtToken)
         axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`

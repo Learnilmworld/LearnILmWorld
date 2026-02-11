@@ -123,7 +123,7 @@ export default function TopTrainers(): JSX.Element {
   }, []);
 
   return (
-    <section className="py-28 ">
+    <section className="py-14 ">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         {/* Heading */}

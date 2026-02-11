@@ -125,13 +125,16 @@ const BecomeTrainer: React.FC = () => {
                   </p>
                 </div>
 
-                <motion.button
-                  onClick={() => navigate("/register?role=trainer")}
-                  className="py-4 px-5 bg-[#276dc9] text-white font-semibold text-lg rounded-full w-fit translate-y-8 shadow-lg hover:bg-[#205eb0]"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  Become a Trainer Today
-                </motion.button>
+                <div className="translate-y-8">
+
+                  <motion.button
+                    onClick={() => navigate("/register?role=trainer")}
+                    className="py-4 px-5 bg-[#276dc9] text-white font-semibold text-lg rounded-full w-fit   shadow-lg hover:bg-[#205eb0]"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    Become a Trainer Today
+                  </motion.button>
+                </div>
               </motion.div>
 
               {/* RIGHT Img */}
