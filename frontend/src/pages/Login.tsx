@@ -362,19 +362,19 @@ const Login: React.FC = () => {
               theme="outline"
               width={320}
             />
-            {/* <button
+            <button
               type="button"
               onClick={handleFacebookClick}
               disabled={loading}
-              className="flex items-center justify-center gap-3 w-full max-w-[320px] px-4 py-2 border border-gray-300 rounded-full shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-between gap-3 w-full max-w-[320px] mt-2 pl-2 pr-14 py-1 border border-gray-300 rounded-full shadow-sm bg-white text-gray-700 font-medium hover:bg-gray-50 transition-colors"
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg"
                 alt="Facebook Logo"
-                className="w-6 h-6"
+                className="w-5 h-5"
               />
               <span>Continue with Facebook</span>
-            </button> */}
+            </button>
           </div>
 
           <div className="mt-8 text-center">

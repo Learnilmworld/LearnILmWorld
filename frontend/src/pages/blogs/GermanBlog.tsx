@@ -7,7 +7,7 @@ import Footer from '../../components/Footer'
 // local images
 import img1 from '../../assets/germanBlogPic1.png'
 import img2 from '../../assets/germanBlogPic2.png'
-import BlogSection from './BlogSection'
+import BlogSection from '../../components/BlogSection'
 
 const GermanBlog = () => {
     return (
@@ -186,7 +186,7 @@ const GermanBlog = () => {
 
 
                             <div className="mt-16">
-                                <Link to="/about#blog" className="text-[#5186cd] font-semibold hover:underline">
+                                <Link to="/blog" className="text-[#5186cd] font-semibold hover:underline">
                                     View all blogs →
                                 </Link>
                             </div>

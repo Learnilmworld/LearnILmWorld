@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import img1 from "../../assets/germanBlogPic1.png";
 
-/* ================= BLOG DATA ================= */
+/*  BLOG DATA  */
 
 const germanBlogMeta = {
     title: "Teach German Language Online",

@@ -31,6 +31,8 @@ import GermanBlog from './pages/blogs/GermanBlog';
 import BengaliBlog from './pages/blogs/BengaliBlog';
 import VerifyEmail from './pages/VerifyEmail';
 import ScrollRestoration from './components/ScrollRestoration';
+import BlogPage from './pages/BlogPage';
+import Careers from './pages/Careers';
 
 function App() {
   return (
@@ -43,7 +45,7 @@ function App() {
 
               <Chatbot />
 
-              <ScrollRestoration/>
+              <ScrollRestoration />
               <ScrollToTop />
 
 
@@ -68,8 +70,12 @@ function App() {
                   <Route path="/demo" element={<FeaturedTrainersPage />} />
 
                   {/* BLOG */}
+                  <Route path='/blog' element={<BlogPage />} />
                   <Route path="/blog/german-culture" element={<GermanBlog />} />
                   <Route path="/blog/bengali-culture" element={<BengaliBlog />} />
+
+                  {/* Careers */}
+                  <Route path='/careers' element={<Careers />} />
 
                   <Route path="/student/*" element={
                     <PrivateRoute allowedRoles={['student']}>

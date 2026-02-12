@@ -1,52 +1,66 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 //  Facebook,Twitter,Instagram,Linkedin,Mail, Globe,
 // import { Nav, Container, Offcanvas, Button } from 'react-bootstrap'
 import { useAuth } from "../contexts/AuthContext";
-import { BookOpen, ArrowRight, Play, Mic, Headphones, Calendar, Users, Award, Clock, Star, MessageSquare, ChevronDown, ChevronRight, } from 'lucide-react';
+import {
+  BookOpen,
+  ArrowRight,
+  Play,
+  Mic,
+  Headphones,
+  Calendar,
+  Users,
+  Award,
+  Clock,
+  Star,
+  MessageSquare,
+  ChevronDown,
+  ChevronRight,
+} from "lucide-react";
 // Navbar,from above
 // import logo from "../assets/LearnilmworldLogo.jpg";
 // import russian_student from '../assets/russian_student.png'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/css/bootstrap.min.css";
 
 // import bg_img from '../assets/purple_gradient.jpg'
 // import bg_main from '../assets/bg_main.jpeg'
 // import bg_img from '../assets/header_bg.jpg'
 
-import french_st from '../assets/French_student1.jpeg';
-import german_st from '../assets/German_student1.jpeg';
-import british_st from '../assets/British_student1.jpeg';
-import spanish_st from '../assets/Spanish_student1.jpeg';
-import japanese_st from '../assets/Japanese_student1.jpeg';
-import arab_student from '../assets/arabian_student1.jpeg'
-import indian_st from '../assets/Indian_student1.jpeg';
+import french_st from "../assets/French_student1.jpeg";
+import german_st from "../assets/German_student1.jpeg";
+import british_st from "../assets/British_student1.jpeg";
+import spanish_st from "../assets/Spanish_student1.jpeg";
+import japanese_st from "../assets/Japanese_student1.jpeg";
+import arab_student from "../assets/arabian_student1.jpeg";
+import indian_st from "../assets/Indian_student1.jpeg";
 // import chi_student from '../assets/chinese_student.png'
 
-import spain_flag from '../assets/Spain_flag.jpeg';
-import france_flag from '../assets/france_flag.jpeg';
-import jap_flag from '../assets/Jap_flag.jpeg';
-import ind_flag from '../assets/Indian_flag.jpeg';
-import ger_flag from '../assets/German_flag.jpeg'
-import brit_flag from '../assets/brit_flag.jpeg'
-import arab_flag from '../assets/arab_flag.jpeg'
+import spain_flag from "../assets/Spain_flag.jpeg";
+import france_flag from "../assets/france_flag.jpeg";
+import jap_flag from "../assets/Jap_flag.jpeg";
+import ind_flag from "../assets/Indian_flag.jpeg";
+import ger_flag from "../assets/German_flag.jpeg";
+import brit_flag from "../assets/brit_flag.jpeg";
+import arab_flag from "../assets/arab_flag.jpeg";
 
 // import heroImage1 from '../assets/Hero_image1.png'
 // import heroImage2 from '../assets/Hero_image2.jpg'
 
-import heroImage3 from '../assets/together child1.png'
+import heroImage3 from "../assets/together child1.png";
 
-import math from '../assets/Math.jpeg'
-import hist from '../assets/history3.png'
-import geo from '../assets/Geography.jpeg'
-import phy from '../assets/Physics.jpeg'
-import chem from '../assets/chemistry.jpeg'
-import bio from '../assets/Biology.jpeg'
-import cs from '../assets/ComputerScience.png'
-import Footer from '../components/Footer'
-import TopTrainers from '../components/TopTrainers'
+import math from "../assets/Math.jpeg";
+import hist from "../assets/history3.png";
+import geo from "../assets/Geography.jpeg";
+import phy from "../assets/Physics.jpeg";
+import chem from "../assets/chemistry.jpeg";
+import bio from "../assets/Biology.jpeg";
+import cs from "../assets/ComputerScience.png";
+import Footer from "../components/Footer";
+import TopTrainers from "../components/TopTrainers";
 // import { LanguageCard } from '../components/LanguageCard'
-import Navbar from '../components/Navbar';
+import Navbar from "../components/Navbar";
 // import CurrencySelector from '../components/CurrencySelector'
 // import MoreLanguages from '../components/MoreLanguages'
 
@@ -55,17 +69,14 @@ import Navbar from '../components/Navbar';
 // cards have been moved upwards for a stronger visual overlap and nicer composition.
 // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-
 export default function LandingPageAlt() {
-  const [mounted, setMounted] = useState(false)
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [mounted, setMounted] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   // const [showOffcanvas, setShowOffcanvas] = useState(false)
 
   const [activeCategory, setActiveCategory] = useState<
     "popular" | "asian" | "euro" | "africa" | "more"
   >("popular");
-
-
 
   const [showMore, setShowMore] = useState(false);
   const [showMoreLanguages, setShowMoreLanguages] = useState(false);
@@ -76,8 +87,6 @@ export default function LandingPageAlt() {
 
   // languages
   const handleLanguageClick = async (language: any) => {
-
-
     const trainerMap: Record<string, string> = {
       German: "trainer_id_for_german",
       French: "trainer_id_for_french",
@@ -92,11 +101,17 @@ export default function LandingPageAlt() {
 
     const trainerId = trainerMap[language];
 
-    if (!trainerId) return alert("We are currently finalizing a top-tier expert for this Language. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
+    if (!trainerId)
+      return alert(
+        "We are currently finalizing a top-tier expert for this Language. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.",
+      );
 
     if (!user) {
       // Save the clicked language temporarily for redirect after login
-      localStorage.setItem("redirectAfterLogin", `/main?language=${encodeURIComponent(language)}`);
+      localStorage.setItem(
+        "redirectAfterLogin",
+        `/main?language=${encodeURIComponent(language)}`,
+      );
       navigate("/login");
     } else {
       navigate(`/main?language=${encodeURIComponent(language)}`);
@@ -104,7 +119,6 @@ export default function LandingPageAlt() {
   };
 
   const handleMoreLanguageClick = (languageName: any) => {
-
     const languageTrainerMap: Record<string, string> = {
       Sanskrit: "68f244c9e88b2371b4194d2c",
       Russian: "68f244c9e88b2371b4194d2c",
@@ -117,7 +131,6 @@ export default function LandingPageAlt() {
       Korean: "trainer_id_for_korean",
     };
 
-
     const trainerId = languageTrainerMap[languageName];
 
     if (!trainerId) {
@@ -127,7 +140,10 @@ export default function LandingPageAlt() {
     }
 
     if (!user) {
-      localStorage.setItem("redirectAfterLogin", `/main?language=${encodeURIComponent(languageName)}`);
+      localStorage.setItem(
+        "redirectAfterLogin",
+        `/main?language=${encodeURIComponent(languageName)}`,
+      );
       navigate("/login");
     } else {
       navigate(`/main?language=${encodeURIComponent(languageName)}`);
@@ -154,12 +170,15 @@ export default function LandingPageAlt() {
 
     const trainerId = hobbyTrainerMap[hobby.name];
 
-    if (!trainerId) return alert("We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.");
+    if (!trainerId)
+      return alert(
+        "We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.",
+      );
 
     if (!user) {
       localStorage.setItem(
         "redirectAfterLogin",
-        `/main?hobby=${encodeURIComponent(hobby.name)}`
+        `/main?hobby=${encodeURIComponent(hobby.name)}`,
       );
       navigate("/login");
     } else {
@@ -178,7 +197,9 @@ export default function LandingPageAlt() {
     const trainerId = trainerMap[hobbyName];
 
     if (!trainerId) {
-      alert("We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.");
+      alert(
+        "We are currently finalizing a creative expert for this passion. We believe learning a new skill should be inspiring, so we are taking a little extra time to find the perfect mentor to guide you.",
+      );
       setShowMoreHobbies(false);
       return;
     }
@@ -186,7 +207,7 @@ export default function LandingPageAlt() {
     if (!user) {
       localStorage.setItem(
         "redirectAfterLogin",
-        `/main?hobby=${encodeURIComponent(hobbyName)}`
+        `/main?hobby=${encodeURIComponent(hobbyName)}`,
       );
       navigate("/login");
     } else {
@@ -222,13 +243,18 @@ export default function LandingPageAlt() {
     const trainerId = subjectTrainerMap[subject.name];
 
     if (!trainerId) {
-      alert("We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
+      alert(
+        "We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.",
+      );
       return;
     }
 
     if (!user) {
       // Store redirect path for after login
-      localStorage.setItem("redirectAfterLogin", `/main?subject=${encodeURIComponent(subject.name)}`);
+      localStorage.setItem(
+        "redirectAfterLogin",
+        `/main?subject=${encodeURIComponent(subject.name)}`,
+      );
       navigate("/login");
     } else {
       navigate(`/main?subject=${encodeURIComponent(subject.name)}`);
@@ -249,13 +275,18 @@ export default function LandingPageAlt() {
     const trainerId = subjectTrainerMap[subjectName];
 
     if (!trainerId) {
-      alert("We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.");
+      alert(
+        "We are currently finalizing a top-tier expert for this subject. We believe in providing the best quality education, so we are taking a little extra time to find the perfect instructor.",
+      );
       setShowMore(false);
       return;
     }
 
     if (!user) {
-      localStorage.setItem("redirectAfterLogin", `/main?subject=${encodeURIComponent(subjectName)}`);
+      localStorage.setItem(
+        "redirectAfterLogin",
+        `/main?subject=${encodeURIComponent(subjectName)}`,
+      );
       navigate("/login");
     } else {
       navigate(`/main?subject=${encodeURIComponent(subjectName)}`);
@@ -263,7 +294,6 @@ export default function LandingPageAlt() {
 
     setShowMore(false);
   };
-
 
   // const flagIcons: Record<string, string> = {
   //   German: "https://flagcdn.com/w40/de.png",
@@ -274,8 +304,7 @@ export default function LandingPageAlt() {
   //   Sanskrit: "https://flagcdn.com/w40/in.png"
   // }
 
-
-  useEffect(() => setMounted(true), [])
+  useEffect(() => setMounted(true), []);
 
   const languages = [
     {
@@ -336,7 +365,8 @@ export default function LandingPageAlt() {
         "A2 — Travel, shopping & daily conversations",
         "B1 — Speak confidently for work, study & life",
       ],
-      idealFor: "🌍 Perfect for students, professionals & study-abroad aspirants",
+      idealFor:
+        "🌍 Perfect for students, professionals & study-abroad aspirants",
     },
     {
       lang: "French",
@@ -393,7 +423,7 @@ export default function LandingPageAlt() {
     { lang: "Portuguese", code: "pt" },
     { lang: "Korean", code: "kr" },
     { lang: "Italian", code: "it" },
-    { lang: "Japanese", code: "jp" }
+    { lang: "Japanese", code: "jp" },
   ];
 
   const asian_lang = [
@@ -404,19 +434,19 @@ export default function LandingPageAlt() {
     { lang: "Hindi", code: "in" },
     { lang: "Korean", code: "kr" },
     { lang: "Thai", code: "th" },
-    { lang: "Marathi", code: "in" }
+    { lang: "Marathi", code: "in" },
   ];
 
   const euro_usa_lang = [
     { lang: "English", code: "gb" },
     { lang: "German", code: "de" },
     { lang: "French", code: "fr" },
-    { lang: "Russian", code: "ru" }
+    { lang: "Russian", code: "ru" },
   ];
 
   const africa_mid_east_lang = [
     { lang: "Arabic", code: "sa" },
-    // { lang: "Swahili", code: "ke" }
+    // { lang: "Swahili", code: "ke" },
   ];
 
   const languageGroups: Record<string, { lang: string; code: string }[]> = {
@@ -430,43 +460,73 @@ export default function LandingPageAlt() {
     {
       ind: "01",
       icon: Users,
-      title: 'Find your trainer',
-      desc: 'Smart filters: language, accent, price, availability and student ratings.'
+      title: "Find your trainer",
+      desc: "Smart filters: language, accent, price, availability and student ratings.",
     },
     {
       ind: "02",
       icon: BookOpen,
-      title: 'Book a session',
-      desc: 'One-click booking, instant calendar sync and secure payments.'
+      title: "Book a session",
+      desc: "One-click booking, instant calendar sync and secure payments.",
     },
     {
       ind: "03",
       icon: Play,
-      title: 'Practice & improve',
-      desc: 'Live lessons, role-plays, recordings and tailored homework.'
+      title: "Practice & improve",
+      desc: "Live lessons, role-plays, recordings and tailored homework.",
     },
     {
       ind: "04",
       icon: Award,
-      title: 'Track progress',
-      desc: 'Personal dashboard, streaks, and certificates.'
-    }
-  ]
+      title: "Track progress",
+      desc: "Personal dashboard, streaks, and certificates.",
+    },
+  ];
 
   const features = [
-    { icon: Clock, title: 'Flexible Hours', text: 'Lessons at any time — morning, night or weekends.' },
-    { icon: MessageSquare, title: 'Expert Trainers', text: 'Certified tutors with real teaching experience.' },
-    { icon: Star, title: 'Real outcomes', text: 'Our curriculum is outcome-focused so you can see measurable improvement' }
-  ]
+    {
+      icon: Clock,
+      title: "Flexible Hours",
+      text: "Lessons at any time — morning, night or weekends.",
+    },
+    {
+      icon: MessageSquare,
+      title: "Expert Trainers",
+      text: "Certified tutors with real teaching experience.",
+    },
+    {
+      icon: Star,
+      title: "Real outcomes",
+      text: "Our curriculum is outcome-focused so you can see measurable improvement",
+    },
+  ];
 
   const faqs = [
-    { q: 'How do I choose a trainer?', a: 'Use filters (experience, rating, price) and send a short message to get a feel. Look for video intros and student reviews.' },
-    { q: 'What languages are available?', a: '20+ languages including Spanish, French, German, Chinese, Japanese, Arabic and many dialects.' },
+    {
+      q: "How do I choose a trainer?",
+      a: "Use filters (experience, rating, price) and send a short message to get a feel. Look for video intros and student reviews.",
+    },
+    {
+      q: "What languages are available?",
+      a: "20+ languages including Spanish, French, German, Chinese, Japanese, Arabic and many dialects.",
+    },
     // { q: 'Can I try before I pay?', a: 'Yes — we offer a free trial credit for first-time students. Trial availability depends on the trainer.' },
-    { q: 'How do payments work?', a: 'We use Stripe for secure checkout. Cards and Apple/Google Pay are accepted where available.' },
-    { q: 'Can I reschedule or cancel?', a: 'Reschedule up to 24 hours before a session. Some trainers may have different policies — check their profile.' },
-    { q: 'Do trainers provide materials?', a: 'Many trainers include PDFs, flashcards or audio.' },
-    { q: 'Is there a mobile app?', a: 'Coming soon — our PWA works great on mobile and can be installed to your home screen.' },
+    {
+      q: "How do payments work?",
+      a: "We use Stripe for secure checkout. Cards and Apple/Google Pay are accepted where available.",
+    },
+    {
+      q: "Can I reschedule or cancel?",
+      a: "Reschedule up to 24 hours before a session. Some trainers may have different policies — check their profile.",
+    },
+    {
+      q: "Do trainers provide materials?",
+      a: "Many trainers include PDFs, flashcards or audio.",
+    },
+    {
+      q: "Is there a mobile app?",
+      a: "Coming soon — our PWA works great on mobile and can be installed to your home screen.",
+    },
     {
       q: "What is the procedure to become a tutor at LearniLM🌍World?",
       a: "Becoming a tutor involves a few simple steps — from applying to onboarding. Here’s how you can start your journey with us:",
@@ -491,38 +551,37 @@ export default function LandingPageAlt() {
       q: "Step 5: How does onboarding work?",
       a: "Once you complete the required steps and training, you officially join LearniLM🌍World as a tutor — ready to empower learners with improved spoken English skills.",
     },
-  ]
+  ];
 
   const reviews = [
     {
-      name: 'Sarath',
+      name: "Sarath",
 
-      text: 'The trainers are excellent — practical and patient. After a month I was comfortable conducting client calls in Spanish. The homework and recorded sessions were invaluable.',
-      rating: 5
+      text: "The trainers are excellent — practical and patient. After a month I was comfortable conducting client calls in Spanish. The homework and recorded sessions were invaluable.",
+      rating: 5,
     },
     {
-      name: 'Murali',
-      text: 'Lessons are structured but flexible. My speaking confidence improved rapidly. The trainer recommended focused listening tasks that really helped.',
-      rating: 4
+      name: "Murali",
+      text: "Lessons are structured but flexible. My speaking confidence improved rapidly. The trainer recommended focused listening tasks that really helped.",
+      rating: 4,
     },
     {
-      name: 'Akhil',
-      text: 'The cultural mini-lessons helped me with real conversations while traveling. The trainer prepared a short phrase sheet for my trip — super useful!',
-      rating: 5
+      name: "Akhil",
+      text: "The cultural mini-lessons helped me with real conversations while traveling. The trainer prepared a short phrase sheet for my trip — super useful!",
+      rating: 5,
     },
     {
-      name: 'Neha',
-      text: 'Easy scheduling and consistent progress checks. I love the micro-lessons between full sessions.',
-      rating: 4
-    }
-  ]
-
+      name: "Neha",
+      text: "Easy scheduling and consistent progress checks. I love the micro-lessons between full sessions.",
+      rating: 4,
+    },
+  ];
 
   return (
-    <div className="min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-[linear-gradient(145deg,#E6EEF9_0%,#FEF5E4_30%,#f7f1e6_70%,#E6EEF9_100%)]"
+    <div
+      className="min-h-screen font-inter text-[#2D274B] transition-colors duration-500 bg-[linear-gradient(145deg,#E6EEF9_0%,#FEF5E4_30%,#f7f1e6_70%,#E6EEF9_100%)]"
     // #fef5e4
     >
-
       {/* 2D274B  text- #dc8d33*/}
       {/* bg-[#6B48AF]/95 backdrop-blur-sm border-b border-white/30 text-white */}
       <Navbar />
@@ -539,7 +598,9 @@ export default function LandingPageAlt() {
                 className="lg:col-span-7 flex flex-col space-y-6 pb-12 z-10 relative"
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl  font-extrabold text-white leading-tight">
-                  <span className="block lg:whitespace-nowrap">Helping learners grow,</span>
+                  <span className="block lg:whitespace-nowrap">
+                    Helping learners grow,
+                  </span>
                   <span className="text-[#2D274B]">
                     emotionally <span className="text-white">& </span>
                     <br /> intellectually
@@ -549,13 +610,15 @@ export default function LandingPageAlt() {
                 <div className="mt-4">
                   <div className="inline-block rounded-xl border-2 border-white px-4 py-2">
                     <p className="text-xl lg:text-2xl font-semibold text-white">
-                      Clarity comes with the <span className="text-[#2D274B]">Right Mentors</span>
+                      Clarity comes with the{" "}
+                      <span className="text-[#2D274B]">Right Mentors</span>
                     </p>
                   </div>
                 </div>
 
                 <p className="text-xl lg:text-2xl font-bold text-white">
-                  Learn from natives. <span className="text-[#2D274B]">Speak like natives</span>
+                  Learn from natives.{" "}
+                  <span className="text-[#2D274B]">Speak like natives</span>
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-2">
@@ -592,7 +655,7 @@ export default function LandingPageAlt() {
                   src={heroImage3}
                   alt="Learners"
                   className="w-full h-auto object-contain max-h-[450px] lg:scale-125 origin-bottom z-10 relative left-4 lg:left-0"
-                  style={{ marginBottom: '-2px' }}
+                  style={{ marginBottom: "-2px" }}
                 />
               </motion.div>
             </div>
@@ -602,7 +665,6 @@ export default function LandingPageAlt() {
         {/* Bottom features after grid*/}
         <div className="py-10 mt-10">
           <div className="max-w-5xl mx-auto flex flex-wrap justify-center gap-10">
-
             <div className="flex items-center gap-3">
               <div className="p-3 bg-white rounded-full text-[#4f88f2] shadow">
                 <Mic className="w-7 h-7" />
@@ -629,10 +691,11 @@ export default function LandingPageAlt() {
               </div>
               <div>
                 <p className="font-bold text-3xl">Flexible</p>
-                <p className="text-base text-gray-500">Weekday / weekend batches</p>
+                <p className="text-base text-gray-500">
+                  Weekday / weekend batches
+                </p>
               </div>
             </div>
-
           </div>
         </div>
       </main>
@@ -640,10 +703,10 @@ export default function LandingPageAlt() {
       {/* Language Levels Explanation */}
       {/*  bg-[#2D274B] */}
       <section
-        className="relative py-12 text-[#dc8d33]"
+        className="relative py-12 md:py-20 text-[#dc8d33]"
         aria-labelledby="sdil-courses"
       >
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Heading */}
           <motion.h2
             id="sdil-courses"
@@ -651,10 +714,10 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-5xl font-extrabold  text-[#5186cd] tracking-tight"
+            className="text-3xl md:text-5xl font-extrabold text-[#5186cd] tracking-tight"
           >
             Languages That Open Doors
-            <span className="block text-[#5186cd] mt-1">
+            <span className="block text-[#5186cd] mt-2 md:mt-1 text-2xl md:text-5xl">
               Speak to the World with Confidence
             </span>
           </motion.h2>
@@ -665,21 +728,21 @@ export default function LandingPageAlt() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-5 text-xl text-[#2D274B] font-bold max-w-3xl mx-auto"
+            className="mt-5 text-base md:text-xl text-[#2D274B] font-bold max-w-3xl mx-auto"
           >
             Explore world languages guided by international certification standards.
             Learn from certified trainers across every level.
           </motion.p>
 
           {/* Tag */}
-          <div className="mt-4 flex justify-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border text-sm font-medium text-[#4B437C] shadow-sm">
+          <div className="mt-6 flex justify-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border text-xs md:text-sm font-medium text-[#4B437C] shadow-sm">
               🌍 Languages & Levels
             </div>
           </div>
 
           {/* CATEGORY OPTIONS */}
-          <div className="mt-12 flex flex-wrap justify-center gap-4">
+          <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-2 md:gap-4">
             {[
               { key: "popular", label: "Popular" },
               { key: "asian", label: "Asian Languages" },
@@ -691,22 +754,21 @@ export default function LandingPageAlt() {
                 key={cat.key}
                 onClick={() => setActiveCategory(cat.key as any)}
                 className={`
-        px-6 py-2 rounded-full font-bold transition
-        ${activeCategory === cat.key
+            px-4 py-2 md:px-6 md:py-2 rounded-full font-bold transition text-sm md:text-base
+            ${activeCategory === cat.key
                     ? "bg-[#5186cd] text-white shadow-md"
                     : "bg-white text-[#2D274B] border hover:bg-[#eef4ff]"
                   }
-      `}
+          `}
               >
                 {cat.label}
               </button>
             ))}
           </div>
 
-
           {/* Responsive Grid with Flags */}
           {/* LANGUAGE GRID (REPLACED CONTENT) */}
-          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 justify-center">
+          <div className="mt-8 md:mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 justify-center">
             {(activeCategory === "more"
               ? [
                 { lang: "Thai", code: "th" },
@@ -724,68 +786,67 @@ export default function LandingPageAlt() {
                 key={idx}
                 onClick={() => handleLanguageClick(lang.lang)}
                 className="
-    cursor-pointer
-    flex items-center gap-3
-    px-5 py-3
-    rounded-full
-    bg-white
-    shadow-[0_4px_10px_rgba(0,0,0,0.12)]
-    hover:shadow-[0_8px_18px_rgba(0,0,0,0.18)]
-    hover:-translate-y-0.5
-    transition-all duration-300
-  "
+            cursor-pointer
+            flex items-center gap-2 md:gap-3
+            px-3 py-2 md:px-5 md:py-3
+            rounded-full
+            bg-white
+            shadow-[0_4px_10px_rgba(0,0,0,0.12)]
+            hover:shadow-[0_8px_18px_rgba(0,0,0,0.18)]
+            hover:-translate-y-0.5
+            transition-all duration-300
+          "
               >
                 <img
                   src={`https://flagcdn.com/w40/${lang.code}.png`}
                   alt={lang.lang}
-                  className="w-8 h-8 rounded-full object-cover"
+                  className="w-6 h-6 md:w-8 md:h-8 rounded-full object-cover"
                 />
 
-                <span className="font-semibold text-[#2f6fd3] text-base">
+                <span className="font-semibold text-[#2f6fd3] text-sm md:text-base truncate">
                   {lang.lang}
                 </span>
               </div>
-
             ))}
           </div>
-
         </div>
         {/* Modal for More Languages */}
         {showMoreLanguages && (
           <div
-            className="fixed inset-0 flex items-center justify-center bg-black/60 z-50"
+            className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 p-4"
             onClick={() => setShowMoreLanguages(false)}
           >
             <div
               onClick={(e) => e.stopPropagation()}
               className="
-        rounded-3xl p-10 max-w-3xl w-[90%] relative 
-        shadow-2xl
-        bg-gradient-to-br from-[#ffffff] via-[#f0f6ff] to-[#dceaff]
-        border border-white/40
-      "
+          rounded-3xl p-6 md:p-10 max-w-3xl w-full relative 
+          shadow-2xl
+          bg-gradient-to-br from-[#ffffff] via-[#f0f6ff] to-[#dceaff]
+          border border-white/40
+          max-h-[85vh] overflow-y-auto
+        "
             >
               {/* Close Button */}
               <button
                 onClick={() => setShowMoreLanguages(false)}
-                className="absolute top-4 right-4 text-[#2D274B] hover:text-black text-2xl"
+                className="absolute top-4 right-4 text-[#2D274B] hover:text-black text-xl md:text-2xl z-10"
               >
                 ✕
               </button>
 
               {/* Title */}
-              <h3 className="text-3xl font-bold text-[#2D274B] mb-6">
+              <h3 className="text-2xl md:text-3xl font-bold text-[#2D274B] mb-6 pr-8">
                 Explore More Languages
               </h3>
 
               {/* Languages Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6 mt-6">
                 {[
                   { name: "Thai", flag: "th" },
                   { name: "Bengali", flag: "in" },
                   { name: "Russian", flag: "ru" },
                   { name: "Mandarin", flag: "cn" },
-                  { name: "Swahili", flag: "ke" },
+                  // { name: "Swahili", flag: "ke" },
                   { name: "Italian", flag: "it" },
                   { name: "Portuguese", flag: "pt" },
                   { name: "Korean", flag: "kr" },
@@ -794,22 +855,22 @@ export default function LandingPageAlt() {
                     key={i}
                     onClick={() => handleMoreLanguageClick(lang.name)}
                     className="
-              group cursor-pointer 
-              h-32 rounded-2xl 
-              bg-white 
-              shadow-md hover:shadow-xl 
-              border border-slate-200
-              transition-all duration-300 
-              flex flex-col items-center justify-center
-              hover:-translate-y-1 hover:scale-[1.05]
-            "
+                group cursor-pointer 
+                h-28 md:h-32 rounded-2xl 
+                bg-white 
+                shadow-md hover:shadow-xl 
+                border border-slate-200
+                transition-all duration-300 
+                flex flex-col items-center justify-center
+                hover:-translate-y-1 hover:scale-[1.05]
+              "
                   >
                     <img
                       src={`https://flagcdn.com/${lang.flag}.svg`}
                       alt={lang.name}
-                      className="w-12 h-12 mb-2 rounded-md shadow-sm"
+                      className="w-10 h-10 md:w-12 md:h-12 mb-2 rounded-md shadow-sm"
                     />
-                    <div className="text-[#2D274B] text-lg font-semibold text-center">
+                    <div className="text-[#2D274B] text-base md:text-lg font-semibold text-center">
                       {lang.name}
                     </div>
                   </div>
@@ -818,9 +879,7 @@ export default function LandingPageAlt() {
             </div>
           </div>
         )}
-
       </section>
-
       {/* Explore subjects section */}
       {/* bg-[#dc8d33] */}
       <section className="relative py-12" aria-labelledby="sdil-subjects">
@@ -900,8 +959,8 @@ export default function LandingPageAlt() {
                 {/* Subject Name */}
                 <div
                   className={`absolute top-3 left-3 ${subject.isMore
-                    ? "bg-[#5186cd] text-white"
-                    : "bg-white/90 text-[#2D274B]"
+                      ? "bg-[#5186cd] text-white"
+                      : "bg-white/90 text-[#2D274B]"
                     } px-3 py-1 rounded-md font-bold text-lg shadow`}
                 >
                   {subject.name}
@@ -967,13 +1026,9 @@ export default function LandingPageAlt() {
           </div>
         )}
       </section>
-
       {/* Explore Hobbies Section */}
       {/* bg-[#2D274B] */}
-      <section
-        className="relative py-12 "
-        aria-labelledby="sdil-hobbies"
-      >
+      <section className="relative py-12 " aria-labelledby="sdil-hobbies">
         <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
           {/* Heading */}
           <motion.h2
@@ -995,7 +1050,8 @@ export default function LandingPageAlt() {
             viewport={{ once: true }}
             className="mt-5 text-2xl text-[#2D274B] font-semibold max-w-2xl mx-auto"
           >
-            Build creativity and skills with professional <br />Hobby / Passion trainers.
+            Build creativity and skills with professional <br />
+            Hobby / Passion trainers.
           </motion.p>
 
           {/* Grid Hobbies */}
@@ -1069,8 +1125,8 @@ export default function LandingPageAlt() {
                 {/* Hobby Name */}
                 <div
                   className={`absolute top-3 left-3 ${hobby.isMore
-                    ? "bg-[#5186cd] text-white"
-                    : "bg-white/90 text-[#2D274B]"
+                      ? "bg-[#5186cd] text-white"
+                      : "bg-white/90 text-[#2D274B]"
                     } px-3 py-1 rounded-md font-bold text-lg shadow`}
                 >
                   {hobby.name}
@@ -1089,15 +1145,18 @@ export default function LandingPageAlt() {
 
         {/* Modal for More Hobbies */}
         {showMoreHobbies && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50" onClick={() => setShowMoreHobbies(false)}>
-
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
+            onClick={() => setShowMoreHobbies(false)}
+          >
             <div
               className="
                 rounded-3xl p-10 max-w-4xl w-[90%] relative 
                 shadow-2xl
                 bg-gradient-to-br from-[#ffffff] via-[#f1fff8] to-[#d8ffe7]
                 border border-white/40
-              " onClick={(e) => e.stopPropagation()}
+              "
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
@@ -1114,7 +1173,6 @@ export default function LandingPageAlt() {
 
               {/* Hobbies Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-
                 {[
                   { name: "Yoga", icon: "🧘‍♀️" },
                   { name: "Knitting", icon: "🧶" },
@@ -1157,22 +1215,17 @@ export default function LandingPageAlt() {
                     </div>
                   </div>
                 ))}
-
               </div>
             </div>
           </div>
         )}
       </section>
-
       {/* top trainer section */}
       <TopTrainers />
-
-
       {/* Why learners love us section */}
       {/* bg-[#2D274B] */}
-      <section className="py-14 ]">
+      <section className="py-20 ]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
           {/* HEADING */}
           <div className="text-center">
             <h3 className="text-4xl lg:text-5xl  font-extrabold text-[#203989]">
@@ -1182,8 +1235,8 @@ export default function LandingPageAlt() {
             {/* SUBTITLE BAR */}
             <div className="mt-5 inline-block bg-[#5b8fd6] text-white px-6 py-3 rounded-md shadow-md max-w-3xl">
               <p className="text-base lg:text-lg font-semibold">
-                Short lessons, lots of speaking time and tutors focused on practical
-                outcomes. Learn phrases you’ll use the very next day.
+                Short lessons, lots of speaking time and tutors focused on
+                practical outcomes. Learn phrases you’ll use the very next day.
               </p>
             </div>
           </div>
@@ -1200,7 +1253,6 @@ export default function LandingPageAlt() {
                 <p className="text-sm font-semibold opacity-90">{f.text}</p>
               </div>
             ))}
-
           </div>
 
           {/* REAL OUTCOMES CARD */}
@@ -1214,13 +1266,11 @@ export default function LandingPageAlt() {
               Excellent Material
             </div>
           </div>
-
         </div>
       </section>
-
       {/* Highlights Section */}
       <section
-        className="relative py-18  text-white"
+        className="relative py-24  text-white"
         aria-labelledby="sdil-highlights"
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -1244,7 +1294,8 @@ export default function LandingPageAlt() {
             viewport={{ once: true }}
             className="mt-5 text-xl font-bold text-[#2D274B] max-w-2xl mx-auto text-center"
           >
-            Our approach ensures effective learning, flexibility, and comprehensive support.
+            Our approach ensures effective learning, flexibility, and
+            comprehensive support.
           </motion.p>
 
           {/* Image + Icon Highlights */}
@@ -1319,52 +1370,68 @@ export default function LandingPageAlt() {
             viewport={{ once: true }}
             className="mt-16 text-lg text-center text-[#2D274B] font-bold max-w-3xl mx-auto"
           >
-            Personalized support and guidance ensure every learner’s success at <br /> LearniLM 🌎 World.
+            Personalized support and guidance ensure every learner’s success at{" "}
+            <br /> LearniLM 🌎 World.
           </motion.p>
         </div>
       </section>
-
       {/* How it works section */}
       <section className="py-1" aria-labelledby="how-it-works">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 id="how-it-works" className="text-4xl font-bold md:text-4xl  text-[#5186cd]">How it works — in 4 simple steps</h2>
-            <p className="mt-3 text-[#2D274B] text-lg font-bold max-w-2xl mx-auto">Designed to get you speaking fast: pick, book, practice and track.</p>
+            <h2
+              id="how-it-works"
+              className="text-4xl font-bold md:text-4xl  text-[#5186cd]"
+            >
+              How it works — in 4 simple steps
+            </h2>
+            <p className="mt-3 text-[#2D274B] text-lg font-bold max-w-2xl mx-auto">
+              Designed to get you speaking fast: pick, book, practice and track.
+            </p>
           </div>
 
           <div className="grid px-3 lg:grid-cols-4 md:grid-cols-2 gap-6">
             {steps.map((s, i) => (
-              <motion.div key={i} whileHover={{ y: -6 }} className="bg-gradient-to-b from-[#f0fdf4] to-white rounded-3xl px-6 relative py-12 border-2 border-sky-800 shadow hover:shadow-xl transition overflow-hidden" role="article">
-                <div className='absolute  w-28 h-28 -top-9 -left-9 '>
-
-                  <div className=' w-28  h-28 rounded-full bg-[#5186cd] text-white text-4xl flex items-center justify-center font-bold   border-black border-2 '>
-                    <span className='translate-x-3 translate-y-3'>
-
-                      {s.ind}
-                    </span>
+              <motion.div
+                key={i}
+                whileHover={{ y: -6 }}
+                className="bg-gradient-to-b from-[#f0fdf4] to-white rounded-3xl px-6 relative py-12 border-2 border-sky-800 shadow hover:shadow-xl transition overflow-hidden"
+                role="article"
+              >
+                <div className="absolute  w-28 h-28 -top-9 -left-9 ">
+                  <div className=" w-28  h-28 rounded-full bg-[#5186cd] text-white text-4xl flex items-center justify-center font-bold   border-black border-2 ">
+                    <span className="translate-x-3 translate-y-3">{s.ind}</span>
                   </div>
                 </div>
                 <div className="w-14 h-14 mx-auto rounded-lg  flex items-center justify-center mb-4 text-center">
                   <s.icon className="text-[#5186cd] size-12" aria-hidden />
                 </div>
-                <h3 className="font-semibold text-lg flex justify-center items-center text-center">{s.title}</h3>
-                <p className="text-sm text-[#4B437C] mt-2 flex justify-center items-center text-center">{s.desc}</p>
+                <h3 className="font-semibold text-lg flex justify-center items-center text-center">
+                  {s.title}
+                </h3>
+                <p className="text-sm text-[#4B437C] mt-2 flex justify-center items-center text-center">
+                  {s.desc}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-
       {/* Removed Reviews section */}
-
       {/* FAQ */}
       <section className="py-16" aria-labelledby="faq-heading">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
-          <h3 id="faq-heading" className="text-4xl  text-center font-extrabold"><span>Frequently Asked
-          </span><span className='text-[#5186cd]'> Questions
-            </span> </h3>
-          <h1 className='mt-4 translate-y-1 flex text-center items-center justify-center'>Getting ready to apply? Check out the Admission FAQ for answers to your </h1>
-          <h1 className='mt-1 flex text-center items-center justify-center'>questions on application requirement.</h1>
+          <h3 id="faq-heading" className="text-4xl  text-center font-extrabold">
+            <span>Frequently Asked</span>
+            <span className="text-[#5186cd]"> Questions</span>{" "}
+          </h3>
+          <h1 className="mt-4 translate-y-1 flex text-center items-center justify-center">
+            Getting ready to apply? Check out the Admission FAQ for answers to
+            your{" "}
+          </h1>
+          <h1 className="mt-1 flex text-center items-center justify-center">
+            questions on application requirement.
+          </h1>
           <div className="mt-8 space-y-4">
             {faqs.map((f, i) => (
               <div
@@ -1408,22 +1475,21 @@ export default function LandingPageAlt() {
         </div>
       </section>
       {/* text-[#e0fa84] text-[#2D274B] */}
-
       {/* CTA  bg-gradient-to-r from-[#9787F3]/10 to-[#f97316]/8*/}
       {/* <section className="py-12 ">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h4 className="text-4xl font-extrabold text-[#5186cd] ">Master Your Skills, Confidently</h4>
           {/* <p className="text-[#2D274B] text-xl font-bold mt-2">Sign up to Claim Your Free Trial Session. Get a Personalized 7-Day Learning Path After Your First Session.</p>
-          2D274B */} {/*
+          2D274B */}{" "}
+      {/*
           <div className="mt-6 flex justify-center gap-4">
             <Link to="/main" className="inline-flex items-center gap-3 px-6 py-3 rounded-lg bg-[#276dc9] text-[white] hover:bg-[#205eb0]">Browse trainers <ChevronRight /></Link>
             <Link to="/become-trainer" className="inline-flex items-center gap-3 px-6 py-3 rounded-lg border bg-[#276dc9] border-[#CBE56A] text-[white] hover:bg-[#205eb0]">Become a trainer</Link>
           </div>
         </div>
       </section> */}
-
       {/* Footer - expanded */}
       <Footer />
     </div>
-  )
+  );
 }

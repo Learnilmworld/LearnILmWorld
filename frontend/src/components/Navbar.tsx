@@ -13,7 +13,7 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
   const navigate = useNavigate();
   const { user, logout, loading } = useAuth();
   const [showOffcanvas, setShowOffcanvas] = useState(false);
-  const location = useLocation(); 
+  const location = useLocation();
 
   const dashboardLink = user
     ? user.role === "trainer"
@@ -66,14 +66,14 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
 
             <Link
               to="/about#about"
-              onClick={() => handleScroll("about")} 
+              onClick={() => handleScroll("about")}
               className="text-lg font-medium text-[#203989] hover:text-black transition no-underline"
             >
               About
             </Link>
 
             <Link
-              to="/about#careers"
+              to="/careers"
               onClick={() => handleScroll("careers")}
               className="text-lg font-medium text-[#203989] hover:text-black transition no-underline"
             >
@@ -161,7 +161,7 @@ const Navbar = ({ variant = "default" }: NavbarProps) => {
 
                   <Nav.Link
                     as={Link}
-                    to="/about#careers"
+                    to="/careers"
                     onClick={() => {
                       handleScroll("careers");
                       setShowOffcanvas(false);

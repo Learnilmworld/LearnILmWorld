@@ -48,8 +48,8 @@ const Footer = () => (
         <div className="font-semibold">Company</div>
         <ul className="mt-3 space-y-2 text-slate-300 text-xl">
           <li><Link to="/about#about" className="hover:underline">About</Link></li>
-          <li><Link to="/about#careers" className="hover:underline">Careers</Link></li>
-          <li><Link to="/about#blog" className="hover:underline">Blog</Link></li>
+          <li><Link to="/careers" className="hover:underline">Careers</Link></li>
+          <li><Link to="/blog" className="hover:underline">Blog</Link></li>
         </ul>
       </div>
 

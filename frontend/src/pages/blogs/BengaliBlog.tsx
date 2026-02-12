@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import heroImg from "../../assets/bengali-blog-photo1.jpeg";
+import heroImg from "../../assets/bengali-blog-photo.png";
 import cultureImg from "../../assets/bengali-blog-photo2.jpeg";
+import BlogSection from "../../components/BlogSection";
 
 const BengaliBlog: React.FC = () => {
   const fadeUp = {
@@ -201,9 +202,12 @@ const BengaliBlog: React.FC = () => {
           </motion.section>
         </div>
       </article>
+
+
       {/* ================= MORE BLOGS ================= */}
       <section className="py-28 px-6 bg-[#e1edfc]">
         <div className="max-w-7xl mx-auto text-center">
+
           <div className="inline-flex px-5 py-2 rounded-full bg-white text-[#276dc9] text-sm font-bold mb-6 shadow">
             MORE FROM OUR BLOG
           </div>
@@ -212,79 +216,11 @@ const BengaliBlog: React.FC = () => {
             Explore More Insights
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-left">
-            {[
-              {
-                title: "How Personalized Learning is Shaping the Future",
-                excerpt:
-                  "Discover how tailored education approaches are redefining success for modern learners.",
-                image:
-                  "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=800&q=80",
-              },
-              {
-                title: "The Power of Mentorship in Digital Learning",
-                excerpt:
-                  "Behind every great learner is a great mentor. Learn how connection drives growth online.",
-                image:
-                  "https://images.unsplash.com/photo-1596495577886-d920f1fb7238?auto=format&fit=crop&w=800&q=80",
-              },
-              {
-                title: "Bridging Skills and Opportunities for All",
-                excerpt:
-                  "Creating accessible pathways that connect learners to real-world possibilities.",
-                image:
-                  "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
-              },
-            ].map((post, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-3xl shadow-md hover:shadow-xl transition overflow-hidden border border-[#5186cd]/10"
-              >
-                <img
-                  src={post.image}
-                  className="w-full h-[220px] object-cover"
-                />
+          <BlogSection variant="more" />
 
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 text-[#1f2937]">
-                    {post.title}
-                  </h3>
-
-                  <p className="text-gray-700 mb-5">{post.excerpt}</p>
-
-                  {i === 0 ? (
-                    <Link
-                      to="/blog/german-culture"
-                      className="text-[#5186cd] font-semibold hover:underline"
-                    >
-                      Read More →
-                    </Link>
-                  ) : i === 1 ? (
-                    <Link
-                      to="/blog/bengali-culture"
-                      className="text-[#5186cd] font-semibold hover:underline"
-                    >
-                      Read More →
-                    </Link>
-                  ) : (
-                    <span className="text-[#5186cd] font-semibold opacity-60">
-                      Read More →
-                    </span>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
 
           <div className="mt-16">
-            <Link
-              to="/about#blog"
-              className="text-[#5186cd] font-semibold hover:underline"
-            >
+            <Link to="/blog" className="text-[#5186cd] font-semibold hover:underline">
               View all blogs →
             </Link>
           </div>
