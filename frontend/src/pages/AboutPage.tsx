@@ -176,7 +176,7 @@ export default function AboutPage() {
       <div className="bg-[linear-gradient(185deg,#E6EEF9_0%,#FEF5E4_30%,#f7f1e6_70%,#e9f1fb_100%)]">
         <section
           id="about"
-          className="relative min-h-screen flex items-center justify-center"
+          className="relative mb-12 pt-4 flex items-center justify-center"
         >
           <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
 
@@ -216,7 +216,7 @@ export default function AboutPage() {
               to everyone — through personalized, flexible, and affordable learning experiences.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 mb-14">
+            <div className="flex flex-wrap justify-center gap-4 mb-2">
               {[
                 { icon: "🌍", text: "Global Community" },
                 { icon: "🎓", text: "Quality Education" },
