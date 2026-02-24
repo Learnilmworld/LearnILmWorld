@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import {
   BookOpen,
-  ArrowRight,
   Play,
   Mic,
   Headphones,
@@ -17,9 +16,9 @@ import {
   Star,
   MessageSquare,
   ChevronDown,
-  ChevronRight,
+  User,
 } from "lucide-react";
-// Navbar,from above
+// Navbar, ChevronRight, ArrowRight,from above
 // import logo from "../assets/LearnilmworldLogo.jpg";
 // import russian_student from '../assets/russian_student.png'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -631,11 +630,10 @@ export default function LandingPageAlt() {
                   </Link>
 
                   <Link
-                    to="/demo"
+                    to="/become-trainer"
                     className="inline-flex items-center gap-3 px-8 py-3 bg-white text-[#024AAC] font-bold rounded-2xl border-2 border-[#024AAC] shadow-md hover:bg-gray-50 transition-colors"
                   >
-                    <Play className="w-5 h-5 fill-current" />
-                    Book a FREE Demo
+                    <User className="w-5 h-5 fill-current stroke-0" />Become a Trainer
                   </Link>
                 </div>
               </motion.div>
@@ -959,8 +957,8 @@ export default function LandingPageAlt() {
                 {/* Subject Name */}
                 <div
                   className={`absolute top-3 left-3 ${subject.isMore
-                      ? "bg-[#5186cd] text-white"
-                      : "bg-white/90 text-[#2D274B]"
+                    ? "bg-[#5186cd] text-white"
+                    : "bg-white/90 text-[#2D274B]"
                     } px-3 py-1 rounded-md font-bold text-lg shadow`}
                 >
                   {subject.name}
@@ -1125,8 +1123,8 @@ export default function LandingPageAlt() {
                 {/* Hobby Name */}
                 <div
                   className={`absolute top-3 left-3 ${hobby.isMore
-                      ? "bg-[#5186cd] text-white"
-                      : "bg-white/90 text-[#2D274B]"
+                    ? "bg-[#5186cd] text-white"
+                    : "bg-white/90 text-[#2D274B]"
                     } px-3 py-1 rounded-md font-bold text-lg shadow`}
                 >
                   {hobby.name}

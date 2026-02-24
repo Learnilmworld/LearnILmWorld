@@ -53,7 +53,7 @@ const OurTeamMember = () => {
               className="bg-white rounded-[2rem] shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col items-center w-full max-w-[350px]"
             >
               {/* Image Container */}
-              <div className="w-full h-60 overflow-hidden relative">
+              <div className="w-full h-[300px] overflow-hidden relative">
                 <img
                   src={member.imageUrl}
                   alt={member.role}
@@ -73,9 +73,9 @@ const OurTeamMember = () => {
                   ? "uppercase" : ""} tracking-wider mb-4`}>
                   {member.role}
                 </p>
-                <p className="text-gray-500 text-sm leading-relaxed">
+                {/* <p className="text-gray-500 text-sm leading-relaxed">
                   {member.bio}
-                </p>
+                </p> */}
               </div>
             </div>
           ))}
