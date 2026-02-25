@@ -13,6 +13,8 @@ import ManageClasses from "../../components/ManageClasses";
 const TrainerProfile = () => {
   const { user, updateProfile } = useAuth();
   const CURRENT_YEAR = new Date().getFullYear();
+  const [originalCertKeys, setOriginalCertKeys] = useState<string[]>([]);
+  const [certPreviews, setCertPreviews] = useState<Record<number, string>>({});
 
   const defaultProfile = {
     bio: user?.profile?.bio || "",
@@ -90,21 +92,15 @@ const TrainerProfile = () => {
     { key: "name", type: "text", placeholder: "Certification Name" },
     { key: "issuer", type: "text", placeholder: "Issuer" },
     {
-      key: "year",
-      type: "number",
-      placeholder: "Year",
-      min: 1950,
-      max: CURRENT_YEAR,
+      key: "year", type: "number", placeholder: "Year",
+      min: 1950, max: CURRENT_YEAR,
     },
     {
-      key: "certificateLink",
-      type: "url",
+      key: "certificateLink", type: "url",
       placeholder: "https://certificate-link.com",
     },
   ];
 
-  // secondaryEmail: string;
-  // secondaryEmail: user?.secondaryEmail || '',
   const [formData, setFormData] = useState<{
     name: string;
     email: string;
@@ -125,10 +121,9 @@ const TrainerProfile = () => {
   const [originalImageKey, setOriginalImageKey] = useState<string>("");
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // const [newStudentAge, setNewStudentAge] = useState('')
   const [newStandard, setNewStandard] = useState("");
-  // const [newProfileImage, setNewProfileImage] = useState('')
 
+  // Availability useeffect
   useEffect(() => {
     // ensure availability has 7 days (preserve existing)
     const ALL_DAYS = [
@@ -291,14 +286,17 @@ const TrainerProfile = () => {
     });
   };
 
-  // const updateCertYear = (index: number, value: string) => {
-  //   const year = value ? parseInt(value, 10) : null
-  //   updateObjectInArray('certifications', index, 'year', year)
-  // }
-
   useEffect(() => {
     if (user?.profile) {
-      // Capture the Original Image Key
+
+      // Capture original certification keys
+      if (user.profile.certifications) {
+        const keys = user.profile.certifications
+          .map((c: any) => c.certificateImage)
+          .filter((k: string) => k && !k.startsWith("http"));
+        setOriginalCertKeys(keys);
+      }
+      // Capture the Original Profile Image Key
       const dbImage = user.profile.imageUrl;
       if (dbImage && !dbImage.startsWith("blob:") && !dbImage.startsWith("data:")) {
         setOriginalImageKey(dbImage);
@@ -315,6 +313,37 @@ const TrainerProfile = () => {
       }
     }
   }, [user]);
+  // for certificate useffect
+  useEffect(() => {
+    const loadCertPreviews = async () => {
+      const previews: Record<number, string> = {};
+
+      await Promise.all(
+        (formData.profile.certifications || []).map(async (cert: any, i: number) => {
+          if (
+            typeof cert.certificateImage === "string" &&
+            cert.certificateImage &&
+            !cert.certificateImage.startsWith("http")
+          ) {
+            try {
+              const { data } = await axios.post(
+                `${API_BASE_URL}/api/upload/get-download-url`,
+                { fileKey: cert.certificateImage }
+              );
+              previews[i] = data.signedUrl;
+            } catch {
+              previews[i] = "";
+            }
+          }
+        })
+      );
+
+      setCertPreviews(previews);
+    };
+
+    loadCertPreviews();
+  }, [formData.profile.certifications]);
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -330,7 +359,7 @@ const TrainerProfile = () => {
       },
     }));
   };
-  //for the image as when someone upload the image it gots load
+  //for the image as when someone upload the image it loads
   useEffect(() => {
     const getPreview = async () => {
       const currentImage = formData.profile.imageUrl;
@@ -425,9 +454,7 @@ const TrainerProfile = () => {
           setLoading(false);
           return;
         }
-      }
-
-      else if (selectedImageFile) {
+      } else if (selectedImageFile) {
         try {
           const { data } = await axios.post(`${API_BASE_URL}/api/upload/get-upload-url`, {
             fileName: selectedImageFile.name,
@@ -448,10 +475,50 @@ const TrainerProfile = () => {
         }
       }
 
+      // --- HANDLE CERTIFICATE UPLOADS ---
+      const updatedCerts = [];
+
+      for (const cert of formData.profile.certifications || []) {
+        let imageKey = cert.certificateImage;
+
+        // If new file selected
+        if (cert.certificateImage instanceof File) {
+          try {
+            const { data } = await axios.post(
+              `${API_BASE_URL}/api/upload/get-upload-url`,
+              {
+                fileName: cert.certificateImage.name,
+                fileType: cert.certificateImage.type,
+                folderMain: "trainers",
+                folderSub: "certificates",
+              }
+            );
+
+            await fetch(data.uploadUrl, {
+              method: "PUT",
+              body: cert.certificateImage,
+              headers: { "Content-Type": cert.certificateImage.type },
+            });
+
+            imageKey = data.key;
+          } catch (err) {
+            setError("Failed to upload certificate image.");
+            setLoading(false);
+            return;
+          }
+        }
+
+        updatedCerts.push({
+          ...cert,
+          certificateImage: imageKey,
+        });
+      }
+
       const updatedProfile = {
         ...user.profile,
         ...formData.profile,
-        imageUrl: finalImageKey
+        imageUrl: finalImageKey,
+        certifications: updatedCerts,
       };
 
       const result = await updateProfile({
@@ -492,6 +559,26 @@ const TrainerProfile = () => {
           console.log("Skipping Delete: No original image was found on load.");
         }
 
+        // DELETE REMOVED CERTIFICATES
+        const currentKeys = updatedCerts
+          .map((c: any) => c.certificateImage)
+          .filter((k: string) => k);
+
+        for (const oldKey of originalCertKeys) {
+          if (!currentKeys.includes(oldKey)) {
+            try {
+              await axios.delete(`${API_BASE_URL}/api/upload/delete-file`, {
+                data: { fileKey: oldKey },
+              });
+              console.log("Deleted old certificate:", oldKey);
+            } catch (err) {
+              console.error("Failed to delete old certificate", err);
+            }
+          }
+        }
+
+        setOriginalCertKeys(currentKeys);
+
         setOriginalImageKey(finalImageKey);
         setSelectedImageFile(null);
       }
@@ -502,11 +589,6 @@ const TrainerProfile = () => {
       setLoading(false);
     }
   }
-
-  // prefer imageUrl (primary) > avatar > first profileImages > empty
-  // const getPrimaryImage = () => {
-  //   return formData.profile?.imageUrl || formData.profile?.avatar || (Array.isArray(formData.profile?.profileImages) && formData.profile.profileImages[0]) || ''
-  // }
 
   return (
     <div className="space-y-8">
@@ -688,6 +770,7 @@ const TrainerProfile = () => {
               </div>
             </div>
 
+            {/* bio */}
             <div className="mt-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Bio
@@ -723,13 +806,6 @@ const TrainerProfile = () => {
                   step={0.5}
                 />
               </div>
-
-              
-
-              {/* <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Hourly Rate ($)</label>
-                <input type="number" name="profile.hourlyRate" value={formData.profile.hourlyRate} onChange={handleChange} className="input-field" min={1} step={1} />
-              </div> */}
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -773,7 +849,7 @@ const TrainerProfile = () => {
               </div>
             </div>
 
-            
+
 
             {/* Languages */}
             <div className="mt-6">
@@ -1067,21 +1143,23 @@ const TrainerProfile = () => {
                         onChange={(e) => {
                           const file = e.target.files?.[0];
                           if (!file) return;
-                          const reader = new FileReader();
-                          reader.onload = () =>
-                            updateObjectInArray(
-                              "certifications",
-                              idx,
-                              "certificateImage",
-                              reader.result as string,
-                            );
-                          reader.readAsDataURL(file);
+
+                          updateObjectInArray(
+                            "certifications",
+                            idx,
+                            "certificateImage",
+                            file
+                          );
                         }}
                         className="input-field"
                       />
                       {cert.certificateImage && (
                         <img
-                          src={cert.certificateImage}
+                          src={
+                            cert.certificateImage instanceof File
+                              ? URL.createObjectURL(cert.certificateImage)
+                              : certPreviews[idx]
+                          }
                           alt="Cert"
                           className="w-32 h-32 mt-2 object-cover rounded border"
                         />
@@ -1254,7 +1332,7 @@ const TrainerProfile = () => {
           </div>
         </form>
         <div className="mt-12 pt-8 border-t border-gray-200">
-           <ManageClasses />
+          <ManageClasses />
         </div>
       </div>
     </div>

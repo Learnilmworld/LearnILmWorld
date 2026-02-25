@@ -1,9 +1,9 @@
 import express from 'express';
-import { deleteFile, getDownloadUrl, getUploadUrl } from '../controllers/uploadController.js';
+import { getDownloadUrl, getUploadUrl, deleteFile } from '../controllers/uploadController.js';
 
 const router = express.Router();
 router.post('/get-upload-url', getUploadUrl);
 router.post('/get-download-url', getDownloadUrl);
-router.post('/delete-file', deleteFile);
+router.delete("/delete-file", deleteFile);
 export default router;
 

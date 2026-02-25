@@ -9,7 +9,7 @@ type AnyObj = Record<string, any>
 /* ---------------- StudentProfile ---------------- */
 const StudentProfile: React.FC = () => {
   const { user, updateProfile } = useAuth() as AnyObj
-  const API_BASE_URL=import.meta.env.VITE_API_BASE_URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
   const [formData, setFormData] = useState({
     name: '',
@@ -30,7 +30,7 @@ const StudentProfile: React.FC = () => {
   const [success, setSuccess] = useState('')
   const [error, setError] = useState('')
 
-  const [previewLink, setPreviewLink] = useState<string>("") 
+  const [previewLink, setPreviewLink] = useState<string>("")
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null)
   const [originalImageKey, setOriginalImageKey] = useState<string>("")
 
@@ -70,7 +70,7 @@ const StudentProfile: React.FC = () => {
         setPreviewLink("");
         return;
       }
-      if (currentImage.startsWith('blob:') || currentImage.startsWith('data:') ) {
+      if (currentImage.startsWith('blob:') || currentImage.startsWith('data:')) {
         setPreviewLink(currentImage);
         return;
       }
@@ -115,17 +115,17 @@ const StudentProfile: React.FC = () => {
     if (!file) return
 
     setSelectedImageFile(file)
-    const localPreviewUrl=URL.createObjectURL(file)
+    const localPreviewUrl = URL.createObjectURL(file)
 
-      setFormData(prev => ({
-        ...prev,
-        profile: {
-          ...prev.profile,
-          imageUrl: localPreviewUrl
-        }
-      }))
-    }
-  
+    setFormData(prev => ({
+      ...prev,
+      profile: {
+        ...prev.profile,
+        imageUrl: localPreviewUrl
+      }
+    }))
+  }
+
 
   const handleRemoveImage = () => {
     setSelectedImageFile(null)
@@ -211,20 +211,20 @@ const StudentProfile: React.FC = () => {
             headers: { 'Content-Type': selectedImageFile.type },
           });
 
-          finalImageKey = data.key; 
+          finalImageKey = data.key;
         } catch (uploadErr) {
           console.error("Upload failed", uploadErr);
           setError("Failed to upload image.");
           setLoading(false);
-          return; 
+          return;
         }
       }
 
       // Safety: Prevent saving "blob:" URLs to database
       if (finalImageKey.startsWith("blob:")) {
-         setError("Image upload failed. Please try again.");
-         setLoading(false);
-         return;
+        setError("Image upload failed. Please try again.");
+        setLoading(false);
+        return;
       }
       const payload = {
         name: formData.name,
@@ -248,7 +248,7 @@ const StudentProfile: React.FC = () => {
 
         if (originalImageKey && originalImageKey !== finalImageKey) {
           const isR2File = !originalImageKey.startsWith("http") && !originalImageKey.startsWith("https") && !originalImageKey.startsWith("data:");
-          
+
           if (isR2File) {
             console.log("Deleting old R2 file:", originalImageKey);
             try {
@@ -271,7 +271,7 @@ const StudentProfile: React.FC = () => {
       setLoading(false)
     }
   }
-  
+
 
   return (
     <div className="space-y-6 max-w-[900px] mx-auto">
@@ -381,19 +381,6 @@ const StudentProfile: React.FC = () => {
             </div>
 
             {/* secondary email Removed */}
-            {/* <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Secondary Email (Optional)
-              </label>
-              <input
-                type="email"
-                name="secondaryEmail"
-                value={formData.secondaryEmail}
-                onChange={handleChange}
-                placeholder="Enter a secondary email for account recovery"
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9787F3] transition-all text-sm font-medium"
-              />
-            </div> */}
 
           </div>
 
