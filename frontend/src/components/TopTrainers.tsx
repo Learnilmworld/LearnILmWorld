@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-// import axios from "axios";
 import { Link } from "react-router-dom";
 import trainer_profile from "../assets/trainer_profile.png";
 import spanish from "../assets/Spanish_Trainer.png";
@@ -8,13 +7,12 @@ import german from "../assets/German_Trainer.jpeg";
 import english from "../assets/English_Trainer.png";
 
 import TrainerBackCard, { Trainer } from "../components/TrainerBackCard";
-import { Play, Users } from "lucide-react";
+import { BookOpen, Users } from "lucide-react";
 
 
 // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 // Moved types in TrainerBackCard.tsx component
-
 /* small helper for rendering label */
 type PickRole = "language" | "subject" | "other";
 
@@ -258,14 +256,12 @@ export default function TopTrainers(): JSX.Element {
 
         {/* CTA */}
         <div className="flex justify-center gap-6 mt-14 w-full max-w-xl mx-auto">
-
-          {/* Book Demo */}
           <Link
-            to="/demo"
+            to="/courses"
             className="flex-1 flex items-center justify-center gap-2 h-[57px] bg-[#276dc9] text-white font-semibold rounded-xl shadow-md border border-white hover:bg-[#205eb0] transition text-lg"
           >
-            <Play className="w-5 h-5 fill-current" />
-            Book a FREE Demo
+            <BookOpen className="w-5 h-5" />
+            Browse Courses
           </Link>
 
           {/* More Trainers */}

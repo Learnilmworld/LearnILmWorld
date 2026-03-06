@@ -83,6 +83,7 @@ const userSchema = new mongoose.Schema({
 
     phone: { type: String, trim: true, default: '' },
     location: { type: String, trim: true, default: '' },
+    continent: { type: String, trim: true, default: '' },
 
     learningType: {
       type: String,
