@@ -325,7 +325,7 @@ export default function StepTrainerTeach({
       {/* SUBJECTS */}
       {teachingType === "subjects" && (
         <div>
-          <FormLabel required>Subjects (Max 1)</FormLabel>
+          <FormLabel required>Subjects</FormLabel>
           <MultiSelect
             options={SUBJECT_OPTIONS}
             selected={subjects}
