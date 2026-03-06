@@ -14,6 +14,7 @@ import careerRoutes from './routes/careerRoutes.js';
 import courseRoutes from './routes/courseRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import dotenv from 'dotenv';
+import ClassScheduleRoutes from './routes/classScheduleRoutes.js';
 
 dotenv.config();
 
@@ -73,6 +74,10 @@ app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/careers', careerRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/upload', uploadRoutes);
+<<<<<<< HEAD
+=======
+app.use('/api/class-schedule', ClassScheduleRoutes);
+>>>>>>> main
 
 
 // Test route

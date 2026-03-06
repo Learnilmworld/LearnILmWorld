@@ -3,6 +3,7 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import ReactFlagsSelect from "react-flags-select";
 import axios from "axios";
+import ManageClasses from "../../components/ManageClasses";
 //  commented out trainers hourly rate
 
 // const FRONTEND_URL= import.meta.env.VITE_FRONTEND_URL;
@@ -34,6 +35,7 @@ const TrainerProfile = () => {
       ? [...user.profile.standards]
       : [],
     hourlyRate: user?.profile?.hourlyRate ?? 25,
+    // pricing: user?.profile?.pricing || { min30: 25, min60: 45, min90: 65 },
     phone: user?.profile?.phone || "",
     location: user?.profile?.location || "",
     specializations: Array.isArray(user?.profile?.specializations)
@@ -847,6 +849,8 @@ const TrainerProfile = () => {
               </div>
             </div>
 
+
+
             {/* Languages */}
             <div className="mt-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -1327,6 +1331,9 @@ const TrainerProfile = () => {
             </button>
           </div>
         </form>
+        <div className="mt-12 pt-8 border-t border-gray-200">
+          <ManageClasses />
+        </div>
       </div>
     </div>
   );
